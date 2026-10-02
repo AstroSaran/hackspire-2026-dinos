@@ -12,34 +12,70 @@ from .weather.models import LIVE
 from .weather import historical
 
 
-def compute_rainfall_anomaly(observation, district: str, block: str, latitude=None, longitude=None, live_pilot=False, rainfall_mm_override=None, measurement_type="observation") -> dict:
+def compute_rainfall_anomaly(observation, district: str, block: str) -> dict:
     """observation: a WeatherObservation (real, from the weather service).
     Returns the full pipeline trace, not just the final number, so the API
-    and UI can show exactly which stage failed if any did."""
+    and UI can show exactly which stage failed if any did. Uses the
+    pre-computed, cached baseline registry (historical.get_baseline) —
+    for the live-pilot path that fetches a baseline on demand, see
+    compute_live_pilot_rainfall_anomaly below."""
     stage_1_observation = {
         "have_observation": observation.status == LIVE,
-        "precipitation_mm": rainfall_mm_override if rainfall_mm_override is not None else observation.precipitation_mm,
-        "measurement_type": measurement_type,
+        "precipitation_mm": observation.precipitation_mm,
+        "measurement_type": "observation",
         "observed_at": observation.observed_at,
         "provider": observation.provider_name,
     }
 
     baseline = historical.get_baseline(district, block)
-    if baseline is None and live_pilot and latitude is not None and longitude is not None:
-        try:
-            baseline = historical.fetch_era5_daily_baseline(latitude, longitude)
-        except Exception as exc:
-            baseline = None
-            live_baseline_error = str(exc)
-        else:
-            live_baseline_error = None
-    else:
-        live_baseline_error = None
     stage_2_baseline = {
         "have_baseline": baseline is not None,
         "baseline": baseline,  # None, or {"mean_mm": ..., "period": ..., "source": ..., "computed_at": ...}
     }
 
+    return _finish(stage_1_observation, stage_2_baseline, baseline)
+
+
+def compute_live_pilot_rainfall_anomaly(observation, forecast, latitude: float, longitude: float) -> dict:
+    """Live-pilot variant (Part 8/9 applied to a real address rather than a
+    representative village): uses TODAY's real Open-Meteo daily precipitation
+    forecast value (not an hourly instantaneous reading — avoids feeding an
+    hourly number into a daily-anomaly feature) against a real ERA5 monthly
+    climatological mean fetched for this exact coordinate. Falls back to
+    'unavailable', never a fabricated number, if either fetch fails.
+    """
+    if observation is None or observation.status != LIVE or not forecast or not forecast.days:
+        return _unavailable(
+            {"have_observation": False, "precipitation_mm": None, "measurement_type": "observation",
+             "observed_at": None, "provider": None},
+            {"have_baseline": False, "baseline": None},
+            "no live observation/forecast available for this pilot location",
+        )
+
+    today = forecast.days[0]
+    stage_1_observation = {
+        "have_observation": True,
+        "precipitation_mm": today.precipitation_sum_mm,
+        "measurement_type": "live_open_meteo_daily_forecast_for_today",
+        "observed_at": observation.observed_at,
+        "provider": observation.provider_name,
+    }
+
+    try:
+        month = int(today.date[5:7])
+        baseline = historical.fetch_era5_monthly_daily_baseline(latitude, longitude, month)
+    except Exception as exc:
+        stage_2_baseline = {"have_baseline": False, "baseline": None}
+        result = _unavailable(stage_1_observation, stage_2_baseline,
+                               f"live ERA5 monthly baseline fetch failed: {exc}")
+        result["measurement_type"] = "live_open_meteo_daily_forecast_for_today"
+        return result
+
+    stage_2_baseline = {"have_baseline": True, "baseline": baseline}
+    return _finish(stage_1_observation, stage_2_baseline, baseline)
+
+
+def _finish(stage_1_observation, stage_2_baseline, baseline):
     if not stage_1_observation["have_observation"]:
         return _unavailable(stage_1_observation, stage_2_baseline,
                              "no live rainfall observation available")

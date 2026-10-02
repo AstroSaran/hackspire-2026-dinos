@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "retrieved_at_utc": "2026-10-02T18:44:16.414626+00:00",
+  "provider": "OpenStreetMap Nominatim",
+  "service_url": "https://nominatim.openstreetmap.org/search",
+  "license": "Open Database License (ODbL) 1.0",
+  "attribution": "© OpenStreetMap contributors",
+  "usage_note": "Three one-time fallback geocodes were obtained for districts not resolved by Open-Meteo Geocoding. Results are cached to avoid repeat Nominatim queries. This is a small point set, not a copied map database.",
+  "results": {
+    "Alipurduar": {
+      "query": "Alipurduar, West Bengal, India",
+      "place_id": 242378534,
+      "osm_type": "node",
+      "osm_id": 568606431,
+      "place_name": "Alipurduar",
+      "display_name": "Alipurduar, Alipurduar - I, Alipurduar, West Bengal, 736121, India",
+      "latitude": 26.4851573,
+      "longitude": 89.5246926,
+      "address": {
+        "state_district": "Alipurduar",
+        "state": "West Bengal",
+        "country": "India",
+        "country_code": "in"
+      }
+    },
+    "Murshidabad": {
+      "query": "Berhampore, Murshidabad, West Bengal, India",
+      "place_id": 240412672,
+      "osm_type": "node",
+      "osm_id": 245719504,
+      "place_name": "Berhampore",
+      "display_name": "Berhampore, Murshidabad, West Bengal, 742101, India",
+      "latitude": 24.1044927,
+      "longitude": 88.2510635,
+      "address": {
+        "state_district": "Murshidabad",
+        "state": "West Bengal",
+        "country": "India",
+        "country_code": "in"
+      }
+    },
+    "Hooghly": {
+      "query": "Chinsurah, Hooghly, West Bengal, India",
+      "place_id": 251003792,
+      "osm_type": "node",
+      "osm_id": 7156071805,
+      "place_name": "Hugli-Chuchura",
+      "display_name": "Hugli-Chuchura, Kolkata Metropolitan Area, Chinsurah - Magra, Hooghly, West Bengal, 712101, India",
+      "latitude": 22.8992251,
+      "longitude": 88.3921337,
+      "address": {
+        "state_district": "Hooghly",
+        "state": "West Bengal",
+        "country": "India",
+        "country_code": "in"
+      }
+    }
+  }
+}

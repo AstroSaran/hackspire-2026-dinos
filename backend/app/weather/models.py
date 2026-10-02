@@ -51,6 +51,8 @@ class WeatherObservation:
     village: Optional[str] = None
     latitude: Optional[float] = None
     longitude: Optional[float] = None
+    provider_latitude: Optional[float] = None  # Weather provider's resolved grid/station coordinate
+    provider_longitude: Optional[float] = None
     location_resolution: str = "unknown"   # "block_centroid" | "station" | "village" | "unavailable"
 
     observed_at: Optional[str] = None  # IST, ISO8601 — when the reading is valid for
@@ -66,6 +68,7 @@ class WeatherObservation:
     rain_mm: Optional[float] = None
     wind_speed_kmh: Optional[float] = None
     wind_direction_deg: Optional[float] = None
+    weather_code: Optional[int] = None
     evapotranspiration_mm: Optional[float] = None
 
     note: Optional[str] = None
@@ -80,6 +83,9 @@ class WeatherForecastDay:
     precipitation_sum_mm: Optional[float] = None
     temperature_max_c: Optional[float] = None
     temperature_min_c: Optional[float] = None
+    precipitation_probability_max_pct: Optional[float] = None
+    wind_speed_max_kmh: Optional[float] = None
+    weather_code: Optional[int] = None
 
 
 @dataclass
@@ -98,6 +104,8 @@ class WeatherForecast:
     village: Optional[str] = None
     latitude: Optional[float] = None
     longitude: Optional[float] = None
+    provider_latitude: Optional[float] = None  # Weather provider's resolved grid coordinate
+    provider_longitude: Optional[float] = None
 
     issued_at: Optional[str] = None    # IST — when this forecast run was issued
     fetched_at: Optional[str] = None

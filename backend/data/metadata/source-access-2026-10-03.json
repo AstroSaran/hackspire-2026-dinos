@@ -1,0 +1,87 @@
+{
+  "report_schema_version": 1,
+  "checked_at": "2026-10-03T00:41:43+05:30",
+  "purpose": "Record reproducible availability checks for real West Bengal model datasets without storing credentials or person-level survey rows.",
+  "existing_snapshots": [
+    {
+      "dataset": "ERA5 daily environmental features",
+      "status": "COLLECTED_QUALITY_PASS",
+      "rows": 64284,
+      "coverage": "22 district-headquarters search points, 2018-01-01 through 2025-12-31",
+      "manifest": "backend/data/metadata/era5-west-bengal-2018-01-01-to-2025-12-31-d3d80529c0c1df4e-manifest-v2.json",
+      "limitation": "Reanalysis predictor estimates at selected points; no crop-loss or livelihood labels. Open-Meteo free API use is non-commercial only."
+    },
+    {
+      "dataset": "West Bengal district mango area and production",
+      "status": "LOCAL_ONLY_EXPERIMENTAL_NOT_PUBLISHED_LICENSE_UNVERIFIED",
+      "rows": 88,
+      "coverage": "22 districts, 2021-22 through 2024-25",
+      "local_manifest": "backend/data/metadata/west-bengal-district-mango-annual-manifest-v2-c3838bcd4eefd461.json",
+      "distribution": "CSV, manifest and model artifact are excluded from GitHub until source reuse terms are confirmed.",
+      "limitation": "Annual mango yield is a separate target; the model loses to persistence on holdout MAE. Original files, collection date and reuse terms are not recorded."
+    }
+  ],
+  "source_checks": [
+    {
+      "dataset": "OGD district-wise crop production",
+      "source": "https://api.data.gov.in/resource/{configured-resource-id}",
+      "status": "UNAVAILABLE",
+      "check": "Configured backend connector requested offset 0, limit 10; no credentials were included in this report.",
+      "result": "Backend could not connect to api.data.gov.in over HTTPS. No response records were saved."
+    },
+    {
+      "dataset": "AGMARKNET daily mandi prices",
+      "source": "https://api.data.gov.in/resource/{configured-resource-id}",
+      "status": "UNAVAILABLE",
+      "check": "Configured backend connector requested offset 0, limit 10; no credentials were included in this report.",
+      "result": "Backend could not connect to api.data.gov.in over HTTPS. No response records were saved."
+    },
+    {
+      "dataset": "MGNREGA OGD resource",
+      "source": "https://api.data.gov.in/resource/{configured-resource-id}",
+      "status": "UNAVAILABLE",
+      "check": "Configured backend connector requested offset 0, limit 10; no credentials were included in this report.",
+      "result": "Backend could not connect to api.data.gov.in over HTTPS. The configured resource is a 2023 archive, not a current time series. No response records were saved."
+    },
+    {
+      "dataset": "MGNREGA Public Data Portal monthly report page",
+      "source": "https://mnregaweb4.nic.in/netnrega/dynamic2/dynamicreport_MPR.aspx",
+      "status": "PAGE_REACHABLE_REPORT_NOT_EXPORTED",
+      "check": "Public page returned HTTP 200 and lists monthwise households/persons demanding work and households worked.",
+      "result": "The region selector was disabled in the inspected page; visible year options ended at 2010-11. No West Bengal district report or downloaded dataset was produced."
+    },
+    {
+      "dataset": "West Bengal WUA point crop-survey GIS layer",
+      "source": "https://nhpgw.wb.gov.in/gisserver/rest/services/WUA/surveycropdatacollectiondb/MapServer/0",
+      "status": "LIVE_COVERAGE_ONLY_TRAINING_INSUFFICIENT",
+      "check": "The app's existing privacy-limited coverage endpoint fetched agronomic fields only and excluded geometry, coordinates, remarks, global IDs and editor metadata. A separate count-only query returned 19.",
+      "coverage": {
+        "survey_records": 19,
+        "crop_health_label_records": 1,
+        "distinct_crop_health_labels": 1,
+        "soil_moisture_readings": 1,
+        "records_with_sowing_date": 19,
+        "records_with_harvest_date": 19,
+        "sowing_years": [2018, 2026],
+        "harvest_years": [2025, 2027],
+        "district_field_available": false
+      },
+      "result": "Too sparse and not district-matched for supervised training. Point rows were not archived. The layer schema includes precise coordinates and editor metadata, and no reuse license is recorded."
+    },
+    {
+      "dataset": "DES Area, Production and Yield query report",
+      "source": "https://data.desagri.gov.in/website/apy-query-report-web",
+      "status": "UNAVAILABLE",
+      "check": "Official query page request timed out from this environment on 2026-10-03.",
+      "result": "No crop-production records were downloaded."
+    }
+  ],
+  "training_gaps": {
+    "crop_weather_stress": "Requires many verified, dated crop-health, crop-damage or yield-loss labels matched to crop, season, district/block/field and weather. Current WUA layer has only one labeled point; annual mango yield is not a crop-stress label.",
+    "mgnrega_shortfall": "Requires a complete versioned monthly district series with households demanding work and households receiving work, reporting period, revisions and stable district keys. No usable series was downloaded.",
+    "broader_livelihood_disruption": "Requires a defined outcome/horizon and authorized representative dated household or suitably granular aggregate outcomes. No such dataset is present."
+  },
+  "no_synthetic_records_used": true,
+  "credentials_saved": false,
+  "person_level_survey_rows_saved": false
+}

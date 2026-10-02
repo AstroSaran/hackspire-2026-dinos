@@ -1,0 +1,398 @@
+{
+  "collected_at_utc": "2026-10-02T18:46:46.477758+00:00",
+  "collection_id": "era5-west-bengal-2018-01-01-to-2025-12-31-d3d80529c0c1df4e",
+  "coverage": {
+    "district_count": 22,
+    "districts": [
+      "Darjeeling",
+      "Kalimpong",
+      "Jalpaiguri",
+      "Alipurduar",
+      "Cooch Behar",
+      "Uttar Dinajpur",
+      "Dakshin Dinajpur",
+      "Malda",
+      "Murshidabad",
+      "Nadia",
+      "North 24 Parganas",
+      "South 24 Parganas",
+      "Howrah",
+      "Hooghly",
+      "Purba Bardhaman",
+      "Paschim Bardhaman",
+      "Birbhum",
+      "Bankura",
+      "Purulia",
+      "Paschim Medinipur",
+      "Jhargram",
+      "Purba Medinipur"
+    ],
+    "end_date": "2025-12-31",
+    "location_method": "One live-geocoded district-headquarters search point per district.",
+    "locations": [
+      {
+        "district": "Darjeeling",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 27.03333,
+        "longitude": 88.26667,
+        "place_name": "Darjeeling",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Darjeeling"
+      },
+      {
+        "district": "Kalimpong",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 27.03461,
+        "longitude": 88.63084,
+        "place_name": "Kalimpong",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Kalimpong"
+      },
+      {
+        "district": "Jalpaiguri",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 26.51667,
+        "longitude": 88.73333,
+        "place_name": "Jalpāiguri",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Jalpaiguri"
+      },
+      {
+        "district": "Alipurduar",
+        "geocoding_attribution": "© OpenStreetMap contributors",
+        "geocoding_source": "OpenStreetMap Nominatim (cached one-time fallback)",
+        "latitude": 26.4851573,
+        "longitude": 89.5246926,
+        "place_name": "Alipurduar",
+        "resolution": "Cached OSM place search point confirmed within the named West Bengal district; not a district polygon or average",
+        "search_label": "Alipurduar"
+      },
+      {
+        "district": "Cooch Behar",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 26.32539,
+        "longitude": 89.44508,
+        "place_name": "Koch Bihār",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Cooch Behar"
+      },
+      {
+        "district": "Uttar Dinajpur",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 25.61281,
+        "longitude": 88.12449,
+        "place_name": "Rāiganj",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Raiganj"
+      },
+      {
+        "district": "Dakshin Dinajpur",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 25.22099,
+        "longitude": 88.77732,
+        "place_name": "Bālurghāt",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Balurghat"
+      },
+      {
+        "district": "Malda",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 25.00447,
+        "longitude": 88.14573,
+        "place_name": "Malda",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Malda"
+      },
+      {
+        "district": "Murshidabad",
+        "geocoding_attribution": "© OpenStreetMap contributors",
+        "geocoding_source": "OpenStreetMap Nominatim (cached one-time fallback)",
+        "latitude": 24.1044927,
+        "longitude": 88.2510635,
+        "place_name": "Berhampore",
+        "resolution": "Cached OSM place search point confirmed within the named West Bengal district; not a district polygon or average",
+        "search_label": "Berhampore"
+      },
+      {
+        "district": "Nadia",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 23.40576,
+        "longitude": 88.49073,
+        "place_name": "Krishnanagar",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Krishnanagar"
+      },
+      {
+        "district": "North 24 Parganas",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 22.72154,
+        "longitude": 88.48198,
+        "place_name": "Bārāsat",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Barasat"
+      },
+      {
+        "district": "South 24 Parganas",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 22.53195,
+        "longitude": 88.32318,
+        "place_name": "Alipore",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Alipore"
+      },
+      {
+        "district": "Howrah",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 22.57688,
+        "longitude": 88.31857,
+        "place_name": "Howrah",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Howrah"
+      },
+      {
+        "district": "Hooghly",
+        "geocoding_attribution": "© OpenStreetMap contributors",
+        "geocoding_source": "OpenStreetMap Nominatim (cached one-time fallback)",
+        "latitude": 22.8992251,
+        "longitude": 88.3921337,
+        "place_name": "Hugli-Chuchura",
+        "resolution": "Cached OSM place search point confirmed within the named West Bengal district; not a district polygon or average",
+        "search_label": "Chinsurah"
+      },
+      {
+        "district": "Purba Bardhaman",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 23.25572,
+        "longitude": 87.85691,
+        "place_name": "Bardhaman",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Bardhaman"
+      },
+      {
+        "district": "Paschim Bardhaman",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 23.68333,
+        "longitude": 86.98333,
+        "place_name": "Asansol",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Asansol"
+      },
+      {
+        "district": "Birbhum",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 23.90806,
+        "longitude": 87.52773,
+        "place_name": "Siuri",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Suri"
+      },
+      {
+        "district": "Bankura",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 23.23241,
+        "longitude": 87.0716,
+        "place_name": "Bānkura",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Bankura"
+      },
+      {
+        "district": "Purulia",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 23.33062,
+        "longitude": 86.36303,
+        "place_name": "Puruliya",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Purulia"
+      },
+      {
+        "district": "Paschim Medinipur",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 22.42114,
+        "longitude": 87.32257,
+        "place_name": "Medinīpur",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Midnapore"
+      },
+      {
+        "district": "Jhargram",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 22.45384,
+        "longitude": 86.99497,
+        "place_name": "Jhārgrām",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Jhargram"
+      },
+      {
+        "district": "Purba Medinipur",
+        "geocoding_attribution": "Open-Meteo Geocoding API",
+        "geocoding_source": "https://geocoding-api.open-meteo.com/v1/search",
+        "latitude": 22.30083,
+        "longitude": 87.92593,
+        "place_name": "Tamlūk",
+        "resolution": "Open-Meteo geocoder-confirmed district-headquarters search point; not a district polygon or average",
+        "search_label": "Tamluk"
+      }
+    ],
+    "start_date": "2018-01-01",
+    "state": "West Bengal",
+    "temporal_resolution": "daily",
+    "timezone": "Asia/Kolkata"
+  },
+  "dataset_id": "west-bengal-district-daily-environmental-features",
+  "dataset_version": "sha256:f7b7020f72711f5014b0df08fecc4ec486676a93d3f17c64aba318bf5d60b26f",
+  "manifest_schema_version": 1,
+  "model_readiness": {
+    "livelihood_model_training_allowed": false,
+    "outcome_labels_included": false,
+    "reason": "Environmental covariates do not label crop loss, MGNREGA access shortfall, household income loss, or livelihood disruption.",
+    "role": "predictor features only"
+  },
+  "provenance": {
+    "processed_file": "backend/data/processed/era5-west-bengal-2018-01-01-to-2025-12-31-d3d80529c0c1df4e.csv",
+    "processed_sha256": "f7b7020f72711f5014b0df08fecc4ec486676a93d3f17c64aba318bf5d60b26f",
+    "raw_file": "backend/data/raw/era5-west-bengal-2018-01-01-to-2025-12-31-d3d80529c0c1df4e.json",
+    "raw_sha256": "d3d80529c0c1df4eb56780ace084e36f7ec2aa642f36ad5bb1ca5859201e5abe",
+    "transform": "Flattened provider daily arrays into one location-date row. No interpolation, imputation, aggregation across districts, or synthetic examples."
+  },
+  "quality": {
+    "all_requested_locations_returned": true,
+    "duplicate_district_dates": 0,
+    "row_count_matches_location_date_coverage": true
+  },
+  "records": {
+    "count": 64284,
+    "expected_rows": 64284,
+    "missing_values_by_feature": {
+      "et0_fao_evapotranspiration": 0,
+      "precipitation_sum": 0,
+      "temperature_2m_max": 0,
+      "temperature_2m_mean": 0,
+      "temperature_2m_min": 0,
+      "wind_speed_10m_max": 0
+    }
+  },
+  "request_parameters": {
+    "daily_variables": [
+      "temperature_2m_mean",
+      "temperature_2m_max",
+      "temperature_2m_min",
+      "precipitation_sum",
+      "wind_speed_10m_max",
+      "et0_fao_evapotranspiration"
+    ],
+    "end_date": "2025-12-31",
+    "format": "json",
+    "location_order": "Matches the district order in coverage.locations; Open-Meteo multi-location API returns corresponding ordered results.",
+    "model": "era5",
+    "start_date": "2018-01-01",
+    "timezone": "Asia/Kolkata"
+  },
+  "schema": [
+    {
+      "name": "state",
+      "type": "string",
+      "unit": null
+    },
+    {
+      "name": "district",
+      "type": "string",
+      "unit": null
+    },
+    {
+      "name": "date",
+      "type": "string",
+      "unit": null
+    },
+    {
+      "name": "latitude",
+      "type": "float",
+      "unit": null
+    },
+    {
+      "name": "longitude",
+      "type": "float",
+      "unit": null
+    },
+    {
+      "name": "provider_grid_latitude",
+      "type": "float",
+      "unit": null
+    },
+    {
+      "name": "provider_grid_longitude",
+      "type": "float",
+      "unit": null
+    },
+    {
+      "name": "source_model",
+      "type": "string",
+      "unit": null
+    },
+    {
+      "name": "temperature_2m_mean",
+      "type": "float",
+      "unit": "°C"
+    },
+    {
+      "name": "temperature_2m_max",
+      "type": "float",
+      "unit": "°C"
+    },
+    {
+      "name": "temperature_2m_min",
+      "type": "float",
+      "unit": "°C"
+    },
+    {
+      "name": "precipitation_sum",
+      "type": "float",
+      "unit": "mm"
+    },
+    {
+      "name": "wind_speed_10m_max",
+      "type": "float",
+      "unit": "km/h"
+    },
+    {
+      "name": "et0_fao_evapotranspiration",
+      "type": "float",
+      "unit": "mm"
+    }
+  ],
+  "source": {
+    "api_url": "https://archive-api.open-meteo.com/v1/archive",
+    "attribution": "Data: Open-Meteo Historical Weather API and ECMWF ERA5. Licensed under CC BY 4.0; indicate modifications and cite Open-Meteo/ECMWF.",
+    "geocoding_fallback": {
+      "attribution": "© OpenStreetMap contributors",
+      "cache_file": "backend/data/metadata/wb_district_geocoding_fallbacks.json",
+      "license": "ODbL 1.0",
+      "provider": "OpenStreetMap Nominatim",
+      "use": "Three cached point results for districts absent from the primary geocoder; no repeated Nominatim calls."
+    },
+    "geocoding_provider": "Open-Meteo Geocoding API",
+    "license": "CC-BY-4.0; Free API service terms limit free use to non-commercial purposes.",
+    "model": "ERA5 reanalysis",
+    "observation_type": "Reanalysis model estimates informed by observations; not a station measurement or district-mean field.",
+    "provider": "Open-Meteo Historical Weather API",
+    "underlying_source": "ECMWF ERA5 historical reanalysis",
+    "usage_scope_warning": "For a commercial deployment, use an API plan appropriate to the intended use and confirm source/model terms before redistribution."
+  }
+}

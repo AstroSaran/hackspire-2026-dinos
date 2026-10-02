@@ -1,0 +1,35 @@
+{
+  "config_version": 1,
+  "dataset": {
+    "id": "west-bengal-district-mango-annual",
+    "path": "backend/data/wb_mango_district_annual.csv",
+    "expected_sha256": "c3838bcd4eefd461fae7c8e508028b3f675bdf2f9186c1167457bc9c82790b1f"
+  },
+  "model": {
+    "name": "West Bengal Mango Yield Baseline",
+    "version": "0.1.0-experimental",
+    "algorithm": "pooled ordinary least-squares autoregression (one lag feature)",
+    "input_feature": "previous-year district mango yield",
+    "target": "annual district mango yield calculated from official production / area estimates",
+    "target_unit": "tonnes per hectare"
+  },
+  "split": {
+    "strategy": "forward_temporal_holdout",
+    "test_transitions": 1,
+    "validation_transitions": 0,
+    "random_seed": null,
+    "group_key": "district",
+    "estimand": "future annual yield for districts with prior-year yield history"
+  },
+  "fit": {
+    "solver": "closed_form_ordinary_least_squares",
+    "epochs": null,
+    "batch_size": null,
+    "learning_rate": null,
+    "note": "Closed-form CPU fit; iterative optimization hyperparameters do not apply."
+  },
+  "output": {
+    "model_artifact": "backend/data/mango_yield_baseline_model.json",
+    "metadata_dir": "backend/data/metadata"
+  }
+}

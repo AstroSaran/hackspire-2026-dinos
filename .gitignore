@@ -1,10 +1,17 @@
-__pycache__/
-*.pyc
-*.pyo
-*.pkl
-*.egg-info/
-dist/
-build/
 .env
-venv/
+backend/.env
 .venv/
+__pycache__/
+*.py[cod]
+*.pkl
+tmp/
+
+# Local mango source data and experiment outputs are excluded pending reuse rights.
+backend/data/wb_mango_district_annual.csv
+backend/data/mango_yield_baseline_model.json
+backend/data/metadata/west-bengal-district-mango-annual-manifest-*.json
+backend/data/metadata/mango-yield-evaluation-*.json
+
+# Archived demo data and model are local-only and are not part of the live app.
+legacy_prototype/
+backend/requirements-legacy.txt

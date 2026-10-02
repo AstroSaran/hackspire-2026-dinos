@@ -181,8 +181,8 @@ class OpenMeteoWeatherProvider(WeatherProvider):
     ARCHIVE_BASE = "https://archive-api.open-meteo.com/v1/archive"
     TIMEOUT_S = 6
     # Requested only where Kavach actually uses them (Part 4)
-    CURRENT_VARS = "temperature_2m,relative_humidity_2m,precipitation,rain,wind_speed_10m,wind_direction_10m"
-    DAILY_VARS = "precipitation_sum,temperature_2m_max,temperature_2m_min"
+    CURRENT_VARS = "temperature_2m,relative_humidity_2m,precipitation,rain,weather_code,wind_speed_10m,wind_direction_10m"
+    DAILY_VARS = "precipitation_sum,precipitation_probability_max,temperature_2m_max,temperature_2m_min,wind_speed_10m_max,weather_code"
     DAILY_HISTORICAL_VARS = "precipitation_sum,et0_fao_evapotranspiration"
 
     def _get(self, base: str, loc: Location, extra: dict):
@@ -212,10 +212,12 @@ class OpenMeteoWeatherProvider(WeatherProvider):
             country=loc.country, state=loc.state, district=loc.district, block=loc.block,
             village=loc.village, latitude=loc.latitude, longitude=loc.longitude,
             location_resolution=loc.resolution,
+            provider_latitude=data.get("latitude"), provider_longitude=data.get("longitude"),
             observed_at=cur.get("time"), fetched_at=now_ist(), cache_status="miss",
             temperature_c=cur.get("temperature_2m"), humidity_pct=cur.get("relative_humidity_2m"),
             precipitation_mm=cur.get("precipitation"), rain_mm=cur.get("rain"),
             wind_speed_kmh=cur.get("wind_speed_10m"), wind_direction_deg=cur.get("wind_direction_10m"),
+            weather_code=cur.get("weather_code"),
             note="Global NWP model blend (not IMD-sourced); used as documented fallback.",
         )
 
@@ -226,11 +228,17 @@ class OpenMeteoWeatherProvider(WeatherProvider):
         psum = daily.get("precipitation_sum", [])
         tmax = daily.get("temperature_2m_max", [])
         tmin = daily.get("temperature_2m_min", [])
+        rain_probability = daily.get("precipitation_probability_max", [])
+        wind_max = daily.get("wind_speed_10m_max", [])
+        weather_code = daily.get("weather_code", [])
         days = [WeatherForecastDay(
             date=d,
             precipitation_sum_mm=psum[i] if i < len(psum) else None,
             temperature_max_c=tmax[i] if i < len(tmax) else None,
             temperature_min_c=tmin[i] if i < len(tmin) else None,
+            precipitation_probability_max_pct=rain_probability[i] if i < len(rain_probability) else None,
+            wind_speed_max_kmh=wind_max[i] if i < len(wind_max) else None,
+            weather_code=weather_code[i] if i < len(weather_code) else None,
         ) for i, d in enumerate(dates)]
         return WeatherForecast(
             provider=self.name, provider_name=self.provider_name,
@@ -238,6 +246,7 @@ class OpenMeteoWeatherProvider(WeatherProvider):
             status=LIVE, data_status=LIVE,
             country=loc.country, state=loc.state, district=loc.district, block=loc.block,
             village=loc.village, latitude=loc.latitude, longitude=loc.longitude,
+            provider_latitude=data.get("latitude"), provider_longitude=data.get("longitude"),
             issued_at=now_ist(), fetched_at=now_ist(), days=days,
             note="Global NWP model blend (not IMD-sourced); used as documented fallback.",
         )
@@ -254,6 +263,27 @@ class OpenMeteoWeatherProvider(WeatherProvider):
         psum = daily.get("precipitation_sum", [])
         et0 = daily.get("et0_fao_evapotranspiration", [])
         return list(zip(dates, psum, et0)) if dates else []
+
+    def get_topsoil_moisture(self, loc: Location) -> dict:
+        """Return the provider's real near-surface soil-moisture model field."""
+        data = self._get(self.FORECAST_BASE, loc, {
+            "hourly": "soil_moisture_0_to_7cm", "forecast_hours": 1,
+        })
+        hourly = data.get("hourly", {})
+        times = hourly.get("time") or []
+        values = hourly.get("soil_moisture_0_to_7cm") or []
+        if not times or not values or values[0] is None:
+            raise ProviderUnavailable(self.name, "provider returned no topsoil-moisture value")
+        return {
+            "status": LIVE, "value": values[0], "unit": "m³/m³",
+            "observed_at": times[0], "fetched_at": now_ist(),
+            "provider": self.name, "provider_name": self.provider_name,
+            "source": "Open-Meteo Forecast API — near-surface soil-moisture model field (0–7 cm)",
+            "latitude": loc.latitude, "longitude": loc.longitude,
+            "provider_latitude": data.get("latitude"), "provider_longitude": data.get("longitude"),
+            "location_resolution": loc.resolution,
+            "note": "Weather-model soil-moisture estimate for the provider grid cell, not a field sensor, groundwater measure, crop-stress index, or irrigation recommendation.",
+        }
 
 
 def _f(v):

@@ -6,7 +6,7 @@ Provider priority (Part 3 / Part 12):
                  whitelisted, see README). Kept in the architecture so
                  flipping this one variable is all that's needed later.
   2. Open-Meteo — real, public, keyless. The immediate real-data source.
-  3. Demo       — only if WEATHER_DEMO_FALLBACK=true. Always SIMULATED_DEMO.
+  3. No synthetic fallback — unavailable is returned when real providers fail.
 
 Caching (Part 4 / Part 21): fetch once per location per TTL window, not once
 per frontend component. Every response carries real cache_status/fetched_at/
@@ -18,7 +18,7 @@ LIVE requires BOTH a successful fetch AND passing the freshness policy
 import os
 import copy
 import time
-from .providers import IMDWeatherProvider, OpenMeteoWeatherProvider, DemoWeatherProvider, ProviderUnavailable, Location
+from .providers import IMDWeatherProvider, OpenMeteoWeatherProvider, ProviderUnavailable, Location
 from .models import unavailable_observation, unavailable_warning, LIVE, STALE, UNAVAILABLE, now_ist
 
 CACHE_TTL_CURRENT_S = int(os.environ.get("WEATHER_CACHE_TTL_CURRENT_S", 600))     # 10 min
@@ -28,7 +28,9 @@ STALE_AFTER_S = int(os.environ.get("WEATHER_STALE_AFTER_S", 1800))              
 
 IMD_ENABLED = os.environ.get("IMD_ENABLED", "false").lower() == "true"
 ENABLE_FALLBACK = os.environ.get("WEATHER_ENABLE_FALLBACK", "true").lower() == "true"
-DEMO_FALLBACK = os.environ.get("WEATHER_DEMO_FALLBACK", "false").lower() == "true"
+# Demo data is not permitted in the live-only beta, even if a stale .env sets
+# WEATHER_DEMO_FALLBACK=true. Keep the reported config false as well.
+DEMO_FALLBACK = False
 
 
 def _unknown():
@@ -55,7 +57,6 @@ _cache = _Cache()
 _health = {
     "imd": {"current": _unknown(), "forecast": _unknown(), "warnings": _unknown()},
     "open_meteo": {"current": _unknown(), "forecast": _unknown(), "warnings": _unknown()},
-    "demo": {"current": _unknown(), "forecast": _unknown(), "warnings": _unknown()},
 }
 
 
@@ -82,8 +83,8 @@ def _providers_in_order():
         chain.append(IMDWeatherProvider())
     if ENABLE_FALLBACK or not IMD_ENABLED:
         chain.append(OpenMeteoWeatherProvider())
-    if DEMO_FALLBACK:
-        chain.append(DemoWeatherProvider())
+    # The user-facing beta is live-data-only. Never fall back to a generated
+    # demo observation: if all configured real providers fail, return UNAVAILABLE.
     return chain
 
 
@@ -138,6 +139,9 @@ def get_forecast_weather(loc: Location):
         value, age_s, ttl_s = cached
         value = copy.copy(value)
         value.cache_status = "hit_stale" if age_s > ttl_s else "hit"
+        if age_s > ttl_s:
+            value.status = STALE
+            value.data_status = STALE
         return value
     for provider in _providers_in_order():
         try:

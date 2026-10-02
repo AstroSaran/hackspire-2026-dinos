@@ -29,23 +29,17 @@ build:
 
 Computing a genuine climatological normal (e.g. 1991-2020) requires calling
 the archive API across ~30 years of data and averaging — a real, one-time
-batch job. This container's network egress does not reach
-archive-api.open-meteo.com (same restriction as the live forecast API), so
-that batch job has NOT been run, and no baseline file exists in this build.
-`get_baseline()` therefore returns None with a clear reason rather than
-inventing a plausible-looking normal — per Part 9's explicit instruction.
-
-Once a deployment has real network access, running
-`python -m app.weather.historical --populate` (see `__main__` below) would
-call the real ERA5 archive for each village's 1991-2020 monsoon-season
-window, average it, and write `backend/data/rainfall_baseline.json` with
-full source/period/retrieval-date documentation — which `get_baseline()`
-would then load and use, still clearly labeled.
+batch job. No baseline file is assumed to ship with the code. A real
+`--populate` operation is available below. The live API uses Windows' native
+certificate store through truststore so managed system roots work with normal
+TLS verification; certificate checks are never disabled.
 """
 import os
 import json
 import datetime
 import time
+import truststore
+truststore.inject_into_ssl()
 import requests
 
 HERE = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))  # backend/
@@ -83,12 +77,8 @@ def fetch_ogd_district_normal(district: str, api_key: str = None):
 
 
 def fetch_era5_daily_baseline(latitude: float, longitude: float, period_start="1991-01-01", period_end="2020-12-31"):
-    """Fetch a real ERA5 daily precipitation baseline for one live pilot point.
-
-    This is intentionally scoped to the Sonarpur pilot: it is a real historical
-    reanalysis baseline, not a fabricated number. The result is cached locally.
-    """
-    key = f"pilot:{latitude:.6f},{longitude:.6f}"
+    """Fetch a real ERA5 daily precipitation baseline for a selected grid point."""
+    key = f"grid:{latitude:.6f},{longitude:.6f}"
     data = {}
     if os.path.exists(BASELINE_FILE):
         try:
@@ -122,8 +112,8 @@ def fetch_era5_daily_baseline(latitude: float, longitude: float, period_start="1
 
 
 def fetch_era5_monthly_daily_baseline(latitude: float, longitude: float, month: int, period_start="1991-01-01", period_end="2020-12-31"):
-    """Real ERA5 daily precipitation mean for the requested calendar month across 1991-2020."""
-    key = f"pilot-month:{latitude:.6f},{longitude:.6f}:{int(month):02d}"
+    """Real ERA5 daily precipitation mean for one calendar month at a selected grid point."""
+    key = f"grid-month:{latitude:.6f},{longitude:.6f}:{int(month):02d}"
     data = {}
     if os.path.exists(BASELINE_FILE):
         try:
@@ -160,12 +150,32 @@ def get_baseline(district: str, block: str):
     return data.get(f"{district}:{block}")
 
 
+def get_grid_monthly_normals(latitude: float, longitude: float):
+    """Return all twelve cached real month normals for a selected grid point."""
+    if not os.path.exists(BASELINE_FILE):
+        return None
+    try:
+        with open(BASELINE_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        keys = {str(month): data[f"grid-month:{latitude:.6f},{longitude:.6f}:{month:02d}"]
+                for month in range(1, 13)}
+    except (json.JSONDecodeError, OSError, KeyError):
+        return None
+    return keys
+
+
 def baseline_status():
     """For /data-health — reports honestly whether any real baseline exists."""
-    exists = os.path.exists(BASELINE_FILE)
+    try:
+        with open(BASELINE_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+    except (json.JSONDecodeError, OSError):
+        data = {}
     return {
-        "baseline_file_present": exists,
+        "baseline_file_present": bool(data),
+        "cached_grid_count": len({key.split(":", 1)[1] for key in data if key.startswith("grid:")}),
         "climatological_period_if_populated": CLIMATOLOGICAL_PERIOD,
+        "selected_grid_monthly_normals": None,
         "candidate_sources": {
             "india_ogd_imd_normals": {
                 "url": OGD_RAINFALL_CATALOG_URL,
@@ -173,8 +183,7 @@ def baseline_status():
             },
             "open_meteo_era5_archive": {
                 "url": ERA5_ARCHIVE_BASE,
-                "status": "documented, correct endpoint, not executed — this environment's "
-                          "network egress does not reach archive-api.open-meteo.com",
+            "status": "real ERA5 archive integration available; retrieve with `python -m app.weather.historical --populate`; no baseline is bundled",
             },
         },
     }
@@ -183,7 +192,18 @@ def baseline_status():
 if __name__ == "__main__":
     import sys
     if "--populate" in sys.argv:
-        print("This would call", ERA5_ARCHIVE_BASE, "for each village in app.geography over",
-              CLIMATOLOGICAL_PERIOD, "and write", BASELINE_FILE)
-        print("Not run: no network egress to archive-api.open-meteo.com in this environment.")
-        sys.exit(1)
+        if len(sys.argv) < 4:
+            print("Usage: python -m app.weather.historical --populate LATITUDE LONGITUDE")
+            sys.exit(2)
+        latitude, longitude = float(sys.argv[2]), float(sys.argv[3])
+        failures = 0
+        for month in range(1, 13):
+            try:
+                result = fetch_era5_monthly_daily_baseline(latitude, longitude, month)
+                print(f"OK month={month:02d} mean_daily_rainfall_mm={result['mean_mm']} "
+                      f"period={result['period']} source={result['source']}")
+            except (BaselineUnavailable, requests.RequestException, ValueError) as exc:
+                print(f"FAILED month={month:02d}: {exc}")
+                failures += 1
+                break
+        sys.exit(1 if failures else 0)

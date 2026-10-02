@@ -42,13 +42,14 @@ def _mock_response(json_body, status_code=200):
 def test_open_meteo_current_parses_real_shaped_response():
     body = {"current": {"time": "2026-09-26T14:00", "temperature_2m": 31.2,
                          "relative_humidity_2m": 78, "precipitation": 12.4, "rain": 12.4,
-                         "wind_speed_10m": 14.0, "wind_direction_10m": 210}}
+                         "weather_code": 61, "wind_speed_10m": 14.0, "wind_direction_10m": 210}}
     with patch("requests.get", return_value=_mock_response(body)):
         obs = OpenMeteoWeatherProvider().get_current(_loc())
     assert obs.status == LIVE
     assert obs.temperature_c == 31.2
     assert obs.precipitation_mm == 12.4
     assert obs.wind_direction_deg == 210
+    assert obs.weather_code == 61
     assert obs.data_type == OBSERVATION
     assert "not IMD" in obs.provider_name.lower() or "not imd" in obs.provider_name.lower()
 
@@ -173,14 +174,15 @@ def test_no_fake_fallback_when_all_providers_fail(monkeypatch):
     assert "UNAVAILABLE" in obs.note
 
 
-def test_demo_only_used_when_explicitly_enabled(monkeypatch):
+def test_demo_fallback_is_never_used_in_live_only_beta(monkeypatch):
     monkeypatch.setattr(weather_service, "IMD_ENABLED", True)
     monkeypatch.setattr(weather_service, "ENABLE_FALLBACK", True)
     monkeypatch.setattr(weather_service, "DEMO_FALLBACK", True)
     weather_service._cache.store.clear()
     with patch("requests.get", return_value=_mock_response({}, status_code=500)):
         obs = weather_service.get_current_weather(_loc("DemoFallbackVillage"))
-    assert obs.status == SIMULATED_DEMO  # only because DEMO_FALLBACK=True was set
+    assert obs.status == UNAVAILABLE
+    assert obs.temperature_c is None
 
 
 # --- Caching ------------------------------------------------------------
@@ -317,14 +319,10 @@ def test_weather_location_unavailable_for_unmapped_village():
 
 # --- Model-input provenance (Part 13) ---------------------------------------
 
-def test_model_input_flag_distinguishes_representative_vs_weather_derived():
+def test_no_representative_model_input_is_exposed_in_live_only_beta():
     from app import main
-    df = main.load_snapshot()
-    row = df.iloc[0]
-    signals = main._raw_signals_with_provenance(row)
-    rainfall_signal = next(s for s in signals if s["feature"] == "rainfall_anomaly_pct")
-    assert rainfall_signal["model_input_used"] is True  # the representative value IS what the model uses today
-    assert rainfall_signal["data_status"] == "SIMULATED_REPRESENTATIVE"
+    assert main.validation_status()["status"] == "WITHHELD"
+    assert not hasattr(main, "_raw_signals_with_provenance")
 
 
 # --- Integration test (real network) — skipped by default, opt-in only -----
@@ -341,13 +339,9 @@ def test_integration_real_open_meteo_call_succeeds():
     assert obs.temperature_c is not None
 
 
-def test_sonarpur_station_road_is_configured_as_live_pilot_location():
+def test_district_catalog_uses_verified_west_bengal_scope_without_address_pilot():
     from app import geography
-    name = "Sonarpur Station Road — Mission Pally, Narendrapur"
-    rec = geography.resolve_location(name)
-    assert rec is not None
-    assert rec["district"] == "South 24 Parganas"
-    assert rec["block"] == "Rajpur Sonarpur"
-    assert rec["latitude"] == 22.442948
-    assert rec["longitude"] == 88.428633
-    assert rec["resolution"] == "address_geocode"
+    catalog = geography.district_catalog()
+    assert len(catalog) == 22
+    assert "Malda" in catalog
+    assert geography.resolve_location("Unregistered locality") is None

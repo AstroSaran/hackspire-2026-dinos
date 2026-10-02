@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kavach — Livelihood Early Warning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F2EA;
+    --panel: #FFFFFF;
+    --panel-2: #ECE6D6;
+    --line: #DCD4C2;
+    --ink: #23241F;
+    --ink-dim: #6B6A5E;
+    --field: #3F6B5E;
+    --wheat: #B9812C;
+    --rust: #A8412A;
+    --amber: #C79A3A;
+    --stable: #3F7168;
+    --watch: #C79A3A;
+    --risk: #C1652F;
+    --critical: #A8412A;
+    --radius: 3px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #171B17;
+      --panel: #1F241E;
+      --panel-2: #262C23;
+      --line: #38402F;
+      --ink: #EDE9DC;
+      --ink-dim: #A2A08F;
+      --field: #7FAE9B;
+      --wheat: #D6A24C;
+      --rust: #D97D5F;
+      --amber: #D9AE5A;
+      --stable: #6FA394;
+      --watch: #D9AE5A;
+      --risk: #D18A4C;
+      --critical: #D97D5F;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #171B17;
+    --panel: #1F241E;
+    --panel-2: #262C23;
+    --line: #38402F;
+    --ink: #EDE9DC;
+    --ink-dim: #A2A08F;
+    --field: #7FAE9B;
+    --wheat: #D6A24C;
+    --rust: #D97D5F;
+    --amber: #D9AE5A;
+    --stable: #6FA394;
+    --watch: #D9AE5A;
+    --risk: #D18A4C;
+    --critical: #D97D5F;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .serif { font-family: 'Fraunces', serif; }
+
+  header {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 18px 28px; border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+  .brand { display: flex; align-items: baseline; gap: 10px; }
+  .brand-mark {
+    width: 30px; height: 30px; border: 1.5px solid var(--ink); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-size: 15px; flex-shrink: 0;
+  }
+  .brand h1 { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  .brand span { color: var(--ink-dim); font-size: 13px; }
+  .district-pill {
+    font-size: 12.5px; color: var(--ink-dim); border: 1px solid var(--line);
+    padding: 6px 12px; border-radius: 20px; white-space: nowrap;
+  }
+  .status-counts { display: flex; gap: 18px; font-size: 12.5px; }
+  .status-counts div { display: flex; align-items: center; gap: 6px; color: var(--ink-dim); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  main {
+    display: grid;
+    grid-template-columns: 260px 1fr 300px;
+    gap: 1px;
+    background: var(--line);
+    min-height: calc(100vh - 68px);
+  }
+  section { background: var(--bg); }
+
+  /* Village list */
+  .village-list { padding: 16px 10px; overflow-x: auto; }
+  .village-list h2, .panel h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-dim); margin: 4px 10px 10px; font-weight: 600; }
+  .v-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 10px;
+    border-radius: var(--radius); cursor: pointer; margin-bottom: 2px;
+  }
+  .v-item:hover { background: var(--panel-2); }
+  .v-item.active { background: var(--panel-2); box-shadow: inset 2px 0 0 var(--ink); }
+  .v-name { font-size: 14px; flex: 1; }
+  .v-score { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--ink-dim); }
+
+  /* Center detail */
+  .detail { padding: 26px 30px 40px; }
+  .detail-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 26px; flex-wrap: wrap; }
+  .v-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 600; margin: 0 0 4px; }
+  .v-sub { color: var(--ink-dim); font-size: 13.5px; }
+  .score-block { text-align: right; }
+  .score-big { font-family: 'Fraunces', serif; font-size: 44px; font-weight: 600; line-height: 1; }
+  .score-label { font-size: 12px; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-top: 6px; font-weight: 600; }
+
+  .sim-bar {
+    display: flex; align-items: center; gap: 14px; padding: 12px 16px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    margin-bottom: 26px; flex-wrap: wrap;
+  }
+  .sim-bar button {
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px;
+    background: var(--ink); color: var(--bg); border: none; padding: 9px 16px;
+    border-radius: var(--radius); cursor: pointer;
+  }
+  .sim-bar button:disabled { opacity: 0.5; cursor: default; }
+  .sim-bar button:not(:disabled):hover { opacity: 0.88; }
+  .sim-week { font-size: 12.5px; color: var(--ink-dim); font-family: 'IBM Plex Mono', monospace; }
+  .sim-lead {
+    margin-left: auto; font-size: 12.5px; color: var(--field); font-weight: 600;
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .sim-lead.show { opacity: 1; }
+
+  .block-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-dim); font-weight: 600; margin: 0 0 14px; }
+
+  .drivers { margin-bottom: 30px; }
+  .driver-row { display: grid; grid-template-columns: 130px 1fr 40px; align-items: center; gap: 12px; margin-bottom: 9px; font-size: 13px; }
+  .driver-track { height: 7px; background: var(--panel-2); border-radius: 4px; overflow: hidden; }
+  .driver-fill { height: 100%; background: var(--wheat); border-radius: 4px; transition: width 0.6s ease; }
+  .driver-pct { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-dim); text-align: right; }
+
+  .cascade { margin-bottom: 30px; }
+  .c-chain { display: flex; flex-direction: column; }
+  .c-node {
+    display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    font-size: 13.5px; transition: border-color 0.4s, background 0.4s;
+  }
+  .c-node.active { border-color: var(--rust); background: var(--panel-2); }
+  .c-node .c-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-dim); width: 16px; }
+  .c-node .c-prob { margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-dim); }
+  .c-link { display: flex; justify-content: flex-start; padding: 4px 0 4px 24px; color: var(--ink-dim); font-size: 11px; }
+  .c-link svg { display: block; }
+
+  .interventions .i-card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 12px 14px; margin-bottom: 10px;
+  }
+  .i-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .i-title { font-size: 13.5px; font-weight: 600; }
+  .i-priority { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .i-meta { display: flex; gap: 12px; font-size: 11.5px; color: var(--ink-dim); font-family: 'IBM Plex Mono', monospace; }
+
+  .footnote { font-size: 11.5px; color: var(--ink-dim); line-height: 1.5; padding: 16px 30px 30px; border-top: 1px solid var(--line); }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+
+  @media (max-width: 900px) {
+    main { grid-template-columns: 1fr; }
+    .village-list { display: flex; gap: 8px; padding: 12px; }
+    .village-list h2 { display: none; }
+    .v-item { flex-direction: column; align-items: flex-start; min-width: 120px; flex-shrink: 0; }
+    header { flex-wrap: wrap; padding: 14px 16px; }
+    .status-counts { order: 3; width: 100%; }
+    .detail { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-mark">क</div>
+    <div>
+      <h1>Kavach</h1>
+      <span>Livelihood early-warning &amp; intervention layer</span>
+    </div>
+  </div>
+  <div class="status-counts" id="statusCounts"></div>
+  <div class="district-pill">Nadia district (pilot) · 30 villages · RandomForest model, AUC 0.73 on held-out data</div>
+</header>
+
+<main>
+  <section class="village-list" id="villageList">
+    <h2>Villages</h2>
+  </section>
+
+  <section class="detail" id="detail"></section>
+
+  <section class="interventions panel" style="padding: 20px 18px;">
+    <h2>Recommended intervention</h2>
+    <div id="interventionList"></div>
+  </section>
+</main>
+
+<div class="footnote">
+  Risk scores, driver attribution and cascade probabilities below are computed by an actual trained RandomForest model (backend/train_model.py) running on a <b>representative/simulated</b> village dataset calibrated to published Meghdoot/e‑NAM/MGNREGA statistic ranges — not a live feed and not a real observed outcome (no public household‑level ground truth exists for this problem; see README "Data &amp; Limitations"). Migration is shown as a distress‑pressure indicator, not a deterministic prediction.
+</div>
+
+<script src="kavach_data.js"></script>
+<script>
+const STATUS = {
+  stable:   { label: 'Stable',   color: 'var(--stable)'  },
+  watch:    { label: 'Watch',    color: 'var(--watch)'   },
+  risk:     { label: 'At Risk',  color: 'var(--risk)'    },
+  critical: { label: 'Critical', color: 'var(--critical)'}
+};
+
+function statusFor(score) {
+  if (score >= 75) return 'critical';
+  if (score >= 55) return 'risk';
+  if (score >= 35) return 'watch';
+  return 'stable';
+}
+
+const CASCADE_TEMPLATE = [
+  'Weather / water shock',
+  'Crop stress & yield loss',
+  'Income loss & distress sale',
+  'Debt / reduced coping capacity',
+  'Employment pressure (MGNREGA demand)',
+  'Distress-migration risk'
+];
+
+// KD comes from kavach_data.js, exported by backend/export_snapshot.py from the
+// REAL trained model (RandomForest, AUC 0.73 held-out) run over a representative
+// village dataset. Schema: [name, score, drivers[[name,pct]], cascade[5], interventions[[title,priority,program,urgencyDays,benefit,cost]]]
+const villages = KD.v.map(row => ({
+  id: row[0].toLowerCase().replace(/\s+/g,'_'),
+  name: row[0], score: row[1], drivers: row[2], cascade: row[3], interventions: row[4]
+}));
+const PRIORITY_COLOR = { 'High priority': 'var(--critical)', 'Medium': 'var(--watch)', 'Watch': 'var(--stable)', '\u2014': 'var(--stable)' };
+
+let currentId = villages.slice().sort((a,b)=>b.score-a.score)[0].id;
+let simRunning = false;
+
+const SIM_ID = 'bagula';
+// Each real what-if stage from backend/export_snapshot.py: [week, note, score, status, drivers, cascade, interventions]
+const SIM_STAGES = KD.sim.map(s => ({ week: s[0], note: s[1], score: s[2], status: s[3], drivers: s[4], cascade: s[5], interventions: s[6] }));
+const SIM_LEAD_WEEKS = KD.lead;
+
+function renderList() {
+  const el = document.getElementById('villageList');
+  el.innerHTML = '<h2>Villages</h2>';
+  villages.slice().sort((a,b)=>b.score-a.score).forEach(v => {
+    const st = statusFor(v.score);
+    const div = document.createElement('div');
+    div.className = 'v-item' + (v.id === currentId ? ' active' : '');
+    div.onclick = () => { currentId = v.id; render(); };
+    div.innerHTML = `
+      <span class="dot" style="background:${STATUS[st].color}"></span>
+      <span class="v-name">${v.name}</span>
+      <span class="v-score mono">${v.score}</span>
+    `;
+    el.appendChild(div);
+  });
+}
+
+function renderCounts() {
+  const counts = { stable: 0, watch: 0, risk: 0, critical: 0 };
+  villages.forEach(v => counts[statusFor(v.score)]++);
+  const el = document.getElementById('statusCounts');
+  el.innerHTML = Object.keys(STATUS).map(k =>
+    `<div><span class="dot" style="background:${STATUS[k].color}"></span>${STATUS[k].label} ${counts[k]}</div>`
+  ).join('');
+}
+
+function arrowSvg() {
+  return `<svg width="14" height="20" viewBox="0 0 14 20" fill="none"><path d="M7 0V16M7 16L2 11M7 16L12 11" stroke="currentColor" stroke-width="1.3"/></svg>`;
+}
+
+function renderDetail() {
+  const v = villages.find(x => x.id === currentId);
+  const st = statusFor(v.score);
+  const el = document.getElementById('detail');
+
+  const driverRows = v.drivers.map(([name, pct]) => `
+    <div class="driver-row">
+      <span>${name}</span>
+      <div class="driver-track"><div class="driver-fill" style="width:${Math.min(100, pct*2.6)}%"></div></div>
+      <span class="driver-pct">${pct}%</span>
+    </div>
+  `).join('');
+
+  const cascadeNodes = CASCADE_TEMPLATE.map((label, i) => {
+    const prob = i === 0 ? null : v.cascade[i-1];
+    const active = prob !== null && prob >= 50;
+    return `
+      ${i > 0 ? `<div class="c-link">${arrowSvg()}&nbsp;${prob}% conditional probability</div>` : ''}
+      <div class="c-node${active ? ' active' : ''}">
+        <span class="c-num mono">${i+1}</span>
+        <span>${label}</span>
+      </div>
+    `;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="detail-top">
+      <div>
+        <div class="v-title">${v.name}</div>
+        <div class="v-sub">Village livelihood profile — Nadia district</div>
+      </div>
+      <div class="score-block">
+        <div class="score-big mono">${v.score}</div>
+        <div class="score-label" style="background:${STATUS[st].color}; color:#fff;">${STATUS[st].label.toUpperCase()}</div>
+      </div>
+    </div>
+
+    <div class="sim-bar">
+      <button id="simBtn" onclick="runSimulation()">▶ Simulate 8-week trajectory — Bagula</button>
+      <span class="sim-week mono" id="simWeekLabel"></span>
+      <span class="sim-lead" id="simLead"></span>
+    </div>
+
+    <div class="drivers">
+      <div class="block-title">Why is risk rising — top contributors</div>
+      ${driverRows}
+    </div>
+
+    <div class="cascade">
+      <div class="block-title">Predicted distress cascade</div>
+      <div class="c-chain">${cascadeNodes}</div>
+    </div>
+  `;
+
+  renderInterventions(v.interventions);
+}
+
+function renderInterventions(list) {
+  const el = document.getElementById('interventionList');
+  el.innerHTML = list.map(iv => {
+    const [title, priority, program, urgencyDays, benefit, cost] = iv;
+    const color = PRIORITY_COLOR[priority] || 'var(--stable)';
+    const urgency = urgencyDays === null ? '\u2014' : `${urgencyDays} days`;
+    return `
+    <div class="i-card">
+      <div class="i-head"><span class="i-title">${title}</span></div>
+      <span class="i-priority" style="color:${color}">${priority}</span>
+      <div class="i-meta" style="margin-top:4px;">${program}</div>
+      <div class="i-meta" style="margin-top:8px;">
+        <span>Urgency ${urgency}</span>
+        <span>Benefit ${benefit}</span>
+        <span>Cost ${cost}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function render() {
+  renderList();
+  renderCounts();
+  renderDetail();
+}
+
+function runSimulation() {
+  if (simRunning) return;
+  simRunning = true;
+  currentId = SIM_ID;
+  render();
+  const btn = document.getElementById('simBtn');
+  btn.disabled = true;
+  let stage = 0;
+
+  const step = () => {
+    const s = SIM_STAGES[stage];
+    const v = villages.find(x => x.id === SIM_ID);
+    v.score = s.score;
+    v.drivers = s.drivers;
+    v.cascade = s.cascade;
+    render();
+    renderInterventions(s.interventions);
+    document.getElementById('simWeekLabel').textContent = `Week ${s.week} — ${s.note}`;
+    const leadEl = document.getElementById('simLead');
+    if (stage === SIM_STAGES.length - 1) {
+      leadEl.textContent = `Model flagged "watch" ${SIM_LEAD_WEEKS} weeks before critical status \u2014 computed by the real backend, not scripted`;
+      leadEl.classList.add('show');
+    }
+    stage++;
+    if (stage < SIM_STAGES.length) {
+      setTimeout(step, 1600);
+    } else {
+      simRunning = false;
+      document.getElementById('simBtn').disabled = false;
+    }
+  };
+  step();
+}
+
+render();
+</script>
+</body>
+</html>

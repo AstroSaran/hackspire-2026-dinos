@@ -1,0 +1,2522 @@
+[
+  {
+    "village": "Bagula",
+    "zone": "rainfall_crop",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -24.4,
+      "crop_stress_index": 34.3,
+      "mandi_price_deviation_pct": -32.6,
+      "mgnrega_demand_spike_pct": 9.5,
+      "water_stress_index": 24.9,
+      "historical_vulnerability": 79.6
+    },
+    "risk_score": 73,
+    "status": "risk",
+    "drivers": [
+      [
+        "Market decline",
+        33.8
+      ],
+      [
+        "Structural vulnerability",
+        25.3
+      ],
+      [
+        "Crop stress",
+        15.0
+      ],
+      [
+        "Rainfall deficit",
+        13.2
+      ],
+      [
+        "Water stress",
+        7.6
+      ],
+      [
+        "Employment pressure",
+        5.1
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        44,
+        33,
+        24,
+        14,
+        9
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 33.8,
+        "priority": "High priority"
+      },
+      {
+        "title": "Prioritise for cash-transfer / social-protection outreach given structural vulnerability",
+        "program": "State Social Welfare",
+        "urgency_days": 14,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Structural vulnerability",
+        "driver_share": 25.3,
+        "priority": "Medium"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 15.0,
+        "priority": "Medium"
+      },
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 13.2,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Ranaghat",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -23.7,
+      "crop_stress_index": 32.5,
+      "mandi_price_deviation_pct": -16.6,
+      "mgnrega_demand_spike_pct": 43.5,
+      "water_stress_index": 20.3,
+      "historical_vulnerability": 56.4
+    },
+    "risk_score": 71,
+    "status": "risk",
+    "drivers": [
+      [
+        "Employment pressure",
+        25.5
+      ],
+      [
+        "Structural vulnerability",
+        19.6
+      ],
+      [
+        "Market decline",
+        18.7
+      ],
+      [
+        "Crop stress",
+        15.5
+      ],
+      [
+        "Rainfall deficit",
+        13.9
+      ],
+      [
+        "Water stress",
+        6.8
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        42,
+        26,
+        15,
+        11,
+        7
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 25.5,
+        "priority": "High priority"
+      },
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 18.7,
+        "priority": "Medium"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 15.5,
+        "priority": "Medium"
+      },
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 13.9,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Char Brahmanagar",
+    "zone": "flood",
+    "raw_signals": {
+      "rainfall_anomaly_pct": 49.0,
+      "crop_stress_index": 46.5,
+      "mandi_price_deviation_pct": -13.6,
+      "mgnrega_demand_spike_pct": 56.8,
+      "water_stress_index": 28.1,
+      "historical_vulnerability": 55.0
+    },
+    "risk_score": 67,
+    "status": "risk",
+    "drivers": [
+      [
+        "Employment pressure",
+        33.6
+      ],
+      [
+        "Crop stress",
+        22.3
+      ],
+      [
+        "Structural vulnerability",
+        19.2
+      ],
+      [
+        "Market decline",
+        15.5
+      ],
+      [
+        "Water stress",
+        9.4
+      ],
+      [
+        "Rainfall deficit",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        45,
+        29,
+        17,
+        14,
+        10
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 33.6,
+        "priority": "High priority"
+      },
+      {
+        "title": "Flag for early PMFBY crop-loss assessment",
+        "program": "PMFBY",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 22.3,
+        "priority": "Medium"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 22.3,
+        "priority": "Medium"
+      },
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 15.5,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Tehatta",
+    "zone": "rainfall_crop",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -35.8,
+      "crop_stress_index": 47.9,
+      "mandi_price_deviation_pct": 4.4,
+      "mgnrega_demand_spike_pct": 23.9,
+      "water_stress_index": 38.6,
+      "historical_vulnerability": 58.8
+    },
+    "risk_score": 65,
+    "status": "risk",
+    "drivers": [
+      [
+        "Crop stress",
+        25.0
+      ],
+      [
+        "Rainfall deficit",
+        23.1
+      ],
+      [
+        "Structural vulnerability",
+        22.4
+      ],
+      [
+        "Employment pressure",
+        15.4
+      ],
+      [
+        "Water stress",
+        14.1
+      ],
+      [
+        "Market decline",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        45,
+        24,
+        13,
+        7,
+        4
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Flag for early PMFBY crop-loss assessment",
+        "program": "PMFBY",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 25.0,
+        "priority": "High priority"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 25.0,
+        "priority": "Medium"
+      },
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 23.1,
+        "priority": "Medium"
+      },
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 15.4,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Palashipara",
+    "zone": "rainfall_crop",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -36.4,
+      "crop_stress_index": 41.8,
+      "mandi_price_deviation_pct": -15.6,
+      "mgnrega_demand_spike_pct": 23.4,
+      "water_stress_index": 39.3,
+      "historical_vulnerability": 34.8
+    },
+    "risk_score": 65,
+    "status": "risk",
+    "drivers": [
+      [
+        "Rainfall deficit",
+        21.9
+      ],
+      [
+        "Crop stress",
+        20.4
+      ],
+      [
+        "Market decline",
+        18.0
+      ],
+      [
+        "Employment pressure",
+        14.0
+      ],
+      [
+        "Water stress",
+        13.4
+      ],
+      [
+        "Structural vulnerability",
+        12.3
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        42,
+        27,
+        16,
+        9,
+        6
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 21.9,
+        "priority": "High priority"
+      },
+      {
+        "title": "Flag for early PMFBY crop-loss assessment",
+        "program": "PMFBY",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 20.4,
+        "priority": "Medium"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 20.4,
+        "priority": "Medium"
+      },
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 18.0,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Debagram",
+    "zone": "rainfall_crop",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -37.6,
+      "crop_stress_index": 41.9,
+      "mandi_price_deviation_pct": -18.7,
+      "mgnrega_demand_spike_pct": 20.7,
+      "water_stress_index": 19.1,
+      "historical_vulnerability": 40.5
+    },
+    "risk_score": 63,
+    "status": "risk",
+    "drivers": [
+      [
+        "Rainfall deficit",
+        23.1
+      ],
+      [
+        "Market decline",
+        22.0
+      ],
+      [
+        "Crop stress",
+        20.9
+      ],
+      [
+        "Structural vulnerability",
+        14.7
+      ],
+      [
+        "Employment pressure",
+        12.7
+      ],
+      [
+        "Water stress",
+        6.7
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        41,
+        27,
+        16,
+        10,
+        6
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 23.1,
+        "priority": "High priority"
+      },
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 22.0,
+        "priority": "Medium"
+      },
+      {
+        "title": "Flag for early PMFBY crop-loss assessment",
+        "program": "PMFBY",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 20.9,
+        "priority": "Medium"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 20.9,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Duttapulia",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -8.8,
+      "crop_stress_index": 27.5,
+      "mandi_price_deviation_pct": -7.6,
+      "mgnrega_demand_spike_pct": 28.6,
+      "water_stress_index": 12.3,
+      "historical_vulnerability": 62.0
+    },
+    "risk_score": 58,
+    "status": "risk",
+    "drivers": [
+      [
+        "Structural vulnerability",
+        31.1
+      ],
+      [
+        "Employment pressure",
+        24.2
+      ],
+      [
+        "Crop stress",
+        18.9
+      ],
+      [
+        "Market decline",
+        12.4
+      ],
+      [
+        "Rainfall deficit",
+        7.5
+      ],
+      [
+        "Water stress",
+        5.9
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        33,
+        18,
+        9,
+        6,
+        3
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Prioritise for cash-transfer / social-protection outreach given structural vulnerability",
+        "program": "State Social Welfare",
+        "urgency_days": 14,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Structural vulnerability",
+        "driver_share": 31.1,
+        "priority": "High priority"
+      },
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 24.2,
+        "priority": "Medium"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 18.9,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Mayapur",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -7.6,
+      "crop_stress_index": 28.2,
+      "mandi_price_deviation_pct": -25.7,
+      "mgnrega_demand_spike_pct": 25.5,
+      "water_stress_index": 12.3,
+      "historical_vulnerability": 46.7
+    },
+    "risk_score": 57,
+    "status": "risk",
+    "drivers": [
+      [
+        "Market decline",
+        35.3
+      ],
+      [
+        "Structural vulnerability",
+        19.7
+      ],
+      [
+        "Employment pressure",
+        18.2
+      ],
+      [
+        "Crop stress",
+        16.4
+      ],
+      [
+        "Rainfall deficit",
+        5.4
+      ],
+      [
+        "Water stress",
+        5.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        33,
+        22,
+        14,
+        9,
+        5
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 35.3,
+        "priority": "High priority"
+      },
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 18.2,
+        "priority": "Medium"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 16.4,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Karimpur",
+    "zone": "rainfall_crop",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -2.5,
+      "crop_stress_index": 13.0,
+      "mandi_price_deviation_pct": -23.9,
+      "mgnrega_demand_spike_pct": 41.4,
+      "water_stress_index": 22.1,
+      "historical_vulnerability": 35.8
+    },
+    "risk_score": 55,
+    "status": "risk",
+    "drivers": [
+      [
+        "Market decline",
+        34.3
+      ],
+      [
+        "Employment pressure",
+        30.8
+      ],
+      [
+        "Structural vulnerability",
+        15.8
+      ],
+      [
+        "Water stress",
+        9.4
+      ],
+      [
+        "Crop stress",
+        7.9
+      ],
+      [
+        "Rainfall deficit",
+        1.9
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        26,
+        16,
+        9,
+        6,
+        4
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 34.3,
+        "priority": "High priority"
+      },
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 30.8,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Fulia",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -15.0,
+      "crop_stress_index": 16.5,
+      "mandi_price_deviation_pct": 3.3,
+      "mgnrega_demand_spike_pct": 52.3,
+      "water_stress_index": 33.9,
+      "historical_vulnerability": 59.5
+    },
+    "risk_score": 54,
+    "status": "watch",
+    "drivers": [
+      [
+        "Employment pressure",
+        38.7
+      ],
+      [
+        "Structural vulnerability",
+        26.0
+      ],
+      [
+        "Water stress",
+        14.3
+      ],
+      [
+        "Rainfall deficit",
+        11.1
+      ],
+      [
+        "Crop stress",
+        9.9
+      ],
+      [
+        "Market decline",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        27,
+        12,
+        5,
+        4,
+        2
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 38.7,
+        "priority": "Medium"
+      },
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 11.1,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Chapra",
+    "zone": "rainfall_crop",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -49.4,
+      "crop_stress_index": 48.7,
+      "mandi_price_deviation_pct": 4.2,
+      "mgnrega_demand_spike_pct": 8.4,
+      "water_stress_index": 37.5,
+      "historical_vulnerability": 51.0
+    },
+    "risk_score": 52,
+    "status": "watch",
+    "drivers": [
+      [
+        "Rainfall deficit",
+        33.2
+      ],
+      [
+        "Crop stress",
+        26.6
+      ],
+      [
+        "Structural vulnerability",
+        20.2
+      ],
+      [
+        "Water stress",
+        14.3
+      ],
+      [
+        "Employment pressure",
+        5.6
+      ],
+      [
+        "Market decline",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        36,
+        20,
+        10,
+        5,
+        3
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 33.2,
+        "priority": "Medium"
+      },
+      {
+        "title": "Flag for early PMFBY crop-loss assessment",
+        "program": "PMFBY",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 26.6,
+        "priority": "Medium"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 26.6,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Nakashipara",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -7.2,
+      "crop_stress_index": 21.0,
+      "mandi_price_deviation_pct": -9.8,
+      "mgnrega_demand_spike_pct": 31.2,
+      "water_stress_index": 14.8,
+      "historical_vulnerability": 47.2
+    },
+    "risk_score": 48,
+    "status": "watch",
+    "drivers": [
+      [
+        "Employment pressure",
+        28.2
+      ],
+      [
+        "Structural vulnerability",
+        25.2
+      ],
+      [
+        "Market decline",
+        17.0
+      ],
+      [
+        "Crop stress",
+        15.4
+      ],
+      [
+        "Water stress",
+        7.6
+      ],
+      [
+        "Rainfall deficit",
+        6.5
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        25,
+        13,
+        7,
+        4,
+        2
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 28.2,
+        "priority": "Medium"
+      },
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 17.0,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Krishnaganj",
+    "zone": "rainfall_crop",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -19.4,
+      "crop_stress_index": 35.0,
+      "mandi_price_deviation_pct": -5.9,
+      "mgnrega_demand_spike_pct": 36.7,
+      "water_stress_index": 18.1,
+      "historical_vulnerability": 31.7
+    },
+    "risk_score": 47,
+    "status": "watch",
+    "drivers": [
+      [
+        "Employment pressure",
+        29.4
+      ],
+      [
+        "Crop stress",
+        22.8
+      ],
+      [
+        "Rainfall deficit",
+        15.6
+      ],
+      [
+        "Structural vulnerability",
+        15.0
+      ],
+      [
+        "Market decline",
+        9.1
+      ],
+      [
+        "Water stress",
+        8.2
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        29,
+        16,
+        8,
+        5,
+        3
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 29.4,
+        "priority": "Medium"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 22.8,
+        "priority": "Medium"
+      },
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 15.6,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Majhdia",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -13.1,
+      "crop_stress_index": 24.4,
+      "mandi_price_deviation_pct": 8.2,
+      "mgnrega_demand_spike_pct": 12.5,
+      "water_stress_index": 13.0,
+      "historical_vulnerability": 84.3
+    },
+    "risk_score": 47,
+    "status": "watch",
+    "drivers": [
+      [
+        "Structural vulnerability",
+        48.5
+      ],
+      [
+        "Crop stress",
+        19.3
+      ],
+      [
+        "Rainfall deficit",
+        12.8
+      ],
+      [
+        "Employment pressure",
+        12.2
+      ],
+      [
+        "Water stress",
+        7.2
+      ],
+      [
+        "Market decline",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        26,
+        12,
+        6,
+        3,
+        1
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Prioritise for cash-transfer / social-protection outreach given structural vulnerability",
+        "program": "State Social Welfare",
+        "urgency_days": 14,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Structural vulnerability",
+        "driver_share": 48.5,
+        "priority": "Medium"
+      },
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 12.8,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Dhubulia",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -18.0,
+      "crop_stress_index": 6.7,
+      "mandi_price_deviation_pct": -3.7,
+      "mgnrega_demand_spike_pct": 50.5,
+      "water_stress_index": 25.4,
+      "historical_vulnerability": 57.4
+    },
+    "risk_score": 45,
+    "status": "watch",
+    "drivers": [
+      [
+        "Employment pressure",
+        39.0
+      ],
+      [
+        "Structural vulnerability",
+        26.2
+      ],
+      [
+        "Rainfall deficit",
+        13.9
+      ],
+      [
+        "Water stress",
+        11.2
+      ],
+      [
+        "Market decline",
+        5.5
+      ],
+      [
+        "Crop stress",
+        4.2
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        20,
+        9,
+        4,
+        3,
+        2
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 39.0,
+        "priority": "Medium"
+      },
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 13.9,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Bethuadahari",
+    "zone": "flood",
+    "raw_signals": {
+      "rainfall_anomaly_pct": 30.9,
+      "crop_stress_index": 38.7,
+      "mandi_price_deviation_pct": -8.3,
+      "mgnrega_demand_spike_pct": 20.6,
+      "water_stress_index": 31.0,
+      "historical_vulnerability": 34.6
+    },
+    "risk_score": 45,
+    "status": "watch",
+    "drivers": [
+      [
+        "Crop stress",
+        29.6
+      ],
+      [
+        "Employment pressure",
+        19.4
+      ],
+      [
+        "Structural vulnerability",
+        19.3
+      ],
+      [
+        "Water stress",
+        16.6
+      ],
+      [
+        "Market decline",
+        15.1
+      ],
+      [
+        "Rainfall deficit",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        28,
+        16,
+        9,
+        5,
+        3
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Flag for early PMFBY crop-loss assessment",
+        "program": "PMFBY",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 29.6,
+        "priority": "Medium"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 29.6,
+        "priority": "Medium"
+      },
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 19.4,
+        "priority": "Medium"
+      },
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 15.1,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Ramnagar",
+    "zone": "flood",
+    "raw_signals": {
+      "rainfall_anomaly_pct": 24.5,
+      "crop_stress_index": 43.3,
+      "mandi_price_deviation_pct": 2.0,
+      "mgnrega_demand_spike_pct": 23.4,
+      "water_stress_index": 38.6,
+      "historical_vulnerability": 29.4
+    },
+    "risk_score": 44,
+    "status": "watch",
+    "drivers": [
+      [
+        "Crop stress",
+        35.9
+      ],
+      [
+        "Employment pressure",
+        23.9
+      ],
+      [
+        "Water stress",
+        22.4
+      ],
+      [
+        "Structural vulnerability",
+        17.7
+      ],
+      [
+        "Rainfall deficit",
+        0.0
+      ],
+      [
+        "Market decline",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        29,
+        15,
+        8,
+        4,
+        2
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Flag for early PMFBY crop-loss assessment",
+        "program": "PMFBY",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 35.9,
+        "priority": "Medium"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 35.9,
+        "priority": "Medium"
+      },
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 23.9,
+        "priority": "Medium"
+      },
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 0.0,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Thanarpara",
+    "zone": "rainfall_crop",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -12.0,
+      "crop_stress_index": 20.6,
+      "mandi_price_deviation_pct": -18.6,
+      "mgnrega_demand_spike_pct": -4.4,
+      "water_stress_index": 17.4,
+      "historical_vulnerability": 55.1
+    },
+    "risk_score": 41,
+    "status": "watch",
+    "drivers": [
+      [
+        "Market decline",
+        33.4
+      ],
+      [
+        "Structural vulnerability",
+        30.4
+      ],
+      [
+        "Crop stress",
+        15.6
+      ],
+      [
+        "Rainfall deficit",
+        11.2
+      ],
+      [
+        "Water stress",
+        9.2
+      ],
+      [
+        "Employment pressure",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        21,
+        13,
+        7,
+        3,
+        2
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 33.4,
+        "priority": "Medium"
+      },
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 11.2,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Gangnapur",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -7.7,
+      "crop_stress_index": 21.0,
+      "mandi_price_deviation_pct": -8.1,
+      "mgnrega_demand_spike_pct": 42.4,
+      "water_stress_index": 13.4,
+      "historical_vulnerability": 38.7
+    },
+    "risk_score": 41,
+    "status": "watch",
+    "drivers": [
+      [
+        "Employment pressure",
+        37.4
+      ],
+      [
+        "Structural vulnerability",
+        20.2
+      ],
+      [
+        "Crop stress",
+        15.1
+      ],
+      [
+        "Market decline",
+        13.8
+      ],
+      [
+        "Rainfall deficit",
+        6.8
+      ],
+      [
+        "Water stress",
+        6.7
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        21,
+        11,
+        6,
+        4,
+        2
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 37.4,
+        "priority": "Medium"
+      },
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 13.8,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Betai",
+    "zone": "rainfall_crop",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -16.3,
+      "crop_stress_index": 15.6,
+      "mandi_price_deviation_pct": -4.8,
+      "mgnrega_demand_spike_pct": 34.4,
+      "water_stress_index": 21.8,
+      "historical_vulnerability": 15.6
+    },
+    "risk_score": 40,
+    "status": "watch",
+    "drivers": [
+      [
+        "Employment pressure",
+        36.5
+      ],
+      [
+        "Rainfall deficit",
+        17.3
+      ],
+      [
+        "Crop stress",
+        13.5
+      ],
+      [
+        "Water stress",
+        13.2
+      ],
+      [
+        "Market decline",
+        9.8
+      ],
+      [
+        "Structural vulnerability",
+        9.8
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        20,
+        9,
+        4,
+        3,
+        1
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 36.5,
+        "priority": "Medium"
+      },
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 17.3,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Chakdaha",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": 10.7,
+      "crop_stress_index": 24.2,
+      "mandi_price_deviation_pct": -8.7,
+      "mgnrega_demand_spike_pct": 27.3,
+      "water_stress_index": 3.0,
+      "historical_vulnerability": 41.9
+    },
+    "risk_score": 38,
+    "status": "watch",
+    "drivers": [
+      [
+        "Employment pressure",
+        30.3
+      ],
+      [
+        "Structural vulnerability",
+        27.5
+      ],
+      [
+        "Crop stress",
+        21.8
+      ],
+      [
+        "Market decline",
+        18.6
+      ],
+      [
+        "Water stress",
+        1.9
+      ],
+      [
+        "Rainfall deficit",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        21,
+        11,
+        6,
+        3,
+        2
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 30.3,
+        "priority": "Medium"
+      },
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 18.6,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Char Meghna",
+    "zone": "flood",
+    "raw_signals": {
+      "rainfall_anomaly_pct": 19.9,
+      "crop_stress_index": 26.2,
+      "mandi_price_deviation_pct": -16.4,
+      "mgnrega_demand_spike_pct": 0.8,
+      "water_stress_index": 29.9,
+      "historical_vulnerability": 37.1
+    },
+    "risk_score": 38,
+    "status": "watch",
+    "drivers": [
+      [
+        "Market decline",
+        34.1
+      ],
+      [
+        "Structural vulnerability",
+        23.7
+      ],
+      [
+        "Crop stress",
+        23.0
+      ],
+      [
+        "Water stress",
+        18.4
+      ],
+      [
+        "Employment pressure",
+        0.9
+      ],
+      [
+        "Rainfall deficit",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        21,
+        13,
+        7,
+        3,
+        2
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 34.1,
+        "priority": "Medium"
+      },
+      {
+        "title": "Verify crop-insurance enrollment & eligibility before window closes",
+        "program": "PMFBY",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Low",
+        "linked_driver": "Crop stress",
+        "driver_share": 23.0,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Nabadwip",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -0.5,
+      "crop_stress_index": 11.0,
+      "mandi_price_deviation_pct": -16.9,
+      "mgnrega_demand_spike_pct": 7.0,
+      "water_stress_index": 16.9,
+      "historical_vulnerability": 39.5
+    },
+    "risk_score": 36,
+    "status": "watch",
+    "drivers": [
+      [
+        "Market decline",
+        39.7
+      ],
+      [
+        "Structural vulnerability",
+        28.5
+      ],
+      [
+        "Water stress",
+        11.7
+      ],
+      [
+        "Crop stress",
+        10.9
+      ],
+      [
+        "Employment pressure",
+        8.5
+      ],
+      [
+        "Rainfall deficit",
+        0.6
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        17,
+        9,
+        5,
+        2,
+        1
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 39.7,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Hanskhali",
+    "zone": "rainfall_crop",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -25.2,
+      "crop_stress_index": 18.4,
+      "mandi_price_deviation_pct": -3.0,
+      "mgnrega_demand_spike_pct": 6.8,
+      "water_stress_index": 18.4,
+      "historical_vulnerability": 54.0
+    },
+    "risk_score": 35,
+    "status": "watch",
+    "drivers": [
+      [
+        "Structural vulnerability",
+        33.5
+      ],
+      [
+        "Rainfall deficit",
+        26.5
+      ],
+      [
+        "Crop stress",
+        15.7
+      ],
+      [
+        "Water stress",
+        11.0
+      ],
+      [
+        "Employment pressure",
+        7.1
+      ],
+      [
+        "Market decline",
+        6.1
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        18,
+        9,
+        4,
+        2,
+        1
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 26.5,
+        "priority": "Medium"
+      }
+    ]
+  },
+  {
+    "village": "Birnagar",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -9.6,
+      "crop_stress_index": 15.3,
+      "mandi_price_deviation_pct": -17.3,
+      "mgnrega_demand_spike_pct": 0.1,
+      "water_stress_index": 4.5,
+      "historical_vulnerability": 45.9
+    },
+    "risk_score": 30,
+    "status": "stable",
+    "drivers": [
+      [
+        "Market decline",
+        39.1
+      ],
+      [
+        "Structural vulnerability",
+        31.9
+      ],
+      [
+        "Crop stress",
+        14.6
+      ],
+      [
+        "Rainfall deficit",
+        11.3
+      ],
+      [
+        "Water stress",
+        3.0
+      ],
+      [
+        "Employment pressure",
+        0.1
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        15,
+        8,
+        5,
+        2,
+        1
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+        "program": "e-NAM / State Marketing Board",
+        "urgency_days": 10,
+        "benefit": "Medium",
+        "cost": "Medium",
+        "linked_driver": "Market decline",
+        "driver_share": 39.1,
+        "priority": "Watch"
+      }
+    ]
+  },
+  {
+    "village": "Shantipur Rural",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -13.9,
+      "crop_stress_index": 12.5,
+      "mandi_price_deviation_pct": 3.2,
+      "mgnrega_demand_spike_pct": -7.4,
+      "water_stress_index": 0.0,
+      "historical_vulnerability": 45.1
+    },
+    "risk_score": 24,
+    "status": "stable",
+    "drivers": [
+      [
+        "Structural vulnerability",
+        52.5
+      ],
+      [
+        "Rainfall deficit",
+        27.5
+      ],
+      [
+        "Crop stress",
+        20.0
+      ],
+      [
+        "Market decline",
+        0.0
+      ],
+      [
+        "Employment pressure",
+        0.0
+      ],
+      [
+        "Water stress",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        11,
+        5,
+        2,
+        1,
+        0
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 27.5,
+        "priority": "Watch"
+      }
+    ]
+  },
+  {
+    "village": "Santipur",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -7.8,
+      "crop_stress_index": 18.0,
+      "mandi_price_deviation_pct": -7.4,
+      "mgnrega_demand_spike_pct": -2.4,
+      "water_stress_index": 24.8,
+      "historical_vulnerability": 43.4
+    },
+    "risk_score": 21,
+    "status": "stable",
+    "drivers": [
+      [
+        "Structural vulnerability",
+        33.6
+      ],
+      [
+        "Crop stress",
+        19.1
+      ],
+      [
+        "Market decline",
+        18.6
+      ],
+      [
+        "Water stress",
+        18.4
+      ],
+      [
+        "Rainfall deficit",
+        10.2
+      ],
+      [
+        "Employment pressure",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        10,
+        5,
+        3,
+        1,
+        1
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Routine monitoring \u2014 no active intervention required",
+        "program": "\u2014",
+        "urgency_days": null,
+        "benefit": "\u2014",
+        "cost": "\u2014",
+        "linked_driver": null,
+        "driver_share": 0,
+        "priority": "Watch"
+      }
+    ]
+  },
+  {
+    "village": "Haringhata",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -6.3,
+      "crop_stress_index": 17.5,
+      "mandi_price_deviation_pct": 0.4,
+      "mgnrega_demand_spike_pct": 5.7,
+      "water_stress_index": 23.5,
+      "historical_vulnerability": 43.4
+    },
+    "risk_score": 20,
+    "status": "stable",
+    "drivers": [
+      [
+        "Structural vulnerability",
+        39.3
+      ],
+      [
+        "Crop stress",
+        21.8
+      ],
+      [
+        "Water stress",
+        20.5
+      ],
+      [
+        "Rainfall deficit",
+        9.7
+      ],
+      [
+        "Employment pressure",
+        8.7
+      ],
+      [
+        "Market decline",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        10,
+        5,
+        2,
+        1,
+        0
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Routine monitoring \u2014 no active intervention required",
+        "program": "\u2014",
+        "urgency_days": null,
+        "benefit": "\u2014",
+        "cost": "\u2014",
+        "linked_driver": null,
+        "driver_share": 0,
+        "priority": "Watch"
+      }
+    ]
+  },
+  {
+    "village": "Kaliganj",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": 1.2,
+      "crop_stress_index": 4.7,
+      "mandi_price_deviation_pct": 5.6,
+      "mgnrega_demand_spike_pct": 25.5,
+      "water_stress_index": 12.9,
+      "historical_vulnerability": 38.3
+    },
+    "risk_score": 18,
+    "status": "stable",
+    "drivers": [
+      [
+        "Employment pressure",
+        43.0
+      ],
+      [
+        "Structural vulnerability",
+        38.2
+      ],
+      [
+        "Water stress",
+        12.4
+      ],
+      [
+        "Crop stress",
+        6.4
+      ],
+      [
+        "Rainfall deficit",
+        0.0
+      ],
+      [
+        "Market decline",
+        0.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        8,
+        3,
+        1,
+        1,
+        0
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Pre-position MGNREGA worksite allocation ahead of demand surge",
+        "program": "MGNREGA",
+        "urgency_days": 7,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Employment pressure",
+        "driver_share": 43.0,
+        "priority": "Watch"
+      }
+    ]
+  },
+  {
+    "village": "Taherpur",
+    "zone": "market_migration",
+    "raw_signals": {
+      "rainfall_anomaly_pct": -13.5,
+      "crop_stress_index": 5.4,
+      "mandi_price_deviation_pct": -7.3,
+      "mgnrega_demand_spike_pct": 14.6,
+      "water_stress_index": 6.4,
+      "historical_vulnerability": 38.3
+    },
+    "risk_score": 18,
+    "status": "stable",
+    "drivers": [
+      [
+        "Structural vulnerability",
+        31.1
+      ],
+      [
+        "Employment pressure",
+        20.0
+      ],
+      [
+        "Market decline",
+        19.3
+      ],
+      [
+        "Rainfall deficit",
+        18.6
+      ],
+      [
+        "Crop stress",
+        6.0
+      ],
+      [
+        "Water stress",
+        5.0
+      ]
+    ],
+    "cascade": {
+      "stages": [
+        "Weather / water shock",
+        "Crop stress & yield loss",
+        "Income loss & distress sale",
+        "Debt / reduced coping capacity",
+        "Employment pressure (MGNREGA demand)",
+        "Distress-migration risk"
+      ],
+      "probabilities": [
+        null,
+        8,
+        4,
+        2,
+        1,
+        0
+      ]
+    },
+    "interventions": [
+      {
+        "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+        "program": "mKisan / Kisan Sarathi",
+        "urgency_days": 5,
+        "benefit": "High",
+        "cost": "Low",
+        "linked_driver": "Rainfall deficit",
+        "driver_share": 18.6,
+        "priority": "Watch"
+      }
+    ]
+  }
+]

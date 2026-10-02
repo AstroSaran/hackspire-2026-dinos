@@ -1,0 +1,353 @@
+{
+  "village": "Bagula",
+  "stages": [
+    {
+      "week": 0,
+      "note": "Baseline \u2014 normal monsoon pattern.",
+      "risk_score": 30,
+      "status": "stable",
+      "drivers": [
+        [
+          "Structural vulnerability",
+          77.6
+        ],
+        [
+          "Water stress",
+          7.5
+        ],
+        [
+          "Crop stress",
+          6.7
+        ],
+        [
+          "Rainfall deficit",
+          5.0
+        ],
+        [
+          "Employment pressure",
+          3.3
+        ],
+        [
+          "Market decline",
+          0.0
+        ]
+      ],
+      "cascade": [
+        13,
+        5,
+        2,
+        1,
+        0
+      ],
+      "interventions": [
+        {
+          "title": "Routine monitoring \u2014 no active intervention required",
+          "program": "\u2014",
+          "urgency_days": null,
+          "benefit": "\u2014",
+          "cost": "\u2014",
+          "linked_driver": null,
+          "driver_share": 0,
+          "priority": "Watch"
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "note": "Rainfall anomaly first detected; crop stress not yet visible.",
+      "risk_score": 41,
+      "status": "watch",
+      "drivers": [
+        [
+          "Structural vulnerability",
+          50.8
+        ],
+        [
+          "Rainfall deficit",
+          17.3
+        ],
+        [
+          "Crop stress",
+          12.3
+        ],
+        [
+          "Water stress",
+          11.1
+        ],
+        [
+          "Employment pressure",
+          4.3
+        ],
+        [
+          "Market decline",
+          4.2
+        ]
+      ],
+      "cascade": [
+        20,
+        9,
+        4,
+        2,
+        1
+      ],
+      "interventions": [
+        {
+          "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+          "program": "mKisan / Kisan Sarathi",
+          "urgency_days": 5,
+          "benefit": "High",
+          "cost": "Low",
+          "linked_driver": "Rainfall deficit",
+          "driver_share": 17.3,
+          "priority": "Medium"
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "note": "Crop stress confirmed; mandi arrivals softening.",
+      "risk_score": 67,
+      "status": "risk",
+      "drivers": [
+        [
+          "Structural vulnerability",
+          30.5
+        ],
+        [
+          "Crop stress",
+          20.0
+        ],
+        [
+          "Rainfall deficit",
+          18.2
+        ],
+        [
+          "Market decline",
+          13.7
+        ],
+        [
+          "Water stress",
+          11.8
+        ],
+        [
+          "Employment pressure",
+          5.8
+        ]
+      ],
+      "cascade": [
+        42,
+        25,
+        15,
+        8,
+        4
+      ],
+      "interventions": [
+        {
+          "title": "Prioritise for cash-transfer / social-protection outreach given structural vulnerability",
+          "program": "State Social Welfare",
+          "urgency_days": 14,
+          "benefit": "Medium",
+          "cost": "Medium",
+          "linked_driver": "Structural vulnerability",
+          "driver_share": 30.5,
+          "priority": "High priority"
+        },
+        {
+          "title": "Flag for early PMFBY crop-loss assessment",
+          "program": "PMFBY",
+          "urgency_days": 7,
+          "benefit": "High",
+          "cost": "Low",
+          "linked_driver": "Crop stress",
+          "driver_share": 20.0,
+          "priority": "Medium"
+        },
+        {
+          "title": "Verify crop-insurance enrollment & eligibility before window closes",
+          "program": "PMFBY",
+          "urgency_days": 10,
+          "benefit": "Medium",
+          "cost": "Low",
+          "linked_driver": "Crop stress",
+          "driver_share": 20.0,
+          "priority": "Medium"
+        },
+        {
+          "title": "Push targeted agromet advisory (irrigation scheduling / drought-tolerant practice)",
+          "program": "mKisan / Kisan Sarathi",
+          "urgency_days": 5,
+          "benefit": "High",
+          "cost": "Low",
+          "linked_driver": "Rainfall deficit",
+          "driver_share": 18.2,
+          "priority": "Medium"
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "note": "MGNREGA demand spike registered \u2014 income-loss cascade underway.",
+      "risk_score": 81,
+      "status": "critical",
+      "drivers": [
+        [
+          "Structural vulnerability",
+          22.7
+        ],
+        [
+          "Crop stress",
+          21.5
+        ],
+        [
+          "Market decline",
+          17.6
+        ],
+        [
+          "Rainfall deficit",
+          16.4
+        ],
+        [
+          "Water stress",
+          11.2
+        ],
+        [
+          "Employment pressure",
+          10.6
+        ]
+      ],
+      "cascade": [
+        59,
+        42,
+        29,
+        19,
+        12
+      ],
+      "interventions": [
+        {
+          "title": "Prioritise for cash-transfer / social-protection outreach given structural vulnerability",
+          "program": "State Social Welfare",
+          "urgency_days": 14,
+          "benefit": "Medium",
+          "cost": "Medium",
+          "linked_driver": "Structural vulnerability",
+          "driver_share": 22.7,
+          "priority": "High priority"
+        },
+        {
+          "title": "Flag for early PMFBY crop-loss assessment",
+          "program": "PMFBY",
+          "urgency_days": 7,
+          "benefit": "High",
+          "cost": "Low",
+          "linked_driver": "Crop stress",
+          "driver_share": 21.5,
+          "priority": "Medium"
+        },
+        {
+          "title": "Verify crop-insurance enrollment & eligibility before window closes",
+          "program": "PMFBY",
+          "urgency_days": 10,
+          "benefit": "Medium",
+          "cost": "Low",
+          "linked_driver": "Crop stress",
+          "driver_share": 21.5,
+          "priority": "Medium"
+        },
+        {
+          "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+          "program": "e-NAM / State Marketing Board",
+          "urgency_days": 10,
+          "benefit": "Medium",
+          "cost": "Medium",
+          "linked_driver": "Market decline",
+          "driver_share": 17.6,
+          "priority": "Medium"
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "note": "Distress-migration pressure rising.",
+      "risk_score": 85,
+      "status": "critical",
+      "drivers": [
+        [
+          "Crop stress",
+          21.4
+        ],
+        [
+          "Structural vulnerability",
+          19.7
+        ],
+        [
+          "Market decline",
+          19.3
+        ],
+        [
+          "Rainfall deficit",
+          15.5
+        ],
+        [
+          "Employment pressure",
+          13.0
+        ],
+        [
+          "Water stress",
+          11.2
+        ]
+      ],
+      "cascade": [
+        66,
+        51,
+        38,
+        27,
+        20
+      ],
+      "interventions": [
+        {
+          "title": "Flag for early PMFBY crop-loss assessment",
+          "program": "PMFBY",
+          "urgency_days": 7,
+          "benefit": "High",
+          "cost": "Low",
+          "linked_driver": "Crop stress",
+          "driver_share": 21.4,
+          "priority": "High priority"
+        },
+        {
+          "title": "Verify crop-insurance enrollment & eligibility before window closes",
+          "program": "PMFBY",
+          "urgency_days": 10,
+          "benefit": "Medium",
+          "cost": "Low",
+          "linked_driver": "Crop stress",
+          "driver_share": 21.4,
+          "priority": "Medium"
+        },
+        {
+          "title": "Prioritise for cash-transfer / social-protection outreach given structural vulnerability",
+          "program": "State Social Welfare",
+          "urgency_days": 14,
+          "benefit": "Medium",
+          "cost": "Medium",
+          "linked_driver": "Structural vulnerability",
+          "driver_share": 19.7,
+          "priority": "Medium"
+        },
+        {
+          "title": "Alert mandi/market cell \u2014 consider MSP procurement support or storage linkage",
+          "program": "e-NAM / State Marketing Board",
+          "urgency_days": 10,
+          "benefit": "Medium",
+          "cost": "Medium",
+          "linked_driver": "Market decline",
+          "driver_share": 19.3,
+          "priority": "Medium"
+        }
+      ]
+    }
+  ],
+  "first_watch_week": 2,
+  "first_critical_week": 6,
+  "lead_time_weeks": 4
+}

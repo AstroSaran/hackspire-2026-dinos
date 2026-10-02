@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kavach — Rural Livelihood Early Warning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F5F2;--surface:#FFFFFF;--surface-2:#ECEEE8;--border:#DADCD3;--ink:#1E211C;--ink-dim:#5E6258;
+  --stable:#2F6B4F;--watch:#B8862B;--risk:#C1652F;--critical:#A8342A;--live:#1E5FA8;--sim:#6B6280;
+  --r:4px;color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14160F;--surface:#1C1F17;--surface-2:#23271D;--border:#343827;--ink:#EDEFE6;--ink-dim:#9EA292;--stable:#66B693;--watch:#DDB15E;--risk:#E08B58;--critical:#E0776A;--live:#6FA8E8;--sim:#A79DC9;color-scheme:dark;}}
+:root[data-theme="dark"]{--bg:#14160F;--surface:#1C1F17;--surface-2:#23271D;--border:#343827;--ink:#EDEFE6;--ink-dim:#9EA292;--stable:#66B693;--watch:#DDB15E;--risk:#E08B58;--critical:#E0776A;--live:#6FA8E8;--sim:#A79DC9;color-scheme:dark;}
+*{box-sizing:border-box;}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}
+.mono{font-family:'IBM Plex Mono',monospace;}
+button{font-family:inherit;}
+button:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--live);outline-offset:2px;}
+
+/* Header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:9px;}
+.brand-mark{width:32px;height:32px;border-radius:50%;background:var(--stable);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;}
+.brand-text b{font-size:15px;font-weight:700;display:block;}
+.brand-text span{font-size:11.5px;color:var(--ink-dim);}
+.breadcrumb{font-size:13px;color:var(--ink-dim);display:flex;gap:6px;align-items:center;}
+.breadcrumb b{color:var(--ink);font-weight:600;}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:12.5px;color:var(--ink-dim);}
+.live-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px;}
+.badge{font-size:10.5px;font-weight:700;letter-spacing:.03em;padding:2px 8px;border-radius:20px;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px;}
+.badge-live{background:color-mix(in srgb, var(--live) 15%, transparent);color:var(--live);}
+.badge-sim{background:color-mix(in srgb, var(--sim) 18%, transparent);color:var(--sim);}
+.badge-unavail{background:color-mix(in srgb, var(--ink-dim) 18%, transparent);color:var(--ink-dim);}
+.header-btn{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r);padding:7px 12px;font-size:12.5px;cursor:pointer;color:var(--ink);min-height:36px;}
+
+/* Location selector */
+.locbar{background:var(--surface-2);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.locbar label{font-size:10.5px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:3px;}
+.locbar select{font-family:inherit;font-size:13.5px;padding:7px 9px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);color:var(--ink);min-height:38px;min-width:140px;}
+
+main{max-width:1180px;margin:0 auto;padding:20px;}
+
+/* Overview */
+.overview-counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px;}
+.count-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;}
+.count-card .n{font-size:30px;font-weight:700;line-height:1;}
+.count-card .l{font-size:12px;color:var(--ink-dim);margin-top:6px;text-transform:uppercase;letter-spacing:.03em;}
+table.vtable{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;font-size:13.5px;}
+table.vtable th{text-align:left;font-size:11px;text-transform:uppercase;color:var(--ink-dim);letter-spacing:.03em;padding:10px 14px;border-bottom:1px solid var(--border);}
+table.vtable td{padding:11px 14px;border-bottom:1px solid var(--border);}
+table.vtable tr:last-child td{border-bottom:none;}
+table.vtable tr{cursor:pointer;}
+table.vtable tr:hover td{background:var(--surface-2);}
+.risk-chip{display:inline-flex;align-items:center;gap:6px;font-weight:600;}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+
+/* Detail grid */
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
+.card h2{font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-dim);margin:0 0 12px;font-weight:700;}
+.span2{grid-column:1/-1;}
+
+.risk-card .score{font-size:46px;font-weight:700;line-height:1;}
+.risk-card .band{display:inline-block;margin-top:8px;padding:4px 12px;border-radius:20px;font-weight:700;font-size:12.5px;text-transform:uppercase;}
+.risk-card .note{font-size:12px;color:var(--ink-dim);margin-top:10px;line-height:1.5;}
+
+.weather-card .temp{font-size:38px;font-weight:700;line-height:1;}
+.weather-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px;font-size:13px;}
+.weather-grid div span{display:block;color:var(--ink-dim);font-size:11px;text-transform:uppercase;margin-bottom:2px;}
+.weather-updated{font-size:11.5px;color:var(--ink-dim);margin-top:12px;}
+.demo-notice{font-size:11.5px;background:var(--surface-2);border-radius:var(--r);padding:8px 10px;margin-top:10px;color:var(--ink-dim);line-height:1.5;}
+
+.warning-card{border-left:4px solid var(--critical);}
+.warning-card.none{border-left-color:var(--border);}
+
+.why-row{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--border);}
+.why-row:last-child{border-bottom:none;}
+.why-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);}
+.why-track{height:8px;background:var(--surface-2);border-radius:4px;overflow:hidden;margin-top:5px;}
+.why-fill{height:100%;background:var(--risk);border-radius:4px;}
+.why-pct{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-dim);}
+
+.signal-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dashed var(--border);font-size:13px;}
+.signal-row:last-child{border-bottom:none;}
+
+.timeline{position:relative;padding-left:20px;}
+.tstage{position:relative;padding:0 0 18px 14px;border-left:2px solid var(--border);}
+.tstage:last-child{border-left-color:transparent;padding-bottom:0;}
+.tstage::before{content:'';position:absolute;left:-6px;top:2px;width:10px;height:10px;border-radius:50%;background:var(--ink-dim);}
+.tstage .name{font-weight:600;font-size:13.5px;}
+.tstage .meta{font-size:11.5px;color:var(--ink-dim);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;}
+
+.action-card{background:var(--surface-2);border-radius:var(--r);padding:13px 15px;margin-bottom:10px;}
+.action-card .title{font-weight:600;font-size:13.5px;display:block;margin-bottom:6px;}
+.action-meta{display:flex;gap:12px;font-size:11.5px;color:var(--ink-dim);flex-wrap:wrap;margin-top:8px;}
+.review-buttons{display:flex;gap:8px;margin-top:14px;}
+.review-buttons button{flex:1;min-height:40px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);color:var(--ink);font-size:13px;cursor:pointer;}
+.review-buttons button:hover{background:var(--surface-2);}
+.review-log{font-size:11.5px;color:var(--ink-dim);margin-top:10px;line-height:1.7;}
+
+.trust-toggle{background:none;border:none;color:var(--live);font-size:12.5px;cursor:pointer;padding:4px 0;text-decoration:underline;}
+.trust-body{display:none;margin-top:10px;font-size:12.5px;}
+.trust-body.open{display:block;}
+.trust-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--border);}
+.trust-note{color:var(--ink-dim);margin-top:10px;line-height:1.5;}
+
+.footnote{max-width:1180px;margin:20px auto 34px;padding:0 20px;font-size:11.5px;color:var(--ink-dim);line-height:1.6;}
+
+@media(max-width:860px){
+  .detail-grid{grid-template-columns:1fr;}
+  .weather-grid{grid-template-columns:1fr 1fr;}
+  header{padding:10px 14px;}
+  main{padding:14px;}
+  .locbar{padding:10px 14px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><div class="brand-mark">क</div><div class="brand-text"><b>KAVACH</b><span>Rural livelihood early warning</span></div></div>
+  <div class="breadcrumb" id="breadcrumb"></div>
+  <div class="header-right">
+    <span id="headerWeatherBadge"></span>
+    <span id="headerTime" class="mono"></span>
+    <button class="header-btn" onclick="showOverview()">Overview</button>
+    <button class="header-btn" onclick="toggleTrust()">Data &amp; validation</button>
+  </div>
+</header>
+
+<div class="locbar">
+  <div><label>State</label><select disabled><option>West Bengal</option></select></div>
+  <div><label>District</label><select disabled><option>Nadia</option></select></div>
+  <div><label>Block</label><select id="blockSelect" onchange="onBlockChange()"></select></div>
+  <div><label>Village</label><select id="villageSelect" onchange="onVillageChange()"></select></div>
+</div>
+
+<main id="main"></main>
+
+<div class="footnote">
+  Kavach sits above Meghdoot, e-NAM, PMFBY and MGNREGA as a decision-support layer — it does not replace them, and it does not allocate benefits or make eligibility decisions on its own. Weather is a real live-data integration (IMD primary, Open-Meteo documented fallback); the crop, market, employment, water and structural-vulnerability signals are representative/simulated pending a field pilot. See Data &amp; validation for full status.
+</div>
+
+<script>
+const KD_DATA = KD; // from kavach_data.js — real model output (SHAP, RandomForest uncertainty) + real weather-provider status
+
+const STATUS_META = {
+  stable:{label:'Stable',color:'var(--stable)'}, watch:{label:'Watch',color:'var(--watch)'},
+  risk:{label:'Elevated',color:'var(--risk)'}, critical:{label:'Critical',color:'var(--critical)'}
+};
+function bandFor(score){ if(score>=75)return'critical'; if(score>=55)return'risk'; if(score>=35)return'watch'; return'stable'; }
+
+// v[i] = [name, score, uncertainty, signals[[label,val]], drivers[[name,pct,dir]], trajectory[[stage,level,evidence,conf]], actions[[title,priority,program,urgencyDays,benefit,feasibility]], data_coverage{}, weather[status,temp,rainfall,humidity,wind,providerName,obsTime,note]|null, zone]
+const villages = KD_DATA.v.map(row => ({
+  id: row[0].toLowerCase().replace(/\s+/g,'_'), name: row[0], score: row[1], uncertainty: row[2],
+  signals: row[3], drivers: row[4], trajectory: row[5], actions: row[6], coverage: row[7], weather: row[8], zone: row[9]
+}));
+const PROVENANCE = KD_DATA.provenance;
+const VALIDATION = KD_DATA.validation;
+const DATA_HEALTH = KD_DATA.data_health;
+const LOCATIONS = KD_DATA.locations;
+const SIM_ID = 'bagula';
+const SIM_STAGES = KD_DATA.sim.map(s=>({week:s[0],note:s[1],score:s[2],status:s[3],uncertainty:s[4],drivers:s[5],trajectory:s[6],actions:s[7]}));
+const SIM_LEAD_WEEKS = KD_DATA.lead;
+
+let view = 'overview'; // 'overview' | 'detail'
+let currentId = villages.slice().sort((a,b)=>b.score-a.score)[0].id;
+let simRunning = false;
+let reviewLog = [];
+let trustOpen = false;
+
+function weatherBadgeHtml(status){
+  if(status==='LIVE') return `<span class="badge badge-live"><span class="live-dot" style="background:var(--live)"></span>LIVE — weather</span>`;
+  if(status==='STALE') return `<span class="badge badge-unavail">STALE — weather</span>`;
+  if(status==='SIMULATED_DEMO') return `<span class="badge badge-sim">DEMO — weather</span>`;
+  return `<span class="badge badge-unavail">UNAVAILABLE — weather</span>`;
+}
+
+function populateBlockSelect(){
+  const sel = document.getElementById('blockSelect');
+  const blocks = LOCATIONS.districts['Nadia'].blocks;
+  sel.innerHTML = blocks.map(b=>`<option value="${b}">${b}</option>`).join('');
+}
+function populateVillageSelect(block){
+  const sel = document.getElementById('villageSelect');
+  const opts = LOCATIONS.villages.filter(v=>v.block===block).map(v=>v.village);
+  sel.innerHTML = opts.map(v=>`<option value="${v}">${v}</option>`).join('');
+  if(opts.length) sel.value = opts.includes(currentVillageName()) ? currentVillageName() : opts[0];
+}
+function currentVillageName(){ const v = villages.find(x=>x.id===currentId); return v?v.name:''; }
+function onBlockChange(){ populateVillageSelect(document.getElementById('blockSelect').value); onVillageChange(); }
+function onVillageChange(){
+  const name = document.getElementById('villageSelect').value;
+  const v = villages.find(x=>x.name===name);
+  if(v){ currentId=v.id; view='detail'; renderAll(); }
+}
+function initLocationSelectors(){
+  const v = villages.find(x=>x.id===currentId);
+  populateBlockSelect();
+  document.getElementById('blockSelect').value = v.zone==='flood' ? LOCATIONS.districts['Nadia'].blocks[0] : LOCATIONS.districts['Nadia'].blocks[0];
+  // best-effort: find the block that actually contains this village
+  const rec = LOCATIONS.villages.find(r=>r.village===v.name);
+  if(rec) document.getElementById('blockSelect').value = rec.block;
+  populateVillageSelect(document.getElementById('blockSelect').value);
+}
+
+function renderHeader(){
+  const v = villages.find(x=>x.id===currentId);
+  document.getElementById('breadcrumb').innerHTML = view==='overview'
+    ? `<b>West Bengal</b> / <b>Nadia</b> / all blocks`
+    : `West Bengal / Nadia / ${v.zone.replace('_',' ')} / <b>${v.name}</b>`;
+  document.getElementById('headerTime').textContent = new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}) + ' IST';
+  document.getElementById('headerWeatherBadge').innerHTML = weatherBadgeHtml(v.coverage.weather);
+}
+
+function showOverview(){ view='overview'; renderAll(); }
+
+function renderOverview(){
+  const counts = {stable:0,watch:0,risk:0,critical:0};
+  villages.forEach(v=>counts[bandFor(v.score)]++);
+  const rows = villages.slice().sort((a,b)=>b.score-a.score).map(v=>{
+    const band = bandFor(v.score);
+    const topDriver = v.drivers[0][0];
+    return `<tr onclick="selectVillage('${v.id}')">
+      <td>${v.name}</td>
+      <td><span class="risk-chip"><span class="dot" style="background:${STATUS_META[band].color}"></span>${v.score}/100</span></td>
+      <td>${topDriver}</td>
+      <td>${v.coverage.weather==='LIVE'?'LIVE weather':'Mixed'}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('main').innerHTML = `
+    <div class="overview-counts">
+      <div class="count-card"><div class="n" style="color:var(--critical)">${counts.critical}</div><div class="l">Critical</div></div>
+      <div class="count-card"><div class="n" style="color:var(--risk)">${counts.risk}</div><div class="l">Elevated / Watch</div></div>
+      <div class="count-card"><div class="n" style="color:var(--stable)">${counts.stable}</div><div class="l">Stable</div></div>
+      <div class="count-card"><div class="n">30</div><div class="l">Villages monitored</div></div>
+    </div>
+    <table class="vtable">
+      <thead><tr><th>Village</th><th>Risk</th><th>Main driver (indicative)</th><th>Weather data</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+function selectVillage(id){ currentId=id; view='detail'; renderAll(); }
+
+function renderDetail(){
+  const v = villages.find(x=>x.id===currentId);
+  const band = bandFor(v.score);
+  const w = v.weather;
+
+  const whyRows = v.drivers.slice(0,4).map((d,i)=>`
+    <div class="why-row"><span class="why-num">0${i+1}</span>
+      <div><div>${d[0]} <span class="mono" style="font-size:10.5px;color:var(--ink-dim)">(${d[2]})</span></div>
+      <div class="why-track"><div class="why-fill" style="width:${Math.min(100,d[1]*2.6)}%"></div></div></div>
+      <span class="why-pct">${d[1]}%</span></div>`).join('');
+
+  const signalRows = v.signals.map(([label,val])=>{
+    const prov = PROVENANCE.find(p=>p[0]===label) || ['','','','',''];
+    return `<div class="signal-row"><span>${label}</span><span>${val} <span class="badge badge-sim" style="margin-left:6px;">${prov[2]||'SIMULATED'}</span></span></div>`;
+  }).join('');
+  const weatherSignalRow = `<div class="signal-row"><span>Weather (rainfall/temp/humidity)</span><span>${weatherBadgeHtml(v.coverage.weather)}</span></div>`;
+
+  const timelineRows = v.trajectory.map(([stage,level,evidence,conf])=>`
+    <div class="tstage"><div class="name">${stage}</div>
+      <div class="meta"><span class="badge ${evidence==='OBSERVED_SIGNAL'?'badge-live':'badge-sim'}">${evidence.replace('_',' ')}</span>
+      <span>${level}</span><span class="mono">confidence ${conf}</span></div></div>`).join('');
+
+  const actionRows = v.actions.map(a=>{
+    const [title,priority,program,urgencyDays,benefit,feasibility] = a;
+    const urgency = urgencyDays===null?'—':`${urgencyDays} days`;
+    return `<div class="action-card"><span class="title">${title}</span>
+      <div class="action-meta"><span><b>${priority}</b></span><span>${program}</span><span>Urgency ${urgency}</span><span>Benefit ${benefit}</span><span>${feasibility}</span></div></div>`;
+  }).join('');
+
+  const weatherBody = (w && w[0]!=='UNAVAILABLE') ? `
+    <div class="temp">${w[1]}°C</div>
+    <div class="weather-grid">
+      <div><span>Rainfall</span>${w[2]} mm</div>
+      <div><span>Humidity</span>${w[3]}%</div>
+      <div><span>Wind</span>${w[4]} km/h</div>
+    </div>
+    <div class="weather-updated">${w[5]} · ${w[6]?new Date(w[6]).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}):''} IST</div>
+    ${w[0]==='SIMULATED_DEMO' ? `<div class="demo-notice">${w[7]}</div>` : ''}
+  ` : `<div style="color:var(--ink-dim);font-size:13px;">Live weather unavailable in this environment.<br>${w?w[7]:''}</div>`;
+
+  document.getElementById('main').innerHTML = `
+    <div class="detail-grid">
+      <div class="card risk-card">
+        <h2>Livelihood risk</h2>
+        <div class="score">${v.score} <span style="font-size:20px;color:var(--ink-dim);">/ 100</span></div>
+        <div class="band" style="background:${STATUS_META[band].color};color:#fff;">${STATUS_META[band].label}</div>
+        <div class="note">Model-estimated risk score — not a calibrated probability.<br>Model disagreement: <b>${v.uncertainty}</b></div>
+      </div>
+      <div class="card weather-card">
+        <h2>${weatherBadgeHtml(v.coverage.weather)} &nbsp; ${w?w[5]:'Weather'}</h2>
+        ${weatherBody}
+      </div>
+
+      <div class="card span2 warning-card none">
+        <h2>Weather warning</h2>
+        <div style="font-size:13px;color:var(--ink-dim);">No active IMD warning for this district in this build's data (warnings capability wired but not independently confirmed live — see Data &amp; validation).</div>
+      </div>
+
+      <div class="card span2">
+        <h2>Why is risk rising? — driver contribution (indicative)</h2>
+        ${whyRows}
+        <div style="font-size:11px;color:var(--ink-dim);margin-top:8px;">Real SHAP (TreeExplainer) output over the trained model. Explains the model's output, not proven real-world causation.</div>
+      </div>
+
+      <div class="card">
+        <h2>Signals</h2>
+        ${weatherSignalRow}
+        ${signalRows}
+      </div>
+
+      <div class="card">
+        <h2>Illustrative trajectory</h2>
+        <div style="font-size:11.5px;color:var(--ink-dim);margin-bottom:10px;">A scenario based on current signals — not a validated forecast.</div>
+        <div class="timeline">${timelineRows}</div>
+      </div>
+
+      <div class="card span2">
+        <h2>Actions for officer review</h2>
+        ${actionRows}
+        <div style="font-size:11px;color:var(--ink-dim);margin:10px 0 4px;">System assessment → officer review → action → outcome tracking</div>
+        <div class="review-buttons">
+          <button onclick="logReview('${v.name}','approved')">Review</button>
+          <button onclick="logReview('${v.name}','deferred')">Defer</button>
+          <button onclick="logReview('${v.name}','escalated')">Escalate</button>
+        </div>
+        <div class="review-log" id="reviewLog"></div>
+      </div>
+
+      <div class="card span2" id="simCard">
+        <h2>Scenario simulation</h2>
+        <button class="header-btn" onclick="runSimulation()" id="simBtn">▶ Run 8-week scenario trajectory — Bagula</button>
+        <span class="mono" id="simWeekLabel" style="display:block;margin-top:8px;font-size:12px;color:var(--ink-dim);"></span>
+        <span id="simLead" style="display:block;margin-top:6px;font-size:12.5px;color:var(--stable);font-weight:600;opacity:0;transition:opacity .4s;"></span>
+      </div>
+
+      <div class="card span2">
+        <button class="trust-toggle" onclick="toggleTrust()">Data &amp; validation ${trustOpen?'▲':'▼'}</button>
+        <div class="trust-body ${trustOpen?'open':''}" id="trustBody"></div>
+      </div>
+    </div>`;
+  renderReviewLog();
+  renderTrustBody();
+}
+
+function renderTrustBody(){
+  const el = document.getElementById('trustBody'); if(!el) return;
+  el.innerHTML = `
+    <div class="trust-row"><span>Model validation</span><b>${VALIDATION.model_validation}</b></div>
+    <div class="trust-row"><span>Data</span><b>${VALIDATION.data}</b></div>
+    <div class="trust-row"><span>Real outcome labels</span><b>${VALIDATION.real_outcome_labels}</b></div>
+    <div class="trust-row"><span>Field validation</span><b>${VALIDATION.field_validation}</b></div>
+    <div class="trust-note">${VALIDATION.note}</div>
+    <h2 style="margin-top:16px;">Data health — providers</h2>
+    ${Object.entries(DATA_HEALTH.providers).map(([name,caps])=>`
+      <div class="trust-row"><span>${name}</span><span>${Object.entries(caps).map(([c,s])=>`${c}: ${s.status}`).join(' · ')}</span></div>`).join('')}
+  `;
+}
+function toggleTrust(){ trustOpen=!trustOpen; if(view==='detail') renderDetail(); }
+
+function logReview(village,decision){
+  reviewLog.unshift({village,decision,at:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})});
+  renderReviewLog();
+}
+function renderReviewLog(){
+  const el = document.getElementById('reviewLog'); if(!el) return;
+  el.innerHTML = reviewLog.length ? ('Review recorded — outcome tracking remains open.<br>'+reviewLog.slice(0,4).map(r=>`${r.at} — ${r.village}: <b>${r.decision}</b>`).join('<br>')) : '';
+}
+
+function renderAll(){
+  renderHeader();
+  if(view==='overview') renderOverview(); else renderDetail();
+  document.getElementById('villageSelect') && syncSelectorsToCurrent();
+}
+function syncSelectorsToCurrent(){
+  const v = villages.find(x=>x.id===currentId);
+  const rec = LOCATIONS.villages.find(r=>r.village===v.name);
+  if(rec){ document.getElementById('blockSelect').value = rec.block; populateVillageSelect(rec.block); document.getElementById('villageSelect').value = v.name; }
+}
+
+function runSimulation(){
+  if(simRunning) return; simRunning=true; currentId=SIM_ID; view='detail'; renderAll();
+  document.getElementById('simBtn').disabled = true;
+  let stage=0;
+  const step=()=>{
+    const s=SIM_STAGES[stage]; const v=villages.find(x=>x.id===SIM_ID);
+    v.score=s.score; v.uncertainty=s.uncertainty; v.drivers=s.drivers; v.trajectory=s.trajectory; v.actions=s.actions;
+    renderDetail();
+    const wl = document.getElementById('simWeekLabel'); if(wl) wl.textContent = `Week ${s.week} — ${s.note}`;
+    const leadEl = document.getElementById('simLead');
+    if(leadEl && stage===SIM_STAGES.length-1){
+      leadEl.textContent = `Scenario shows "watch" ${SIM_LEAD_WEEKS} weeks before "critical" — computed live by the real scoring engine, not a historical prediction.`;
+      leadEl.style.opacity = 1;
+    }
+    stage++;
+    if(stage<SIM_STAGES.length) setTimeout(step,1700); else { simRunning=false; const b=document.getElementById('simBtn'); if(b) b.disabled=false; }
+  };
+  step();
+}
+
+initLocationSelectors();
+renderAll();
+setInterval(()=>{ document.getElementById('headerTime') && (document.getElementById('headerTime').textContent = new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}) + ' IST'); }, 30000);
+</script>
+</body>
+</html>

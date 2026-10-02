@@ -1,19 +1,25 @@
 """
-Kavach API — Livelihood Early Warning
-=======================================
+Kavach API — Explainable Livelihood-Risk Early-Warning & Decision Support
+============================================================================
 Run locally:
     uvicorn app.main:app --reload --port 8000
 
 Endpoints:
-    GET  /villages                 -> list of all villages with score/status
-    GET  /villages/{village}       -> full detail: score, drivers, cascade, interventions
-    GET  /district/summary         -> counts by status band
-    POST /villages/{village}/what-if  -> re-score with overridden feature values (for demo/simulation)
-    GET  /model/metrics            -> honest model evaluation metrics + data-provenance note
+    GET  /villages                    -> list of all villages with score/status (+ pilot_mode banner)
+    GET  /villages/{village}          -> full assessment: score, uncertainty, drivers, data quality,
+                                          scenario trajectory, suggested actions, validation status
+    GET  /district/summary            -> counts by status band
+    POST /villages/{village}/what-if  -> re-score with overridden feature values (for demo/scenario exploration)
+    GET  /model/metrics               -> model evaluation metrics + explicit non-field-validation notice
+    GET  /model/validation-status     -> the validation-framework status block (section 7 of the design)
+    GET  /provenance                  -> per-feature data provenance metadata
+    POST /villages/{village}/review   -> log an officer review (human-in-the-loop step)
+    GET  /villages/{village}/review-log -> list logged reviews for a village
 
-Data provenance: see backend/data/generate_dataset.py docstring. Snapshot data
-is REPRESENTATIVE/SIMULATED, calibrated to published statistic ranges, not a
-live feed. Swap `load_snapshot()` for a real ingestion call to go live.
+IMPORTANT: everything under "data" in this API is SIMULATED_REPRESENTATIVE
+(see backend/data/generate_dataset.py). This is a pilot/representative mode,
+not a live government data feed, and no output here is a field-validated
+prediction. See GET /model/validation-status.
 """
 import os
 import json
@@ -21,10 +27,16 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
 from . import engine
+from . import review as review_module
 
 HERE = os.path.dirname(os.path.dirname(__file__))
 
-app = FastAPI(title="Kavach — Livelihood Early Warning API", version="0.1.0")
+PILOT_BANNER = (
+    "Pilot / representative mode: current scores are generated from representative "
+    "data and are not field-validated predictions."
+)
+
+app = FastAPI(title="Kavach — Explainable Livelihood-Risk Decision Support API", version="0.2.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
@@ -32,19 +44,53 @@ def load_snapshot() -> pd.DataFrame:
     return pd.read_csv(os.path.join(HERE, "data", "current_snapshot.csv"))
 
 
+def _raw_signals_with_provenance(row: pd.Series) -> list:
+    out = []
+    for f in engine.FEATURES:
+        prov = engine.PROVENANCE.get(f, {})
+        out.append({
+            "feature": f,
+            "label": engine.FRIENDLY[f],
+            "value": row[f],
+            "signal_type": prov.get("signal_type"),
+            "data_status": prov.get("data_status"),
+            "source": prov.get("source"),
+            "geographic_level": prov.get("geographic_level"),
+            "freshness": prov.get("freshness"),
+            "confidence": prov.get("confidence"),
+            "live_equivalent": prov.get("live_equivalent"),
+        })
+    return out
+
+
 def build_village_result(row: pd.Series) -> dict:
     feat = row[engine.FEATURES].to_dict()
-    result = engine.score_village(feat)
-    interventions = engine.rank_interventions(feat, result)
+    result = engine.assess_risk(feat)
+    actions = engine.suggest_actions(feat, result)
     return {
         "village": row["village"],
         "zone": row["zone"],
-        "raw_signals": feat,
-        "risk_score": result["risk_score"],
-        "status": result["status"],
-        "drivers": result["drivers"],
-        "cascade": {"stages": engine.CASCADE_STAGES, "probabilities": [None] + result["cascade"]},
-        "interventions": interventions,
+        "pilot_mode_banner": PILOT_BANNER,
+        "observed_signals": _raw_signals_with_provenance(row),
+        "model_assessment": {
+            "estimated_risk_score": result["risk_score"],
+            "status": result["status"],
+            "model_uncertainty": result["model_uncertainty"],
+            "note": "Model risk score, not a calibrated probability of poverty, migration, debt, or distress.",
+        },
+        "driver_contribution_indicative": {
+            "method": "SHAP (TreeExplainer) over the trained RandomForest",
+            "note": "Explains the MODEL's output, not proven real-world causation.",
+            "drivers": result["drivers"],
+        },
+        "data_quality": result["data_quality"],
+        "scenario_trajectory": {
+            "note": "Illustrative scenario trajectory generated by hand-designed transition weights over "
+                    "representative inputs. Not a forecast validated against field outcomes.",
+            "stages": result["scenario_trajectory"],
+        },
+        "suggested_actions_for_officer_review": actions,
+        "validation_status": result["validation_status"],
     }
 
 
@@ -54,20 +100,22 @@ def list_villages():
     out = []
     for _, row in df.iterrows():
         feat = row[engine.FEATURES].to_dict()
-        result = engine.score_village(feat)
+        result = engine.assess_risk(feat)
         out.append({"village": row["village"], "zone": row["zone"],
-                     "risk_score": result["risk_score"], "status": result["status"]})
-    out.sort(key=lambda v: -v["risk_score"])
-    return out
+                     "estimated_risk_score": result["risk_score"], "status": result["status"]})
+    out.sort(key=lambda v: -v["estimated_risk_score"])
+    return {"pilot_mode_banner": PILOT_BANNER, "villages": out}
 
 
 @app.get("/district/summary")
 def district_summary():
-    villages = list_villages()
+    listing = list_villages()
+    villages = listing["villages"]
     counts = {"stable": 0, "watch": 0, "risk": 0, "critical": 0}
     for v in villages:
         counts[v["status"]] += 1
-    return {"district": "Nadia (representative pilot)", "total_villages": len(villages), "counts": counts}
+    return {"district": "Nadia (representative pilot)", "total_villages": len(villages), "counts": counts,
+            "pilot_mode_banner": PILOT_BANNER}
 
 
 @app.get("/villages/{village}")
@@ -81,7 +129,8 @@ def village_detail(village: str):
 
 @app.post("/villages/{village}/what-if")
 def village_what_if(village: str, overrides: dict = Body(default={})):
-    """Simulate a shock: overrides = {'rainfall_anomaly_pct': -40, ...}"""
+    """Explore a scenario: overrides = {'rainfall_anomaly_pct': -40, ...}.
+    This is scenario exploration, not a historical prediction."""
     df = load_snapshot()
     match = df[df["village"].str.lower() == village.lower()]
     if match.empty:
@@ -99,9 +148,44 @@ def model_metrics():
         metrics = json.load(f)
     with open(os.path.join(HERE, "model_artifacts", "feature_importance.json")) as f:
         importance = json.load(f)
-    return {"metrics": metrics, "feature_importance": importance}
+    return {
+        "metrics": metrics,
+        "feature_importance_global": importance,
+        "important_note": "These metrics describe how well the model recovers a synthetic, "
+                           "literature-grounded causal structure in REPRESENTATIVE data. They are "
+                           "NOT a validated real-world accuracy figure. See /model/validation-status.",
+    }
+
+
+@app.get("/model/validation-status")
+def validation_status():
+    return engine.VALIDATION_STATUS
+
+
+@app.get("/provenance")
+def provenance():
+    return engine.PROVENANCE
+
+
+@app.post("/villages/{village}/review")
+def submit_review(village: str, officer_decision: str = Body(...), action_taken: str = Body(default=None)):
+    """Human-in-the-loop step: SYSTEM ASSESSMENT -> OFFICER REVIEW -> ACTION.
+    Does not allocate benefits or make eligibility decisions — logs a review only."""
+    df = load_snapshot()
+    match = df[df["village"].str.lower() == village.lower()]
+    if match.empty:
+        raise HTTPException(404, f"Village '{village}' not found")
+    feat = match.iloc[0][engine.FEATURES].to_dict()
+    predicted = engine.assess_risk(feat)
+    return review_module.log_officer_review(village, predicted, officer_decision, action_taken)
+
+
+@app.get("/villages/{village}/review-log")
+def review_log(village: str):
+    return review_module.list_review_log(village)
 
 
 @app.get("/")
 def root():
-    return {"service": "Kavach Livelihood Early Warning API", "docs": "/docs"}
+    return {"service": "Kavach — Explainable Livelihood-Risk Decision Support API",
+            "pilot_mode_banner": PILOT_BANNER, "docs": "/docs"}

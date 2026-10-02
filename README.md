@@ -1,130 +1,137 @@
-# Kavach — Livelihood Resilience Grid
+# Kavach — Explainable Livelihood-Risk Early-Warning & Decision Support
 
 ## One-line description
-An early-warning and intervention-orchestration layer that detects when
-climate, crop, market and employment risks are converging on a village, and
-recommends the earliest feasible action using **existing** government
-mechanisms (Meghdoot advisories, PMFBY, MGNREGA, e-NAM) instead of building
-another standalone farmer app.
+A decision-support layer that turns fragmented climate, crop, market, water
+and employment signals into an auditable early-warning workflow: it
+estimates risk, explains why risk is rising, explores plausible scenario
+trajectories, and surfaces rule-based suggested actions for a human officer
+to review — using programs (PMFBY, MGNREGA, mKisan, e-NAM) that already
+exist, rather than replacing them.
 
-## Problem
-Weather, crop, market and employment data already exist in separate
-government systems. A household experiences these as one connected crisis;
-the current information architecture only detects individual events, not the
-interaction between them — so intervention comes late, after distress has
-already compounded.
+## What Kavach is not
+Kavach does **not** claim to predict poverty, migration, debt or livelihood
+distress with a validated real-world probability. It does not auto-allocate
+benefits or make eligibility decisions. Every score, driver, and trajectory
+in this build is computed by a real, running pipeline over **representative
+/ simulated** data — not a live government feed — and is labeled as such
+throughout the API and UI. See "Data & Validation status" below before
+presenting this anywhere.
 
-## Solution
-A **risk-convergence + cascade-prediction + intervention-ranking** pipeline:
-six signals feed a trained classifier that outputs a 0–100 risk score, a
-transparent driver breakdown ("why is risk rising"), a 5-stage causal cascade
-(shock → crop stress → income loss → debt → employment pressure → migration
-risk), and a ranked list of interventions tied to real, existing programs.
+## Architecture (the required pipeline)
+```
+DATA SIGNALS
+   -> DATA QUALITY / PROVENANCE     (backend/data/generate_dataset.py: FEATURE_PROVENANCE)
+   -> RISK ASSESSMENT               (backend/app/engine.py: assess_risk — RandomForest,
+                                      "estimated risk score", real model-uncertainty from
+                                      tree disagreement, NOT a calibrated probability)
+   -> DRIVER EXPLANATION            (real SHAP TreeExplainer output, labeled
+                                      "driver contribution — indicative", not causal proof)
+   -> SCENARIO / TRAJECTORY ENGINE  (hand-designed transition weights, labeled
+                                      "illustrative scenario trajectory", not a forecast)
+   -> INTERVENTION RULE ENGINE      (deterministic, rule-based, tied to real programs;
+                                      "suggested actions for officer review")
+   -> HUMAN REVIEW                  (backend/app/review.py: officer decision logged)
+   -> OUTCOME TRACKING              (subsequent_outcome field, intentionally null —
+                                      no real pilot has observed it yet)
+   -> FUTURE MODEL VALIDATION       (backend/app/main.py: GET /model/validation-status)
+```
 
 ## Key features
-- Real trained model (RandomForest, scikit-learn) — not a hand-tuned demo score
-- Transparent, auditable driver attribution (feature importance × local severity)
-- Causal cascade chain with monotonically-decaying conditional probabilities
-- Rule-based intervention engine mapped to PMFBY / MGNREGA / mKisan / e-NAM
-- A live 8-week "what-if" simulation computed by calling the real model at
-  each stage (not scripted numbers) — used for the demo's wow moment
-- FastAPI backend with a documented path to swap simulated inputs for live feeds
-
-## Why it is different
-Existing systems (Meghdoot, e-NAM, PMFBY, MGNREGA, FEWS NET, WFP HungerMap)
-already do climate, crop, market or food-security monitoring individually.
-The differentiator here is **not another data source** — it's the decision
-graph connecting signals → risk → explanation → cascade → intervention →
-outcome, built specifically around India's existing scheme infrastructure.
-
-## Architecture
-```
-Data sources (weather / crop / market / employment / water / vulnerability)
-        -> Feature engineering (backend/app/engine.py: FEATURES)
-        -> RandomForest risk model (backend/train_model.py)
-        -> Explainability layer (feature importance x local severity)
-        -> Cascade engine (causal-graph-weighted transition chain)
-        -> Intervention engine (rule-based, tied to real programs)
-        -> FastAPI (backend/app/main.py)
-        -> Dashboard (frontend/kavach_dashboard.html)
-```
+- Real trained RandomForestClassifier (scikit-learn) — kept as the risk model per design;
+  an LLM is never used to compute the score, only (optionally) to narrate it downstream
+- Real SHAP (TreeExplainer) driver attribution — genuine model explanation, explicitly
+  labeled as indicative, not proof of real-world causation
+- Genuine model uncertainty: standard deviation of per-tree probability estimates across
+  the forest, surfaced as "low / moderate / high model disagreement"
+- Full data-provenance metadata on every signal: source, data_status
+  (`SIMULATED_REPRESENTATIVE`), geographic level, freshness, confidence, and what the
+  live equivalent would be
+- Scenario trajectory (not "predicted cascade"): each stage tagged `OBSERVED_SIGNAL`,
+  `SCENARIO_ESTIMATE`, or `SCENARIO_INDICATOR`, with a qualitative relative-risk level
+  and a confidence figure that deliberately decays down the chain
+- Rule-based, deterministic intervention engine — same inputs always produce the same
+  suggested actions (tested; see `backend/tests/`), each requiring officer review
+- Human-in-the-loop logging: `POST /villages/{village}/review` records an officer's
+  decision, with `subsequent_outcome` intentionally left null until a real pilot exists
+  to observe it
+- A `GET /model/validation-status` endpoint stating, in plain language, that this model
+  is not field-validated and that no real outcome-label dataset currently exists
+- 18 automated tests (`backend/tests/test_methodological_honesty.py`) that fail if any
+  future change re-introduces overclaiming language, mislabels simulated data as live,
+  or conflates the scenario trajectory with an observed outcome
 
 ## Tech stack
-- **Model**: Python, scikit-learn (RandomForestClassifier)
+- **Model**: Python, scikit-learn (RandomForestClassifier), SHAP (TreeExplainer)
 - **Backend**: FastAPI, pandas, numpy
-- **Frontend**: Self-contained HTML/CSS/JS dashboard (no build step; embeds
-  precomputed model output for the published demo, calls the live API when
-  deployed with a backend running)
+- **Frontend**: self-contained HTML/CSS/JS dashboard, no build step
 
-## AI/ML component
-A tabular RandomForestClassifier is the risk engine, trained on 1,200
-representative observation-samples (40 per village × 30 villages). It is
-**not** an LLM — per design, an LLM is only appropriate downstream, to turn
-the model's numeric output into plain-language explanation, never to compute
-the score itself. Held-out evaluation: **AUC 0.73, precision 0.43, recall
-0.63** (see `backend/model_artifacts/metrics.json`).
+## Data & Validation status — read before presenting this anywhere
+| | |
+|---|---|
+| Model validation | **Not field validated** |
+| Data | **Representative / simulated** |
+| Real outcome labels | **Not currently available** |
+| Field validation | **Future pilot** |
 
-##  Data & Limitations — read before presenting this
-1. **No public, household-level, ground-truth "did this household suffer a
-   livelihood distress cascade" dataset exists.** Meghdoot, e-NAM, MGNREGA MIS
-   and PMFBY expose real signals, not a labeled outcome variable. This is a
-   real constraint on the whole problem space, not a shortcut we took.
-2. The **feature value ranges** (rainfall anomaly, crop stress, price
-   deviation, MGNREGA demand spike, water stress, historical vulnerability)
-   are calibrated to match published statistic ranges cited in the project's
-   research review (IMD/Meghdoot bulletins, e-NAM price data, MGNREGA MIS
-   dashboards, and West Bengal rice-farmer livelihood-vulnerability
-   literature) — see `backend/data/generate_dataset.py` docstring for exact
-   sourcing per feature.
-3. The **outcome label** used to train the model is synthetically generated
-   from the causal cascade structure (FEWS NET's livelihoods-based
-   methodology), plus noise. It is a credible, literature-grounded simulation
-   — it is not a real observed outcome.
-4. Therefore: **the AUC/precision/recall numbers describe how well the model
-   recovers the synthetic structure we built in, not real-world predictive
-   accuracy.** Do not present them as validated field accuracy. Say so
-   explicitly if a judge asks (see PITCH.md Q&A).
-5. **No live API calls are wired up.** This sandbox's network is restricted;
-   the backend is architected so `load_snapshot()` in `app/main.py` and the
-   feature columns in `generate_dataset.py` are the only places that need to
-   change to plug in Open-Meteo/IMD, Sentinel NDVI (Earth Engine), AGMARKNET/
-   e-NAM, and NREGA MIS's public endpoints for a real deployment.
-6. Migration is presented as a **distress-pressure indicator**, never a
-   deterministic prediction, by design.
+No public, household- or village-level ground-truth "did this place experience a
+livelihood distress cascade" dataset exists in India's open-data ecosystem today.
+Meghdoot, e-NAM, MGNREGA MIS and PMFBY expose real *signals*, not a labeled outcome
+variable. This is a real constraint on the whole problem space, not a shortcut taken
+here — and it's disclosed up front as an intentional research boundary, not a hidden
+limitation.
+
+Feature value **ranges** are calibrated to published statistics (see per-feature
+`calibration_note` in `backend/data/generate_dataset.py`: IMD/Meghdoot bulletins, e-NAM
+price data, MGNREGA MIS dashboards, and the West Bengal rice-farmer
+livelihood-vulnerability literature). The **outcome label** used to train the model,
+and the scenario trajectory's transition weights, are synthetic constructions
+consistent with FEWS NET's livelihoods-based causal structure — not observed events.
+
+Model metrics (`backend/model_artifacts/metrics.json`: AUC 0.73, precision 0.43,
+recall 0.63) describe how well the model recovers **the synthetic structure we built
+in**, not real-world predictive accuracy. `is_field_validated` is hard-coded `False`.
+
+No live API calls are wired up in this sandbox (network access here is restricted to
+package registries). The backend is structured so that `load_snapshot()` in
+`app/main.py` and the feature columns in `generate_dataset.py` are the only places that
+need to change to plug in Open-Meteo/IMD, Sentinel NDVI (Earth Engine), AGMARKNET/e-NAM,
+and NREGA MIS's public endpoints for a real deployment.
+
+Migration is presented only as a **scenario/distress-pressure indicator**, never a
+deterministic prediction, by design.
 
 ## Setup
 ```bash
 cd backend
 pip install -r requirements.txt
-python data/generate_dataset.py   # builds representative dataset
+python data/generate_dataset.py   # builds representative dataset + provenance metadata
 python train_model.py             # trains the real model, writes metrics.json
-python export_snapshot.py         # scores all villages + builds the demo simulation
+python export_snapshot.py         # scores all villages + builds the demo scenario, writes frontend data
+python -m pytest tests/ -q        # 18 tests: methodological-honesty invariants
 uvicorn app.main:app --reload --port 8000
 ```
 
-## Environment variables
-None required for the representative pilot. For a live deployment, add:
-`OPENMETEO_API_KEY` (optional, free tier works without one), `DATA_GOV_IN_API_KEY`
-(AGMARKNET/e-NAM), `NREGA_MIS_ENDPOINT`, `GEE_SERVICE_ACCOUNT_JSON` (Sentinel NDVI).
-
 ## Running locally
-See Setup above. API docs auto-served at `http://localhost:8000/docs`.
-Frontend: open `frontend/kavach_dashboard.html` directly, or serve it and
-point its fetch calls at the running API (currently it embeds a precomputed
-snapshot so the published demo works without a live backend).
+API docs auto-served at `http://localhost:8000/docs`. Key endpoints:
+`GET /villages`, `GET /villages/{village}`, `GET /model/validation-status`,
+`GET /provenance`, `POST /villages/{village}/review`.
+Frontend: open `frontend/kavach_dashboard.html` (embeds a precomputed snapshot so the
+published demo works without a live backend running).
 
 ## Demo flow
-1. Open the dashboard — 30 villages, colour-coded by status.
-2. Click the highest-risk village → show driver breakdown, cascade, and
-   ranked interventions (all real model output).
-3. Click **"Simulate 8-week trajectory"** — watch Bagula move
-   🟢 stable → 🟡 watch → 🟠 at-risk → 🔴 critical, with the model recomputing
-   score/drivers/cascade/interventions at each stage. The dashboard states the
-   real computed lead time (weeks of warning before critical status).
+1. Village selected → 2. Observed signals (with provenance badges) → 3. Model
+assessment (estimated risk score + uncertainty) → 4. Driver contribution (indicative
+SHAP) → 5. Illustrative scenario trajectory → 6. Suggested actions for officer review
+→ 7. Officer review (Approve / Defer / Escalate, logged) → 8. Outcome tracking (null
+until a real pilot exists).
+
+Story: *"Many systems already generate signals. Kavach turns those fragmented signals
+into an auditable early-warning workflow."* Not: *"Kavach predicts exactly what will
+happen."*
 
 ## Future scope
 - Wire live feeds (Open-Meteo/IMD, Sentinel NDVI, AGMARKNET, NREGA MIS)
-- Replace feature-importance-based attribution with full SHAP decomposition
-- Partner with a state rural development department for a real pilot with an
-  actual outcome-tracking process (the only way to get real ground truth)
+- Partner with a state rural-development department for a real pilot that observes and
+  records the `subsequent_outcome` field this build already reserves for it — the only
+  way any real accuracy claim becomes possible
 - Household/cluster-level prioritization once ethically and operationally reviewed

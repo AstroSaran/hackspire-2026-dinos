@@ -39,16 +39,18 @@ model.fit(X_train, y_train)
 pred_proba = model.predict_proba(X_test)[:, 1]
 pred = model.predict(X_test)
 metrics = {
+    "is_field_validated": False,
     "auc": round(float(roc_auc_score(y_test, pred_proba)), 3),
     "precision": round(float(precision_score(y_test, pred)), 3),
     "recall": round(float(recall_score(y_test, pred)), 3),
     "n_train": len(X_train),
     "n_test": len(X_test),
+    "data_status": "SIMULATED_REPRESENTATIVE",
     "note": "Evaluated on held-out REPRESENTATIVE/SIMULATED data, not a real "
             "historical outcome dataset. These numbers describe how well the "
             "model recovers the synthetic causal structure we built in, not "
-            "real-world predictive accuracy. Do not present as a validated "
-            "field accuracy figure.",
+            "real-world predictive accuracy. is_field_validated is always False "
+            "in this build — see /model/validation-status.",
 }
 
 os.makedirs(os.path.join(HERE, "model_artifacts"), exist_ok=True)

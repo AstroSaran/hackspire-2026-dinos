@@ -1,0 +1,62 @@
+{
+  "rainfall_anomaly_pct": {
+    "source": "Representative simulation, calibrated to IMD/Meghdoot agromet bulletin deviation ranges",
+    "data_status": "SIMULATED_REPRESENTATIVE",
+    "geographic_level": "block",
+    "signal_type": "observed_signal",
+    "calibration_note": "Gangetic WB block-level deviation from normal typically reported -60% to +40% during a stressed monsoon window.",
+    "freshness": "static_demo_snapshot",
+    "confidence": "low",
+    "live_equivalent": "Open-Meteo / IMD Meghdoot API"
+  },
+  "crop_stress_index": {
+    "source": "Representative simulation, calibrated to remote-sensing (NDVI-style) crop-stress literature",
+    "data_status": "SIMULATED_REPRESENTATIVE",
+    "geographic_level": "village",
+    "signal_type": "observed_signal",
+    "calibration_note": "Derived index tracking |rainfall anomaly| plus independent noise for pest/soil factors, consistent with the West Bengal rice-farmer vulnerability literature.",
+    "freshness": "static_demo_snapshot",
+    "confidence": "low",
+    "live_equivalent": "Sentinel-2/Landsat NDVI via Google Earth Engine"
+  },
+  "mandi_price_deviation_pct": {
+    "source": "Representative simulation, calibrated to e-NAM/AGMARKNET price-bulletin volatility ranges",
+    "data_status": "SIMULATED_REPRESENTATIVE",
+    "geographic_level": "mandi_catchment",
+    "signal_type": "observed_signal",
+    "calibration_note": "Deviation from a 3-year seasonal average, pushed negative under simulated distress-sale conditions.",
+    "freshness": "static_demo_snapshot",
+    "confidence": "low",
+    "live_equivalent": "e-NAM / AGMARKNET public price API"
+  },
+  "mgnrega_demand_spike_pct": {
+    "source": "Representative simulation, calibrated to published MGNREGA MIS work-demand ranges",
+    "data_status": "SIMULATED_REPRESENTATIVE",
+    "geographic_level": "gram_panchayat",
+    "signal_type": "observed_signal",
+    "calibration_note": "Percent change in households demanding work vs district median.",
+    "freshness": "static_demo_snapshot",
+    "confidence": "low",
+    "live_equivalent": "NREGA MIS public dashboard/API"
+  },
+  "water_stress_index": {
+    "source": "Representative simulation, loosely coupled to rainfall deficit plus independent noise",
+    "data_status": "SIMULATED_REPRESENTATIVE",
+    "geographic_level": "block",
+    "signal_type": "observed_signal",
+    "calibration_note": "No single authoritative published range; treated as the weakest-provenance signal in this build.",
+    "freshness": "static_demo_snapshot",
+    "confidence": "very_low",
+    "live_equivalent": "CGWB groundwater bulletins / reservoir telemetry"
+  },
+  "historical_vulnerability": {
+    "source": "Representative simulation \u2014 static per-village trait (land fragmentation, irrigation coverage, debt exposure proxy)",
+    "data_status": "SIMULATED_REPRESENTATIVE",
+    "geographic_level": "village",
+    "signal_type": "derived_indicator",
+    "calibration_note": "Not time-varying in this build; a live deployment would refresh this from a periodically maintained vulnerability register, not a real-time feed.",
+    "freshness": "static_demo_snapshot",
+    "confidence": "very_low",
+    "live_equivalent": "State rural-development vulnerability register (no real-time source exists)"
+  }
+}

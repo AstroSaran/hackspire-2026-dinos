@@ -30,10 +30,28 @@ def slim_signals(row):
 
 def slim_weather(weather_block):
     if not weather_block or "observation" not in weather_block:
-        return None
+        return {"status": (weather_block or {}).get("status", "UNAVAILABLE"),
+                "note": (weather_block or {}).get("note")}
     obs = weather_block["observation"]
-    return [obs["status"], obs.get("temperature_c"), obs.get("rainfall_mm"), obs.get("humidity_pct"),
-            obs.get("wind_speed_kmh"), obs.get("provider_name"), obs.get("observation_time"), obs.get("note")]
+    fc = weather_block.get("forecast", {})
+    warn = weather_block.get("warnings", {})
+    pipeline = weather_block.get("rainfall_anomaly_pipeline") or {}
+    return {
+        "status": obs["status"], "provider": obs.get("provider"), "provider_name": obs.get("provider_name"),
+        "source": obs.get("source"),
+        "temperature_c": obs.get("temperature_c"), "precipitation_mm": obs.get("precipitation_mm"),
+        "humidity_pct": obs.get("humidity_pct"), "wind_speed_kmh": obs.get("wind_speed_kmh"),
+        "wind_direction_deg": obs.get("wind_direction_deg"),
+        "observed_at": obs.get("observed_at"), "fetched_at": obs.get("fetched_at"),
+        "cache_status": obs.get("cache_status"), "freshness": obs.get("freshness"), "note": obs.get("note"),
+        "forecast_days": [[d["date"], d.get("precipitation_sum_mm"), d.get("temperature_max_c"), d.get("temperature_min_c")]
+                          for d in fc.get("days", [])][:7],
+        "forecast_status": fc.get("status"),
+        "warnings_status": warn.get("status"), "warnings": warn.get("warnings", []), "warnings_note": warn.get("note"),
+        "rainfall_anomaly_pct": pipeline.get("rainfall_anomaly_pct"),
+        "rainfall_model_input_used": pipeline.get("model_input_used"),
+        "rainfall_baseline_period": pipeline.get("baseline_period"),
+    }
 
 
 # 1. All villages, fully assessed by the real (reframed) pipeline, weather included

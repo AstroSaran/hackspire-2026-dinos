@@ -231,29 +231,32 @@ def test_unknown_village_resolves_to_none():
 
 
 # --- Weather model / provider tests (Part 32) --------------------------------
+# (fuller, properly-mocked weather coverage lives in test_weather_integration.py;
+# these two just check the normalized model's field shape.)
 
 def test_observation_has_timestamp_fields():
-    from app.weather.models import WeatherObservation, now_iso
+    from app.weather.models import WeatherObservation, now_ist
     obs = WeatherObservation(
-        source="IMD", provider_name="India Meteorological Department", country="India",
-        state="West Bengal", district="Nadia", block="Krishnanagar Sadar", village="Bagula",
+        provider="imd", provider_name="India Meteorological Department", source="IMD current-weather API",
+        country="India", state="West Bengal", district="Nadia", block="Krishnanagar Sadar", village="Bagula",
         latitude=23.4, longitude=88.5, location_resolution="station",
-        observation_time="2026-09-26T10:00:00+05:30", retrieved_at=now_iso(), status="LIVE",
+        observed_at="2026-09-26T10:00:00+05:30", fetched_at=now_ist(), status="LIVE",
     )
-    assert obs.observation_time is not None
-    assert obs.retrieved_at is not None
+    assert obs.observed_at is not None
+    assert obs.fetched_at is not None
+    assert obs.timezone == "Asia/Kolkata"
 
 
 def test_forecast_has_issue_time_and_differs_from_observation_shape():
     from app.weather.models import WeatherForecast
     fc = WeatherForecast(
-        source="IMD", provider_name="India Meteorological Department", country="India",
-        state="West Bengal", district="Nadia", block="Krishnanagar Sadar", village="Bagula",
-        latitude=23.4, longitude=88.5, forecast_issue_time="2026-09-26T06:00:00+05:30", status="LIVE",
+        provider="imd", provider_name="India Meteorological Department", source="IMD forecast API",
+        country="India", state="West Bengal", district="Nadia", block="Krishnanagar Sadar", village="Bagula",
+        latitude=23.4, longitude=88.5, issued_at="2026-09-26T06:00:00+05:30", status="LIVE",
     )
-    assert fc.forecast_issue_time is not None
-    assert fc.data_type == "forecast"
-    assert not hasattr(fc, "observation_time")  # forecast and observation are never mixed
+    assert fc.issued_at is not None
+    assert fc.data_type == "FORECAST"
+    assert not hasattr(fc, "observed_at")  # forecast and observation are never mixed
 
 
 def test_imd_endpoint_requires_station_id_never_guesses_one():
@@ -281,7 +284,7 @@ def test_provider_failure_never_produces_fake_reading(monkeypatch):
                    village="TestVillage", latitude=23.4, longitude=88.5, resolution="block_centroid")
     obs = weather_service.get_current_weather(loc)
     assert obs.status == "UNAVAILABLE"
-    assert obs.temperature_c is None and obs.rainfall_mm is None
+    assert obs.temperature_c is None and obs.precipitation_mm is None
     assert "UNAVAILABLE" in obs.note
 
 

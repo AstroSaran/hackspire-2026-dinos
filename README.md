@@ -1,11 +1,5 @@
 # Kavach — Explainable Livelihood-Risk Early-Warning & Decision Support
 
-![Tests](https://github.com/AstroSaran/hackspire-2026-dinos/actions/workflows/test.yml/badge.svg)
-![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-
-> 🛡️ **Kavach** (Sanskrit: "shield") - Protecting rural livelihoods through early warning
-
 ## One-line description
 A decision-support layer that turns fragmented climate, crop, market, water
 and employment signals into an auditable early-warning workflow: it
@@ -45,44 +39,75 @@ DATA SIGNALS
 ## Real weather integration (West Bengal, India)
 Country: India · State: West Bengal · Timezone: Asia/Kolkata · Units: °C, mm, km/h.
 
+**Provider priority** (`backend/app/weather/service.py`):
+1. **IMD** — only attempted if `IMD_ENABLED=true` (default `false`: not yet whitelisted).
+2. **Open-Meteo** — the immediate real-data source. Public, keyless, always attempted as fallback.
+3. **Demo** — only if `WEATHER_DEMO_FALLBACK=true`. Always `SIMULATED_DEMO`, never `LIVE`.
+
 **Architecture**: `WeatherProvider` abstraction (`backend/app/weather/providers.py`) with
-`IMDWeatherProvider` (primary) and `OpenMeteoWeatherProvider` (documented fallback), an
-orchestration layer with caching and health tracking (`backend/app/weather/service.py`),
-and a normalized, provider-independent data model (`backend/app/weather/models.py`) that
-never mixes observation and forecast fields.
+`IMDWeatherProvider`, `OpenMeteoWeatherProvider`, `DemoWeatherProvider`; an orchestration
+layer with real caching/freshness/health tracking (`backend/app/weather/service.py`); a
+historical-baseline module (`backend/app/weather/historical.py`); and a normalized data
+model (`backend/app/weather/models.py`) carrying full provenance (provider, source,
+status, data_status, data_type, location, observed_at/issued_at/fetched_at, timezone,
+freshness, cache_status) that never mixes observation and forecast fields.
 
-**IMD investigation — what is actually true, verified during this build:** IMD publishes
-real, documented API endpoints (`mausam.imd.gov.in/api/current_wx_api.php`,
-`districtwise_rainfall_api.php`, `warnings_district_api.php`, `nowcast_district_api.php`,
-and the newer `api.imd.gov.in/api/v1/*` family). **They require IP whitelisting by an IMD
-nodal officer.** This was independently confirmed two ways: a live test against a real
-endpoint from this build returned HTTP 401, and multiple third-party developer projects
-report the identical 401-without-whitelisting behavior. `IMDWeatherProvider` is coded
-against the real, correct endpoint contracts and will work once a deployment is
-whitelisted and real IMD station/district IDs are supplied — it does not scrape, guess,
-or work around the restriction.
+**IMD** — confirmed via a live 401 test and independent third-party reports: real,
+documented endpoints exist but require IP whitelisting by IMD's nodal officer. Kept in
+the architecture as the future primary provider (`IMD_ENABLED=false` by default); no
+bearer-token flow was invented for it since none exists publicly.
 
-**Open-Meteo** (`api.open-meteo.com/v1/forecast`) is a genuinely public, keyless, live
-weather API (global NWP model blend — not IMD-sourced), used only as the documented
-fallback. It is explicitly labeled "not IMD" everywhere it appears (tested).
+**Open-Meteo** — real, public, keyless. Two APIs used: the forecast API
+(`api.open-meteo.com/v1/forecast` — current + 7-day daily, requesting only
+temperature/humidity/precipitation/rain/wind speed/wind direction, per Part 4's "don't
+request unnecessary variables") and the historical ERA5 archive API
+(`archive-api.open-meteo.com/v1/archive`) for baseline computation. Both confirmed via
+Open-Meteo's own official documentation and GitHub repo. Labeled "not IMD" everywhere it
+appears (tested).
 
-**Sandbox limitation, stated plainly:** this development container's network egress is
-restricted to package registries and does not include either `mausam.imd.gov.in` or
-`api.open-meteo.com` — confirmed via a direct request that returned this container's own
-egress-proxy `403 host_not_allowed`, not a rejection from either weather service. Neither
-provider could be executed live from inside this container. Both are written against
-each API's real, independently-verified contract; run them in an environment with normal
-internet egress to get genuinely live data.
+**Sandbox limitation, stated plainly:** this development container's network egress does
+not reach `mausam.imd.gov.in`, `api.open-meteo.com`, or `data.gov.in` — confirmed via a
+direct request that returned this container's own egress-proxy `403 host_not_allowed`,
+and via `web_fetch`'s robots.txt policy on the same hosts. **Neither provider's live call
+could be executed from inside this container.** Every provider is written against its
+real, independently-verified API contract; deploy with normal internet egress (which
+almost any real hosting environment has) to get genuinely live data immediately for
+Open-Meteo — no IMD whitelisting wait required.
 
-**Demo mode** (Part 35): with `WEATHER_DEMO_FALLBACK=true`, a third provider
-(`DemoWeatherProvider`) supplies clearly-labeled `SIMULATED_DEMO` weather (deterministic
-per-village values, never random, never labeled `LIVE`) so the dashboard's weather card
-is demonstrable even where no live provider is reachable. The published dashboard was
-exported with this flag on — its weather card says `SIMULATED_DEMO`, not `LIVE`, and
-`/data-health` shows the real IMD/Open-Meteo provider failures underneath.
+**Demo mode**: with `WEATHER_DEMO_FALLBACK=true`, `DemoWeatherProvider` supplies
+clearly-labeled `SIMULATED_DEMO` weather (deterministic per-village values, never random)
+so the dashboard's weather card is demonstrable where no live provider is reachable — the
+published dashboard was exported with this flag on; its weather card says
+`SIMULATED_DEMO`, not `LIVE`.
 
-**Per-signal data coverage** (Part 9) — never one blanket LIVE/SIMULATED label; every
-response carries a `data_coverage` object:
+**Rainfall anomaly pipeline** (`backend/app/weather_features.py`, Part 9): OBSERVATION →
+HISTORICAL BASELINE → ANOMALY → QUALITY CHECK → MODEL INPUT, every stage inspectable via
+`weather.rainfall_anomaly_pipeline` in the API response. **A defensible baseline could
+not be constructed in this build** — computing one honestly requires either (a) a
+data.gov.in API key for India OGD's official IMD district-normal-rainfall dataset
+(confirmed to exist at `www.data.gov.in/catalog/rainfall`, not obtained here), or (b) a
+real multi-decade batch call to Open-Meteo's ERA5 archive (this sandbox has no network
+egress to run it). So `rainfall_anomaly_pct` is honestly `UNAVAILABLE` with
+`model_input_used: false` throughout this build, per Part 9's explicit instruction rather
+than inventing a plausible-looking normal. See `historical.py`'s `--populate` entry point
+for the real (not-yet-run) computation path, and `GET /data-health` →
+`historical_baseline` for live status.
+
+**Live weather vs. the trained model** (Part 13) — the RandomForest is trained on the
+representative/synthetic dataset (`backend/data/generate_dataset.py`) and remains so:
+displaying live Open-Meteo weather does **not** mean the model was retrained on it. Every
+village response's `observed_signals[].model_input_used` is `true` for the six
+representative features (they ARE the model's real input today) and the weather block's
+`rainfall_model_input_used` is `false` (live weather is shown, not yet fed to the model)
+— this distinction is asserted by a test (`test_model_input_flag_distinguishes...`).
+
+**Weather warnings** (Part 11) — Open-Meteo has no warnings product and IMD's requires
+whitelisting, so `GET /weather/{village}/warnings` returns `{"status": "UNAVAILABLE", ...}`
+today. The UI renders this as **"WARNING STATUS UNAVAILABLE"**, never "no active
+warning" — that phrase is reserved for when a real source was genuinely queried and
+returned an empty result.
+
+**Per-signal data coverage** (Part 14) — every response carries a `data_coverage` object:
 ```
 weather:        LIVE | STALE | SIMULATED_DEMO | UNAVAILABLE  (see /data-health for why)
 crop:           SIMULATED
@@ -90,23 +115,19 @@ market:         SIMULATED
 employment:     SIMULATED
 water:          SIMULATED
 vulnerability:  SIMULATED
+historical_outcomes: NOT_AVAILABLE
 ```
-The live-weather-derived rainfall anomaly (`backend/app/weather_features.py`) is computed
-against an explicitly labeled `PROTOTYPE_BASELINE_MM` constant — a real 30-year IMD
-climatological normal is not wired in — and is exposed as an **additive, transparent
-signal** (`weather.derived_rainfall_anomaly` in the API response), not silently merged
-into the trained model's `rainfall_anomaly_pct` feature, so the model's
-already-internally-consistent behavior is not disturbed by a partially-sourced
-replacement input.
 
 **West Bengal geography** (`backend/app/geography.py`): real Nadia district/block
 hierarchy (Krishnanagar Sadar, Tehatta, Ranaghat, Kalyani) with block-headquarters
 centroid coordinates (general public geography; resolution marked `block_centroid`, not
-village-level GPS). IMD's own numeric district ID for Nadia is not published as an open,
-verifiable lookup table, so `imd_district_id` is left `None` rather than guessed —
-filling it in is a one-line config change once obtained directly from IMD.
+village-level GPS — Part 5). IMD's own numeric district ID for Nadia is not published as
+an open, verifiable lookup table, so `imd_district_id` is left `None` rather than
+guessed. A village with no geography record resolves to an explicit "weather location
+unavailable" response, never a fabricated coordinate (tested).
 
 ## Key features
+
 - Real trained RandomForestClassifier (scikit-learn) — kept as the risk model per design;
   an LLM is never used to compute the score, only (optionally) to narrate it downstream
 - Real SHAP (TreeExplainer) driver attribution — genuine model explanation, explicitly
@@ -126,12 +147,16 @@ filling it in is a one-line config change once obtained directly from IMD.
   to observe it
 - A `GET /model/validation-status` endpoint stating, in plain language, that this model
   is not field-validated and that no real outcome-label dataset currently exists
-- 18 automated tests (`backend/tests/test_methodological_honesty.py`) that fail if any
-  future change re-introduces overclaiming language, mislabels simulated data as live,
-  or conflates the scenario trajectory with an observed outcome
+- 59 automated tests across `backend/tests/test_methodological_honesty.py` and
+  `test_weather_integration.py` — properly mocked (no real network dependency, Part 19),
+  covering geography, provider fallback, caching, IST timestamps, rainfall-anomaly
+  pipeline, and every overclaiming-language guard, plus one explicitly opt-in real-network
+  integration test (skipped by default)
 
 ## Tech stack
 - **Model**: Python, scikit-learn (RandomForestClassifier), SHAP (TreeExplainer)
+- **Weather**: `requests` against Open-Meteo (immediate, live) and IMD (future, pending
+  whitelisting); historical baseline path documented against India OGD + Open-Meteo ERA5
 - **Backend**: FastAPI, pandas, numpy
 - **Frontend**: self-contained HTML/CSS/JS dashboard, no build step
 
@@ -170,49 +195,41 @@ and NREGA MIS's public endpoints for a real deployment.
 Migration is presented only as a **scenario/distress-pressure indicator**, never a
 deterministic prediction, by design.
 
-## Quick Start
-
-### Automated Setup (Recommended)
-```bash
-# Linux/macOS
-./setup.sh
-
-# Windows PowerShell
-.\setup.ps1
-```
-
-### Manual Setup
+## Setup
 ```bash
 cd backend
 pip install -r requirements.txt
-cp .env.example .env   # then set WEATHER_PROVIDER, WEATHER_DEMO_FALLBACK etc.
+cp .env.example .env   # set IMD_ENABLED, WEATHER_DEMO_FALLBACK, DATA_GOV_IN_API_KEY etc.
 python data/generate_dataset.py   # builds representative dataset + provenance metadata
 python train_model.py             # trains the real model, writes metrics.json
-python export_snapshot.py         # scores all villages, fetches weather, writes frontend data
-python -m pytest tests/ -q        # 31 tests: methodological honesty + geography + weather + failure modes
+python export_snapshot.py         # scores all villages, attempts live weather, writes frontend data
+python -m pytest tests/ -q        # 59 tests (1 skipped: opt-in real-network integration test)
 uvicorn app.main:app --reload --port 8000
 ```
+To see genuinely live Open-Meteo data: deploy anywhere with normal internet egress and
+leave `IMD_ENABLED=false` (default) — Open-Meteo needs no key and no whitelisting.
+To run the real-network integration test: `KAVACH_RUN_LIVE_INTEGRATION_TESTS=true python -m pytest tests/test_weather_integration.py -k integration`.
 
 ## Running locally
 API docs auto-served at `http://localhost:8000/docs`. Key endpoints:
 `GET /villages`, `GET /villages/{village}`, `GET /model/validation-status`,
 `GET /provenance`, `GET /locations`, `GET /weather/{village}`,
 `GET /weather/{village}/forecast`, `GET /weather/{village}/warnings`,
-`GET /data-health`, `POST /villages/{village}/review`.
-Frontend: open `frontend/kavach_dashboard.html` (embeds a precomputed snapshot,
-including the real weather-provider attempt's result, so the published demo works
-without a live backend running).
+`GET /data-health`, `POST /villages/{village}/review`, `GET /villages/{village}/review-log`.
+Frontend: open `frontend/kavach_dashboard.html` (embeds a precomputed snapshot so the
+published demo works standalone; set `window.KAVACH_API_BASE` before load to point the
+officer-review buttons at a real running backend instead of the static fallback).
 
-## Demo flow
-1. Village selected → 2. Observed signals (with provenance badges) → 3. Model
-assessment (estimated risk score + uncertainty) → 4. Driver contribution (indicative
-SHAP) → 5. Illustrative scenario trajectory → 6. Suggested actions for officer review
-→ 7. Officer review (Approve / Defer / Escalate, logged) → 8. Outcome tracking (null
-until a real pilot exists).
+## Demo flow (Part 24)
+Open Kavach → West Bengal location hierarchy → select a village → risk score /100 → why
+is risk rising → live Open-Meteo weather (source + timestamp) → forecast → data-health
+panel → which inputs are real vs. representative → illustrative scenario trajectory →
+suggested actions for officer review → submit Review/Defer/Escalate → backend
+confirmation (or honest local-only note if no backend is running) → validation status.
 
-Story: *"Many systems already generate signals. Kavach turns those fragmented signals
-into an auditable early-warning workflow."* Not: *"Kavach predicts exactly what will
-happen."*
+Story: *"See where risk is rising, understand why, know which signals are real, explore
+what could happen next, and give the officer clear actions to review."* Not: *"Kavach
+predicts exactly what will happen."*
 
 ## Future scope
 - Wire live feeds (Open-Meteo/IMD, Sentinel NDVI, AGMARKNET, NREGA MIS)
@@ -220,53 +237,3 @@ happen."*
   records the `subsequent_outcome` field this build already reserves for it — the only
   way any real accuracy claim becomes possible
 - Household/cluster-level prioritization once ethically and operationally reviewed
-
-## Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-## Project Structure
-
-```
-kavach/
-├── backend/
-│   ├── app/              # FastAPI application
-│   │   ├── main.py       # API endpoints
-│   │   ├── engine.py     # Risk assessment & ML logic
-│   │   ├── geography.py  # Location resolution (West Bengal)
-│   │   ├── review.py     # Human-in-the-loop review logging
-│   │   └── weather/      # Weather integration (IMD/Open-Meteo)
-│   ├── data/             # Dataset generation & storage
-│   ├── model_artifacts/  # Trained model & evaluation metrics
-│   ├── tests/            # Comprehensive test suite
-│   └── requirements.txt  # Python dependencies
-├── frontend/             # Static HTML dashboard
-├── frontend_data/        # Precomputed village snapshots
-├── setup.sh              # Quick setup (Linux/macOS)
-├── setup.ps1             # Quick setup (Windows)
-└── CONTRIBUTING.md       # Contribution guidelines
-```
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Citation
-
-If you use Kavach in your research or project, please cite:
-
-```bibtex
-@software{kavach2026,
-  title = {Kavach: Explainable Livelihood-Risk Early-Warning System},
-  author = {AstroSaran},
-  year = {2026},
-  url = {https://github.com/AstroSaran/hackspire-2026-dinos}
-}
-```
-
-## Acknowledgments
-
-- IMD (India Meteorological Department) for weather data infrastructure
-- Open-Meteo for providing open weather API
-- FEWS NET for livelihood-vulnerability framework
-- West Bengal government data sources

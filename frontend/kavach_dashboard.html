@@ -262,7 +262,7 @@ function renderDetail(){
     const prov = PROVENANCE.find(p=>p[0]===label) || ['','','','',''];
     return `<div class="signal-row"><span>${label}</span><span>${val} <span class="badge badge-sim" style="margin-left:6px;">${prov[2]||'SIMULATED'}</span></span></div>`;
   }).join('');
-  const weatherSignalRow = `<div class="signal-row"><span>Weather (rainfall/temp/humidity)</span><span>${weatherBadgeHtml(v.coverage.weather)}</span></div>`;
+  const weatherSignalRow = `<div class="signal-row"><span>Weather (temperature/rainfall/humidity)</span><span>${weatherBadgeHtml(v.coverage.weather)}</span></div>`;
 
   const timelineRows = v.trajectory.map(([stage,level,evidence,conf])=>`
     <div class="tstage"><div class="name">${stage}</div>
@@ -276,33 +276,59 @@ function renderDetail(){
       <div class="action-meta"><span><b>${priority}</b></span><span>${program}</span><span>Urgency ${urgency}</span><span>Benefit ${benefit}</span><span>${feasibility}</span></div></div>`;
   }).join('');
 
-  const weatherBody = (w && w[0]!=='UNAVAILABLE') ? `
-    <div class="temp">${w[1]}°C</div>
+  const weatherBody = (w && w.status && w.status!=='UNAVAILABLE') ? `
+    <div class="temp">${w.temperature_c}°C</div>
     <div class="weather-grid">
-      <div><span>Rainfall</span>${w[2]} mm</div>
-      <div><span>Humidity</span>${w[3]}%</div>
-      <div><span>Wind</span>${w[4]} km/h</div>
+      <div><span>Rainfall</span>${w.precipitation_mm} mm</div>
+      <div><span>Humidity</span>${w.humidity_pct}%</div>
+      <div><span>Wind</span>${w.wind_speed_kmh} km/h ${w.wind_direction_deg!=null?('@ '+w.wind_direction_deg+'°'):''}</div>
     </div>
-    <div class="weather-updated">${w[5]} · ${w[6]?new Date(w[6]).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}):''} IST</div>
-    ${w[0]==='SIMULATED_DEMO' ? `<div class="demo-notice">${w[7]}</div>` : ''}
-  ` : `<div style="color:var(--ink-dim);font-size:13px;">Live weather unavailable in this environment.<br>${w?w[7]:''}</div>`;
+    <div class="weather-updated">Provider: <b>${w.provider_name}</b><br>
+      Source: ${w.source}<br>
+      Updated ${w.observed_at?new Date(w.observed_at).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}):''} IST
+      ${w.cache_status==='hit'||w.cache_status==='hit_stale' ? ` · <b>${w.status} · CACHED</b> (${w.freshness})` : ''}</div>
+    ${w.status==='SIMULATED_DEMO' ? `<div class="demo-notice">${w.note}</div>` : ''}
+    <div style="font-size:11px;color:var(--ink-dim);margin-top:10px;border-top:1px dashed var(--border);padding-top:8px;">
+      Rainfall anomaly: <b>${w.rainfall_anomaly_pct!=null ? w.rainfall_anomaly_pct+'%' : 'UNAVAILABLE'}</b>
+      ${w.rainfall_baseline_period ? ' vs '+w.rainfall_baseline_period+' baseline' : ' — no defensible historical baseline computed yet'}<br>
+      Model input: <b style="color:${w.rainfall_model_input_used?'var(--stable)':'var(--ink-dim)'}">${w.rainfall_model_input_used ? 'YES' : 'NO'}</b>
+      — the trained model currently uses the representative rainfall_anomaly_pct signal shown under Signals below, not this live reading.
+    </div>
+  ` : `<div style="color:var(--ink-dim);font-size:13px;">Live weather unavailable in this environment.<br>${w?w.note:''}</div>`;
+
+  const forecastDays = (w && w.forecast_days && w.forecast_days.length) ? w.forecast_days.slice(0,7).map(([date,precip,tmax,tmin])=>`
+    <div class="signal-row"><span>${date}</span><span>${precip!=null?precip+' mm':'—'} ${tmax!=null?(' · '+tmin+'–'+tmax+'°C'):''}</span></div>`).join('')
+    : `<div style="font-size:12.5px;color:var(--ink-dim);">Forecast unavailable — ${w?(w.forecast_status||'no forecast source reachable'):'no weather source reachable'}.</div>`;
+
+  const warningsUnavailable = !w || w.warnings_status !== 'LIVE';
+  const warningsBody = warningsUnavailable
+    ? `<div style="font-size:13px;font-weight:700;color:var(--ink-dim);">WARNING STATUS UNAVAILABLE</div>
+       <div style="font-size:11.5px;color:var(--ink-dim);margin-top:4px;">${w&&w.warnings_note ? w.warnings_note : 'No warning source could be genuinely queried for this location.'} This is different from Kavach's own risk score above — an unavailable warning check does not mean risk is low.</div>`
+    : (w.warnings.length ? w.warnings.map(wn=>`<div style="font-size:13px;"><b>${wn.headline}</b> — ${wn.severity||''} (valid ${wn.valid_from||'?'} to ${wn.valid_until||'?'})</div>`).join('')
+                          : `<div style="font-size:13px;color:var(--stable);">Checked live via ${w.warnings.length?'':''}${w.provider||'provider'} — no active warning found.</div>`);
 
   document.getElementById('main').innerHTML = `
     <div class="detail-grid">
       <div class="card risk-card">
-        <h2>Livelihood risk</h2>
+        <h2>Livelihood risk — model assessment</h2>
         <div class="score">${v.score} <span style="font-size:20px;color:var(--ink-dim);">/ 100</span></div>
         <div class="band" style="background:${STATUS_META[band].color};color:#fff;">${STATUS_META[band].label}</div>
-        <div class="note">Model-estimated risk score — not a calibrated probability.<br>Model disagreement: <b>${v.uncertainty}</b></div>
+        <div class="note">Model-estimated risk score — not a calibrated probability.<br>Model disagreement: <b>${v.uncertainty}</b><br>Trained on the representative/synthetic livelihood dataset (see Data &amp; validation) — not on live weather.</div>
       </div>
       <div class="card weather-card">
-        <h2>${weatherBadgeHtml(v.coverage.weather)} &nbsp; ${w?w[5]:'Weather'}</h2>
+        <h2>${weatherBadgeHtml(v.coverage.weather)} &nbsp; Live observation</h2>
         ${weatherBody}
       </div>
 
-      <div class="card span2 warning-card none">
+      <div class="card">
+        <h2>Weather forecast</h2>
+        <div style="font-size:11px;color:var(--ink-dim);margin-bottom:8px;">Provider: ${w?w.provider_name:'—'}. Not an official warning.</div>
+        ${forecastDays}
+      </div>
+
+      <div class="card warning-card ${warningsUnavailable?'none':''}">
         <h2>Weather warning</h2>
-        <div style="font-size:13px;color:var(--ink-dim);">No active IMD warning for this district in this build's data (warnings capability wired but not independently confirmed live — see Data &amp; validation).</div>
+        ${warningsBody}
       </div>
 
       <div class="card span2">
@@ -353,26 +379,61 @@ function renderDetail(){
 
 function renderTrustBody(){
   const el = document.getElementById('trustBody'); if(!el) return;
+  const cov = villages.find(x=>x.id===currentId).coverage;
   el.innerHTML = `
     <div class="trust-row"><span>Model validation</span><b>${VALIDATION.model_validation}</b></div>
     <div class="trust-row"><span>Data</span><b>${VALIDATION.data}</b></div>
     <div class="trust-row"><span>Real outcome labels</span><b>${VALIDATION.real_outcome_labels}</b></div>
     <div class="trust-row"><span>Field validation</span><b>${VALIDATION.field_validation}</b></div>
     <div class="trust-note">${VALIDATION.note}</div>
-    <h2 style="margin-top:16px;">Data health — providers</h2>
+    <h2 style="margin-top:16px;">Data coverage</h2>
+    <div class="trust-row"><span>Weather</span><b>${cov.weather}</b></div>
+    <div class="trust-row"><span>Crop stress</span><b>${cov.crop}</b></div>
+    <div class="trust-row"><span>Market price</span><b>${cov.market}</b></div>
+    <div class="trust-row"><span>Employment</span><b>${cov.employment}</b></div>
+    <div class="trust-row"><span>Water stress</span><b>${cov.water}</b></div>
+    <div class="trust-row"><span>Structural vulnerability</span><b>${cov.vulnerability}</b></div>
+    <div class="trust-row"><span>Historical outcomes</span><b>NOT_AVAILABLE</b></div>
+    <h2 style="margin-top:16px;">Historical rainfall baseline</h2>
+    <div class="trust-row"><span>Baseline computed</span><b>${DATA_HEALTH.historical_baseline.baseline_file_present ? 'yes' : 'no'}</b></div>
+    <div class="trust-note">India OGD/IMD normals: ${DATA_HEALTH.historical_baseline.candidate_sources.india_ogd_imd_normals.status}.<br>
+      Open-Meteo ERA5 archive: ${DATA_HEALTH.historical_baseline.candidate_sources.open_meteo_era5_archive.status}.</div>
+    <h2 style="margin-top:16px;">Data health — weather providers</h2>
+    <div class="trust-row"><span>IMD enabled (config)</span><b>${DATA_HEALTH.imd_enabled_config}</b></div>
     ${Object.entries(DATA_HEALTH.providers).map(([name,caps])=>`
       <div class="trust-row"><span>${name}</span><span>${Object.entries(caps).map(([c,s])=>`${c}: ${s.status}`).join(' · ')}</span></div>`).join('')}
   `;
 }
 function toggleTrust(){ trustOpen=!trustOpen; if(view==='detail') renderDetail(); }
 
-function logReview(village,decision){
-  reviewLog.unshift({village,decision,at:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})});
+const API_BASE = (typeof window!=='undefined' && window.KAVACH_API_BASE) || ''; // set window.KAVACH_API_BASE when a real backend is deployed alongside this page
+
+async function logReview(village,decision){
+  const entry = {village,decision,at:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}), confirmed:false, reviewId:null};
+  reviewLog.unshift(entry);
+  renderReviewLog();
+  try {
+    const resp = await fetch(`${API_BASE}/villages/${encodeURIComponent(village)}/review`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({officer_decision: decision}),
+    });
+    if(!resp.ok) throw new Error('backend returned ' + resp.status);
+    const data = await resp.json();
+    entry.confirmed = true; entry.reviewId = data.record_id; entry.outcome = data.subsequent_outcome;
+  } catch(e) {
+    entry.confirmed = false;
+    entry.backendError = 'Backend unreachable from this static demo page — logged locally only. '
+      + 'A deployed backend would confirm with a review ID (see /villages/{village}/review).';
+  }
   renderReviewLog();
 }
 function renderReviewLog(){
   const el = document.getElementById('reviewLog'); if(!el) return;
-  el.innerHTML = reviewLog.length ? ('Review recorded — outcome tracking remains open.<br>'+reviewLog.slice(0,4).map(r=>`${r.at} — ${r.village}: <b>${r.decision}</b>`).join('<br>')) : '';
+  el.innerHTML = reviewLog.length ? reviewLog.slice(0,4).map(r=>
+    r.confirmed
+      ? `${r.at} — ${r.village}: <b>${r.decision}</b> — <span style="color:var(--stable)">backend confirmed</span> (review ID ${r.reviewId}, outcome tracking: ${r.outcome===null?'open':r.outcome})`
+      : `${r.at} — ${r.village}: <b>${r.decision}</b> — <span style="color:var(--ink-dim)">${r.backendError||'pending confirmation...'}</span>`
+  ).join('<br>') : '';
 }
 
 function renderAll(){

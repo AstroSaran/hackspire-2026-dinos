@@ -31,38 +31,46 @@ from . import review as review_module
 from . import geography
 from . import weather_features
 from .weather import service as weather_service
+from .weather import historical as weather_historical
 from .weather.providers import Location as WeatherLocation
 
 HERE = os.path.dirname(os.path.dirname(__file__))
 
 PILOT_BANNER = (
-    "Pilot / representative mode: livelihood-signal scores are generated from representative "
-    "data and are not field-validated predictions. Weather is a genuine live-data integration "
-    "attempt (IMD primary, Open-Meteo documented fallback) — see /data-health for its real status."
+    "Pilot / representative mode: livelihood-signal scores (crop, market, employment, water, "
+    "structural vulnerability) are representative/simulated and not field-validated predictions. "
+    "Weather is a genuine live-data integration — Open-Meteo is the immediate real provider; "
+    "IMD is retained as the future primary provider pending IP whitelisting. See /data-health."
 )
 
-app = FastAPI(title="Kavach — Explainable Livelihood-Risk Decision Support API", version="0.3.0")
+app = FastAPI(title="Kavach — Explainable Livelihood-Risk Decision Support API", version="0.4.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 DATA_COVERAGE_STATIC = {
     "crop": "SIMULATED", "market": "SIMULATED", "employment": "SIMULATED",
-    "water": "SIMULATED", "vulnerability": "SIMULATED",
+    "water": "SIMULATED", "vulnerability": "SIMULATED", "historical_outcomes": "NOT_AVAILABLE",
 }
 
 
-def _weather_location(village: str) -> WeatherLocation:
+def _weather_location(village: str):
+    """Part 5: every displayed village must have real lat/lon/district/block,
+    or the caller gets an explicit 'weather location unavailable' — never a
+    fabricated coordinate."""
     rec = geography.resolve_location(village)
     if rec is None:
-        raise HTTPException(404, f"No West Bengal location record for '{village}'")
+        return None
     return WeatherLocation(**rec)
 
 
 def _weather_bundle(village: str):
     loc = _weather_location(village)
+    if loc is None:
+        return None, None, {"status": "UNAVAILABLE", "warnings": [],
+                             "note": "Weather location unavailable — no coordinate record for this village."}, None
     obs = weather_service.get_current_weather(loc)
     fc = weather_service.get_forecast_weather(loc)
     warnings = weather_service.get_warnings(loc)
-    return obs, fc, warnings
+    return obs, fc, warnings, loc
 
 
 def load_snapshot() -> pd.DataFrame:
@@ -84,6 +92,7 @@ def _raw_signals_with_provenance(row: pd.Series) -> list:
             "freshness": prov.get("freshness"),
             "confidence": prov.get("confidence"),
             "live_equivalent": prov.get("live_equivalent"),
+            "model_input_used": True,  # the representative dataset value IS what the trained model uses today
         })
     return out
 
@@ -95,18 +104,21 @@ def build_village_result(row: pd.Series, include_live_weather: bool = True):
 
     weather_block = None
     weather_data_status = "UNAVAILABLE"
+    rainfall_pipeline = None
     if include_live_weather:
-        try:
-            obs, fc, warnings = _weather_bundle(row["village"])
-            weather_data_status = obs.status  # LIVE | STALE | UNAVAILABLE
+        obs, fc, warnings, loc = _weather_bundle(row["village"])
+        if obs is None:
+            weather_block = {"status": "UNAVAILABLE",
+                              "note": "Weather location unavailable — no coordinate record for this village."}
+        else:
+            weather_data_status = obs.status  # LIVE | STALE | SIMULATED_DEMO | UNAVAILABLE
+            rainfall_pipeline = weather_features.compute_rainfall_anomaly(obs, loc.district, loc.block)
             weather_block = {
                 "observation": obs.to_dict(),
                 "forecast": fc.to_dict(),
-                "warnings": [w.to_dict() for w in warnings],
-                "derived_rainfall_anomaly": weather_features.rainfall_anomaly_from_observation(obs),
+                "warnings": warnings,   # {"status", "warnings", "provider"/"note"} — never a bare list (Part 11)
+                "rainfall_anomaly_pipeline": rainfall_pipeline,
             }
-        except Exception as e:  # never let a weather failure break the risk assessment
-            weather_block = {"error": str(e)}
 
     data_coverage = {"weather": weather_data_status, **DATA_COVERAGE_STATIC}
 
@@ -121,7 +133,10 @@ def build_village_result(row: pd.Series, include_live_weather: bool = True):
             "estimated_risk_score": result["risk_score"],
             "status": result["status"],
             "model_uncertainty": result["model_uncertainty"],
-            "note": "Model risk score, not a calibrated probability of poverty, migration, debt, or distress.",
+            "note": "Model risk score, not a calibrated probability of poverty, migration, debt, or distress. "
+                    "This model is trained on the representative/synthetic dataset described in "
+                    "/model/validation-status — live weather is NOT yet a trained-model input (see "
+                    "weather.rainfall_anomaly_pipeline.model_input_used, currently False in this build).",
         },
         "driver_contribution_indicative": {
             "method": "SHAP (TreeExplainer) over the trained RandomForest",
@@ -248,6 +263,8 @@ def locations():
 @app.get("/weather/{village}")
 def weather_current(village: str):
     loc = _weather_location(village)
+    if loc is None:
+        return {"status": "UNAVAILABLE", "note": "Weather location unavailable — no coordinate record for this village."}
     obs = weather_service.get_current_weather(loc)
     return obs.to_dict()
 
@@ -255,6 +272,8 @@ def weather_current(village: str):
 @app.get("/weather/{village}/forecast")
 def weather_forecast(village: str):
     loc = _weather_location(village)
+    if loc is None:
+        return {"status": "UNAVAILABLE", "note": "Weather location unavailable — no coordinate record for this village."}
     fc = weather_service.get_forecast_weather(loc)
     return fc.to_dict()
 
@@ -262,13 +281,19 @@ def weather_forecast(village: str):
 @app.get("/weather/{village}/warnings")
 def weather_warnings(village: str):
     loc = _weather_location(village)
-    warnings = weather_service.get_warnings(loc)
-    return [w.to_dict() for w in warnings]
+    if loc is None:
+        return {"status": "UNAVAILABLE", "warnings": [],
+                "note": "Weather location unavailable — no coordinate record for this village."}
+    return weather_service.get_warnings(loc)  # {"status", "warnings", "provider"/"note"} — never a bare list
 
 
 @app.get("/data-health")
 def data_health():
+    weather_health = weather_service.get_data_health()
     return {
-        "providers": weather_service.get_data_health(),
+        "providers": weather_health["providers"],
+        "imd_enabled_config": weather_health["imd_enabled_config"],
+        "demo_fallback_config": weather_health["demo_fallback_config"],
+        "historical_baseline": weather_historical.baseline_status(),
         "signals": {"weather": "see providers above", **DATA_COVERAGE_STATIC},
     }

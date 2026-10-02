@@ -1,3 +1,4 @@
+import base64
 from unittest.mock import patch
 
 from fastapi.testclient import TestClient
@@ -46,6 +47,42 @@ def test_speech_generation_returns_audio_and_keeps_key_server_side(monkeypatch):
     assert response.content == b"fake-mp3-bytes"
     assert post.call_args.args[0].endswith("/voice123456")
     assert post.call_args.kwargs["headers"]["xi-api-key"] == "test-eleven-secret"
+
+
+def test_speech_generation_uses_gemini_tts_when_elevenlabs_is_not_configured(monkeypatch):
+    monkeypatch.setenv("ELEVENLABS_API_KEY", "")
+    monkeypatch.setenv("ELEVENLABS_VOICE_ID", "")
+    monkeypatch.setenv("GEMINI_API_KEY", "test-gemini-secret")
+    audio = b"RIFFfake-wav-audio"
+    result = JsonResponse()
+    result.content = b"unused-json-body"
+    result.json = lambda: {"output_audio": {"data": base64.b64encode(audio).decode("ascii")}}
+
+    with patch("app.main.requests.post", return_value=result) as post:
+        response = _client().post("/voice/synthesize", json={"text": "আজকের আবহাওয়া ভালো"})
+
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "audio/wav"
+    assert response.headers["cache-control"] == "no-store"
+    assert response.content == audio
+    assert post.call_args.args[0] == "https://generativelanguage.googleapis.com/v1beta/interactions"
+    assert post.call_args.kwargs["headers"]["x-goog-api-key"] == "test-gemini-secret"
+    body = post.call_args.kwargs["json"]
+    assert body["model"] == "gemini-3.8-flash-lite-tts"
+    assert body["input"][0]["content"][0]["text"] == "আজকের আবহাওয়া ভালো"
+    assert "Bengali" in body["input"][0]["content"][0]["annotations"][0]["style"]
+    assert "test-gemini-secret" not in response.text
+
+
+def test_speech_status_reports_gemini_tts_when_no_elevenlabs_voice(monkeypatch):
+    monkeypatch.setenv("ELEVENLABS_API_KEY", "")
+    monkeypatch.setenv("ELEVENLABS_VOICE_ID", "")
+    monkeypatch.setenv("GEMINI_API_KEY", "test-gemini-secret")
+
+    status = main.support_status()
+
+    assert status["voice"]["text_to_speech"] == "Gemini"
+    assert status["voice"]["text_to_speech_model"] == "gemini-3.8-flash-lite-tts"
 
 
 def test_voice_cloning_requires_explicit_speaker_and_provider_consent(monkeypatch):

@@ -4,6 +4,7 @@ The API serves provider-backed weather and optional official market records.
 Synthetic scoring routes are intentionally disabled; missing feeds remain
 unavailable and no risk score is inferred from incomplete observations.
 """
+import asyncio
 import os
 import re
 import json
@@ -14,6 +15,7 @@ import datetime
 import threading
 import logging
 import sys
+from contextlib import asynccontextmanager
 from functools import wraps
 import base64
 from pathlib import Path
@@ -27,6 +29,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, Response
 from . import geography, environmental_model, livelihood_model
+from . import private_data
+from .private_data import router as private_data_router
 from .weather import service as weather_service
 from .weather import historical as weather_historical
 from .weather.providers import Location as WeatherLocation, OpenMeteoWeatherProvider, ProviderUnavailable
@@ -37,7 +41,19 @@ WORKSPACE_BANNER = (
 )
 
 logger = logging.getLogger("kavach")
-app = FastAPI(title="Kavach — Live Data Beta API", version="1.0.0")
+
+
+@asynccontextmanager
+async def lifespan(_app):
+    """Initialize optional storage once and release its client on shutdown."""
+    await asyncio.to_thread(initialize_optional_private_storage)
+    try:
+        yield
+    finally:
+        await asyncio.to_thread(private_data.close_db)
+
+
+app = FastAPI(title="Kavach — Live Data Beta API", version="1.0.0", lifespan=lifespan)
 _district_provider_cache = {}
 _district_provider_cache_lock = threading.Lock()
 _field_crop_survey_cache = {"expires_at": 0.0, "payload": None}
@@ -83,6 +99,25 @@ for _middleware in app.user_middleware:
     if _middleware.cls is CORSMiddleware:
         _middleware.kwargs["allow_origins"] = [origin.strip() for origin in os.environ.get(
             "KAVACH_ALLOWED_ORIGINS", "http://127.0.0.1:8001,http://localhost:8001").split(",") if origin.strip()]
+
+from starlette.middleware.trustedhost import TrustedHostMiddleware
+
+_allowed_hosts = [host.strip() for host in os.environ.get(
+    "KAVACH_ALLOWED_HOSTS", "127.0.0.1,localhost,::1,testserver").split(",") if host.strip()]
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=_allowed_hosts)
+
+
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    response.headers.setdefault("X-Frame-Options", "DENY")
+    response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+    response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(self), geolocation=()")
+    if request.url.path.startswith(("/auth/", "/me", "/notes")):
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["Pragma"] = "no-cache"
+    return response
 
 def _warn_if_public_bind():
     key = os.environ.get("GEMINI_API_KEY", "").strip()
@@ -206,12 +241,15 @@ def support_status():
         private_db_ready = "NEEDS_CONFIGURATION"
     elevenlabs_key = bool(os.environ.get("ELEVENLABS_API_KEY", "").strip())
     elevenlabs_voice = bool(os.environ.get("ELEVENLABS_VOICE_ID", "").strip())
+    gemini_key = bool(os.environ.get("GEMINI_API_KEY", "").strip())
+    tts_model = os.environ.get("GEMINI_TTS_MODEL", "gemini-3.8-flash-lite-tts")
     return {"status": status,
             "provider": config["provider"], "model": config["model"],
             "transcribe_model": transcribe_model,
             "voice": {
                 "speech_to_text": "ElevenLabs" if elevenlabs_key else ("Gemini" if os.environ.get("GEMINI_API_KEY", "").strip() else "NEEDS_CONFIGURATION"),
-                "text_to_speech": "ElevenLabs" if elevenlabs_key and elevenlabs_voice else "BROWSER_FALLBACK",
+                "text_to_speech": "ElevenLabs" if elevenlabs_key and elevenlabs_voice else ("Gemini" if gemini_key else "BROWSER_FALLBACK"),
+                "text_to_speech_model": "eleven_multilingual_v2" if elevenlabs_key and elevenlabs_voice else (tts_model if gemini_key else None),
                 "voice_clone_available": elevenlabs_key,
                 "default_voice_configured": elevenlabs_voice,
             },
@@ -339,35 +377,69 @@ def support_transcribe(request: Request, audio: UploadFile = File(...), language
 
 @app.post("/voice/synthesize")
 def voice_synthesize(payload: VoiceSynthesisRequest, request: Request):
-    """Generate audio without exposing ElevenLabs credentials to the browser."""
+    """Generate speech server-side, preferring a chosen ElevenLabs voice and otherwise Gemini TTS."""
     _limit_request(request, "voice_synthesize", 20)
-    api_key = os.environ.get("ELEVENLABS_API_KEY", "").strip()
+    elevenlabs_key = os.environ.get("ELEVENLABS_API_KEY", "").strip()
     voice_id = payload.voice_id or os.environ.get("ELEVENLABS_VOICE_ID", "").strip()
-    if not api_key:
-        raise HTTPException(503, "ElevenLabs is not configured. Set ELEVENLABS_API_KEY in backend/.env.")
-    if not voice_id:
-        raise HTTPException(503, "Choose or clone an ElevenLabs voice, or set ELEVENLABS_VOICE_ID in backend/.env.")
+    gemini_key = os.environ.get("GEMINI_API_KEY", "").strip()
+    use_elevenlabs = bool(elevenlabs_key and voice_id)
+    if not use_elevenlabs and not gemini_key:
+        raise HTTPException(503, "Speech is not configured. Set GEMINI_API_KEY or configure an ElevenLabs voice on the backend.")
     _consume_ai_call()
     if not _ai_slots.acquire(blocking=False):
         raise HTTPException(503, "Voice service is busy. Please retry shortly.")
     try:
+        if use_elevenlabs:
+            response = requests.post(
+                f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}",
+                params={"output_format": "mp3_44100_128"},
+                headers={"xi-api-key": elevenlabs_key, "Content-Type": "application/json"},
+                json={"text": payload.text, "model_id": os.environ.get("ELEVENLABS_TTS_MODEL", "eleven_multilingual_v2")},
+                timeout=(5, 30))
+            if response.status_code == 429:
+                raise HTTPException(503, "ElevenLabs voice quota is busy. Please retry later.")
+            if not response.ok:
+                logger.warning("ElevenLabs speech generation returned HTTP %s", response.status_code)
+                raise HTTPException(502, f"ElevenLabs could not generate this audio (HTTP {response.status_code}). Check the voice, API key, and plan.")
+            return Response(content=response.content, media_type="audio/mpeg", headers={"Cache-Control": "no-store"})
+
+        model = os.environ.get("GEMINI_TTS_MODEL", "gemini-3.8-flash-lite-tts").strip()
+        voice = os.environ.get("GEMINI_TTS_VOICE", "Sulafat").strip() or "Sulafat"
+        language = "Bengali" if re.search(r"[\u0980-\u09ff]", payload.text) else "English"
+        style = ("Speak warmly, gently, and clearly in natural Bengali as spoken in West Bengal. "
+                 "Use an unhurried, friendly pace and pronounce each word clearly.") if language == "Bengali" else (
+                 "Speak warmly, gently, and clearly. Use a friendly, unhurried pace and pronounce each word clearly.")
+        request_body = {
+            "model": model,
+            "input": [{"type": "user_input", "content": [{
+                "type": "text", "text": payload.text,
+                "annotations": [{"type": "speech_metadata", "style": style}],
+            }]}],
+            "response_format": {"type": "audio", "mime_type": "audio/wav", "sample_rate": 24000},
+            "generation_config": {"speech_config": [{"voice": voice}]},
+        }
         response = requests.post(
-            f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}",
-            params={"output_format": "mp3_44100_128"},
-            headers={"xi-api-key": api_key, "Content-Type": "application/json"},
-            json={"text": payload.text, "model_id": os.environ.get("ELEVENLABS_TTS_MODEL", "eleven_multilingual_v2")},
-            timeout=45)
+            "https://generativelanguage.googleapis.com/v1beta/interactions",
+            headers={"x-goog-api-key": gemini_key, "Content-Type": "application/json"},
+            json=request_body, timeout=(5, 30))
         if response.status_code == 429:
-            raise HTTPException(503, "ElevenLabs voice quota is busy. Please retry later.")
+            raise HTTPException(503, "Gemini speech is busy. Please wait a moment and try again.")
         if not response.ok:
-            logger.warning("ElevenLabs speech generation returned HTTP %s", response.status_code)
-            raise HTTPException(502, f"ElevenLabs could not generate this audio (HTTP {response.status_code}). Check the voice, API key, and plan.")
-        return Response(content=response.content, media_type="audio/mpeg", headers={"Cache-Control": "no-store"})
+            logger.warning("Gemini speech generation returned HTTP %s", response.status_code)
+            raise HTTPException(502, "Gemini could not generate speech. Check the TTS model and API access, then retry.")
+        try:
+            audio = base64.b64decode(response.json().get("output_audio", {}).get("data", ""), validate=True)
+        except (ValueError, TypeError, AttributeError):
+            audio = b""
+        if not audio or len(audio) > 15 * 1024 * 1024:
+            raise HTTPException(502, "Gemini returned empty or oversized speech audio. Please retry.")
+        return Response(content=audio, media_type="audio/wav", headers={"Cache-Control": "no-store"})
     except HTTPException:
         raise
     except requests.RequestException as exc:
-        logger.warning("ElevenLabs speech generation failed (%s)", type(exc).__name__)
-        raise HTTPException(502, "Could not reach ElevenLabs. Check outbound HTTPS and try again.") from exc
+        provider = "ElevenLabs" if use_elevenlabs else "Gemini"
+        logger.warning("%s speech generation failed (%s)", provider, type(exc).__name__)
+        raise HTTPException(502, f"Could not reach {provider}. Check outbound HTTPS and try again.") from exc
     finally:
         _ai_slots.release()
 
@@ -1219,11 +1291,8 @@ def live_employment_indicators(offset: int = Query(default=0, ge=0), limit: int 
         note,
         location_filters={"state_name": "West Bengal"}, offset=offset, limit=limit)
 
-from . import private_data
-from .private_data import router as private_data_router
 app.include_router(private_data_router)
 
-@app.on_event("startup")
 def initialize_optional_private_storage():
     """Create optional Mongo indexes when configured; never block live feeds on it."""
     _, state = private_data._ready_db()

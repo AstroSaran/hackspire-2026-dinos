@@ -105,6 +105,16 @@ retired pilot registry is empty.
 
 The retired synthetic prototype and its model artifacts are not part of the current application.
 
+## Production packaging
+
+The repository includes a hardened API container and a production Compose
+profile for deployment behind a trusted HTTPS reverse proxy. Follow
+[`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) to set allowed origins/hosts and the
+proxy trust range. Caches and throttles are process-local, so the packaged API
+runs one worker and is not horizontally scalable until shared controls are
+configured. The application still withholds livelihood predictions pending
+real outcome data and independent validation.
+
 ## Run locally (PowerShell)
 
 From the repository root:

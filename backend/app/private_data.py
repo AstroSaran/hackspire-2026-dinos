@@ -4,6 +4,7 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
+import logging
 import os
 import re
 import secrets
@@ -20,8 +21,10 @@ from fastapi import APIRouter, Cookie, Header, HTTPException, Request
 from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 import jwt
+from pymongo.errors import DuplicateKeyError
 
 router = APIRouter()
+logger = logging.getLogger("kavach.private_data")
 _hasher = PasswordHasher()
 _client = None
 _client_uri = None
@@ -91,8 +94,20 @@ def _ready_db():
                 db.refresh_tokens.create_index("token_hash", unique=True)
                 _indexes_ready = True
             return db, "READY"
-    except Exception:
+    except Exception as exc:
+        logger.warning("Private MongoDB storage is unavailable (%s).", type(exc).__name__)
         return None, "UNAVAILABLE"
+
+
+def close_db():
+    """Close the optional Mongo client during application shutdown."""
+    global _client, _client_uri, _indexes_ready
+    with _db_lock:
+        client, _client = _client, None
+        _client_uri = None
+        _indexes_ready = False
+    if client is not None:
+        client.close()
 
 
 def _crypto():
@@ -189,6 +204,11 @@ class NoteCreate(BaseModel):
     fields: dict[str, object] = Field(default_factory=dict)
     source: Literal["user_entered", "ai_generated"] = "user_entered"
 
+    @field_validator("fields")
+    @classmethod
+    def bounded_fields(cls, value):
+        return _validate_note_fields(value)
+
     @field_validator("tags")
     @classmethod
     def valid_tags(cls, tags):
@@ -203,6 +223,45 @@ class NotePatch(BaseModel):
     body: str | None = Field(default=None, min_length=1, max_length=5000)
     tags: list[str] | None = Field(default=None, max_length=10)
     fields: dict[str, object] | None = None
+
+    @field_validator("fields")
+    @classmethod
+    def bounded_fields(cls, value):
+        return None if value is None else _validate_note_fields(value)
+
+
+def _validate_note_fields(value: dict) -> dict:
+    """Bound user-defined metadata before encryption or MongoDB writes."""
+    max_depth = 8
+    max_nodes = 256
+    node_count = 0
+
+    def visit(item, depth):
+        nonlocal node_count
+        node_count += 1
+        if node_count > max_nodes:
+            raise ValueError("Note fields contain too many values.")
+        if depth > max_depth:
+            raise ValueError("Note fields are nested too deeply.")
+        if isinstance(item, dict):
+            for key, child in item.items():
+                if not isinstance(key, str) or not key or len(key) > 128:
+                    raise ValueError("Note field names must be non-empty text of at most 128 characters.")
+                if key.startswith("$") or "." in key:
+                    raise ValueError("MongoDB operator keys are not allowed.")
+                visit(child, depth + 1)
+        elif isinstance(item, list):
+            for child in item:
+                visit(child, depth + 1)
+
+    visit(value, 0)
+    try:
+        serialized = json.dumps(value, ensure_ascii=False, allow_nan=False, separators=(",", ":"))
+    except (TypeError, ValueError):
+        raise ValueError("Note fields must contain valid JSON values.") from None
+    if len(serialized.encode("utf-8")) > 16 * 1024:
+        raise ValueError("Note fields exceed the 16 KiB limit.")
+    return value
 
 
 def _reject_operators(value):
@@ -243,8 +302,11 @@ def register(body: RegisterBody, request: Request):
     try:
         db.users.insert_one({"_id": uid, "email": body.email, "password_hash": _hasher.hash(body.password),
                              "created_at": now, "token_version": 0})
-    except Exception:
+    except DuplicateKeyError:
         raise HTTPException(409, "An account with this email already exists.")
+    except Exception as exc:
+        logger.warning("Account creation failed (%s).", type(exc).__name__)
+        raise HTTPException(503, "Private account storage is unavailable. Please retry later.") from None
     user = {"_id": uid, "email": body.email, "token_version": 0}
     refresh = secrets.token_urlsafe(48)
     db.refresh_tokens.insert_one({"token_hash": hashlib.sha256(refresh.encode()).hexdigest(), "user_id": uid,

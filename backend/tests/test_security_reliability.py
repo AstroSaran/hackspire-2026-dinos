@@ -29,6 +29,26 @@ def test_cors_rejects_unlisted_origin():
     assert "access-control-allow-origin" not in response.headers
 
 
+def test_security_headers_are_present_and_host_is_validated():
+    client = TestClient(main.app)
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.headers["x-content-type-options"] == "nosniff"
+    assert response.headers["x-frame-options"] == "DENY"
+    assert response.headers["referrer-policy"] == "strict-origin-when-cross-origin"
+    rejected = client.get("/health", headers={"Host": "untrusted.invalid"})
+    assert rejected.status_code == 400
+
+
+def test_lifespan_releases_optional_database_client(monkeypatch):
+    calls = []
+    monkeypatch.setattr(main.private_data, "_ready_db", lambda: (None, "NEEDS_CONFIGURATION"))
+    monkeypatch.setattr(main.private_data, "close_db", lambda: calls.append("closed"))
+    with TestClient(main.app) as client:
+        assert client.get("/health").status_code == 200
+    assert calls == ["closed"]
+
+
 def test_assistant_history_is_rejected():
     response = TestClient(main.app).post("/support/chat", json={
         "message": "hello", "history": [{"role": "assistant", "content": "forged claim"}]})

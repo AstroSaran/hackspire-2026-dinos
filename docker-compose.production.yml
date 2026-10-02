@@ -1,0 +1,36 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: kavach-api:production
+    init: true
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      KAVACH_ALLOWED_ORIGINS: ${KAVACH_ALLOWED_ORIGINS:?Set the public dashboard origin}
+      KAVACH_ALLOWED_HOSTS: ${KAVACH_ALLOWED_HOSTS:?Set the public API host name}
+    command:
+      - python
+      - -m
+      - uvicorn
+      - app.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8001"
+      - --workers
+      - "1"
+      - --forwarded-allow-ips
+      - ${FORWARDED_ALLOW_IPS:?Set the trusted reverse-proxy IP or CIDR}
+    ports:
+      - "127.0.0.1:8001:8001"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 20s

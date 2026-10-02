@@ -1,0 +1,17 @@
+.git
+.venv
+tmp
+legacy_prototype
+__pycache__
+*.py[cod]
+.pytest_cache
+.ruff_cache
+.coverage
+coverage.xml
+.env
+backend/.env
+backend/data/wb_mango_district_annual.csv
+backend/data/mango_yield_baseline_model.json
+backend/data/metadata/west-bengal-district-mango-annual-manifest-*.json
+backend/data/metadata/mango-yield-evaluation-*.json
+*.pkl

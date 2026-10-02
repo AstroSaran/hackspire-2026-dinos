@@ -64,7 +64,7 @@ the model's numeric output into plain-language explanation, never to compute
 the score itself. Held-out evaluation: **AUC 0.73, precision 0.43, recall
 0.63** (see `backend/model_artifacts/metrics.json`).
 
-## ⚠️ Data & Limitations — read before presenting this
+##  Data & Limitations — read before presenting this
 1. **No public, household-level, ground-truth "did this household suffer a
    livelihood distress cascade" dataset exists.** Meghdoot, e-NAM, MGNREGA MIS
    and PMFBY expose real signals, not a labeled outcome variable. This is a

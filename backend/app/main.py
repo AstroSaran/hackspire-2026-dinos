@@ -251,6 +251,44 @@ def root():
             "pilot_mode_banner": PILOT_BANNER, "docs": "/docs"}
 
 
+@app.get("/health")
+def health_check():
+    """Health check endpoint for monitoring and load balancers."""
+    import time
+    from . import config
+    
+    try:
+        # Check model is loaded
+        model_loaded = engine.MODEL is not None
+        
+        # Check data is available
+        df = load_snapshot()
+        data_available = len(df) > 0
+        
+        # Check weather service (don't actually call external APIs)
+        weather_config_valid = bool(config.Config.WEATHER_COUNTRY and config.Config.WEATHER_STATE)
+        
+        status = "healthy" if (model_loaded and data_available and weather_config_valid) else "degraded"
+        
+        return {
+            "status": status,
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S+05:30"),
+            "checks": {
+                "model_loaded": model_loaded,
+                "data_available": data_available,
+                "village_count": len(df) if data_available else 0,
+                "weather_config": weather_config_valid,
+            },
+            "version": "0.3.0"
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "error": str(e),
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S+05:30")
+        }
+
+
 # --- Weather (Part 30) -------------------------------------------------------
 
 @app.get("/locations")

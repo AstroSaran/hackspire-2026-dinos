@@ -1,5 +1,11 @@
 # Kavach — Explainable Livelihood-Risk Early-Warning & Decision Support
 
+![Tests](https://github.com/AstroSaran/hackspire-2026-dinos/actions/workflows/test.yml/badge.svg)
+![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+
+> 🛡️ **Kavach** (Sanskrit: "shield") - Protecting rural livelihoods through early warning
+
 ## One-line description
 A decision-support layer that turns fragmented climate, crop, market, water
 and employment signals into an auditable early-warning workflow: it
@@ -164,7 +170,18 @@ and NREGA MIS's public endpoints for a real deployment.
 Migration is presented only as a **scenario/distress-pressure indicator**, never a
 deterministic prediction, by design.
 
-## Setup
+## Quick Start
+
+### Automated Setup (Recommended)
+```bash
+# Linux/macOS
+./setup.sh
+
+# Windows PowerShell
+.\setup.ps1
+```
+
+### Manual Setup
 ```bash
 cd backend
 pip install -r requirements.txt
@@ -203,3 +220,53 @@ happen."*
   records the `subsequent_outcome` field this build already reserves for it — the only
   way any real accuracy claim becomes possible
 - Household/cluster-level prioritization once ethically and operationally reviewed
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## Project Structure
+
+```
+kavach/
+├── backend/
+│   ├── app/              # FastAPI application
+│   │   ├── main.py       # API endpoints
+│   │   ├── engine.py     # Risk assessment & ML logic
+│   │   ├── geography.py  # Location resolution (West Bengal)
+│   │   ├── review.py     # Human-in-the-loop review logging
+│   │   └── weather/      # Weather integration (IMD/Open-Meteo)
+│   ├── data/             # Dataset generation & storage
+│   ├── model_artifacts/  # Trained model & evaluation metrics
+│   ├── tests/            # Comprehensive test suite
+│   └── requirements.txt  # Python dependencies
+├── frontend/             # Static HTML dashboard
+├── frontend_data/        # Precomputed village snapshots
+├── setup.sh              # Quick setup (Linux/macOS)
+├── setup.ps1             # Quick setup (Windows)
+└── CONTRIBUTING.md       # Contribution guidelines
+```
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Citation
+
+If you use Kavach in your research or project, please cite:
+
+```bibtex
+@software{kavach2026,
+  title = {Kavach: Explainable Livelihood-Risk Early-Warning System},
+  author = {AstroSaran},
+  year = {2026},
+  url = {https://github.com/AstroSaran/hackspire-2026-dinos}
+}
+```
+
+## Acknowledgments
+
+- IMD (India Meteorological Department) for weather data infrastructure
+- Open-Meteo for providing open weather API
+- FEWS NET for livelihood-vulnerability framework
+- West Bengal government data sources

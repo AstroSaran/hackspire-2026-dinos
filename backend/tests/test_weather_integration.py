@@ -339,3 +339,15 @@ def test_integration_real_open_meteo_call_succeeds():
     obs = OpenMeteoWeatherProvider().get_current(_loc())
     assert obs.status == LIVE
     assert obs.temperature_c is not None
+
+
+def test_sonarpur_station_road_is_configured_as_live_pilot_location():
+    from app import geography
+    name = "Sonarpur Station Road — Mission Pally, Narendrapur"
+    rec = geography.resolve_location(name)
+    assert rec is not None
+    assert rec["district"] == "South 24 Parganas"
+    assert rec["block"] == "Rajpur Sonarpur"
+    assert rec["latitude"] == 22.442948
+    assert rec["longitude"] == 88.428633
+    assert rec["resolution"] == "address_geocode"

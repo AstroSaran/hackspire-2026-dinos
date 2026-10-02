@@ -43,13 +43,53 @@ PILOT_BANNER = (
     "IMD is retained as the future primary provider pending IP whitelisting. See /data-health."
 )
 
-app = FastAPI(title="Kavach — Explainable Livelihood-Risk Decision Support API", version="0.4.0")
+app = FastAPI(title="Kavach — Explainable Livelihood-Risk Decision Support API", version="0.4.1")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 DATA_COVERAGE_STATIC = {
     "crop": "SIMULATED", "market": "SIMULATED", "employment": "SIMULATED",
     "water": "SIMULATED", "vulnerability": "SIMULATED", "historical_outcomes": "NOT_AVAILABLE",
 }
+
+SONARPUR_LIVE_VILLAGE = "Sonarpur Station Road — Mission Pally, Narendrapur"
+SONARPUR_SIMULATED_REMAINDER = {
+    "crop_stress_index": 34.0,
+    "mandi_price_deviation_pct": -8.0,
+    "mgnrega_demand_spike_pct": 12.0,
+    "water_stress_index": 28.0,
+    "historical_vulnerability": 52.0,
+}
+
+def _is_sonarpur(village: str) -> bool:
+    return village.strip().lower() == SONARPUR_LIVE_VILLAGE.lower()
+
+def _sonarpur_live_rainfall_pipeline(obs, fc, loc):
+    """Use today's real Open-Meteo daily precipitation and a real ERA5 monthly baseline.
+    This avoids feeding an hourly precipitation reading into a daily anomaly feature."""
+    if obs is None or obs.status != "LIVE" or not fc or not fc.days:
+        return weather_features.compute_rainfall_anomaly(obs, loc.district, loc.block, loc.latitude, loc.longitude, live_pilot=False)
+    day = fc.days[0]
+    try:
+        from datetime import datetime
+        month = int(day.date[5:7])
+        baseline = weather_historical.fetch_era5_monthly_daily_baseline(loc.latitude, loc.longitude, month)
+        return weather_features.compute_rainfall_anomaly(
+            obs, loc.district, loc.block, loc.latitude, loc.longitude,
+            live_pilot=False, rainfall_mm_override=day.precipitation_sum_mm,
+            measurement_type="live_open_meteo_daily_forecast_for_today",
+        ) | {"stage_2_baseline": {"have_baseline": True, "baseline": baseline},
+             "rainfall_anomaly_pct": round(((day.precipitation_sum_mm - baseline["mean_mm"]) / baseline["mean_mm"]) * 100, 1) if baseline["mean_mm"] else None,
+             "baseline_period": baseline["period"], "baseline_source": baseline["source"],
+             "model_input_used": baseline["mean_mm"] not in (None,0) and day.precipitation_sum_mm is not None}
+    except Exception as exc:
+        return weather_features.compute_rainfall_anomaly(obs, loc.district, loc.block, loc.latitude, loc.longitude, live_pilot=False) | {"model_input_used": False, "reason": f"live daily rainfall baseline unavailable: {exc}"}
+
+def _sonarpur_hybrid_features(obs, loc, rainfall_pipeline):
+    if not rainfall_pipeline or not rainfall_pipeline.get("model_input_used"):
+        return None
+    feat = dict(SONARPUR_SIMULATED_REMAINDER)
+    feat["rainfall_anomaly_pct"] = rainfall_pipeline["rainfall_anomaly_pct"]
+    return feat
 
 
 def _weather_location(village: str):
@@ -99,8 +139,8 @@ def _raw_signals_with_provenance(row: pd.Series) -> list:
 
 def build_village_result(row: pd.Series, include_live_weather: bool = True):
     feat = row[engine.FEATURES].to_dict()
-    result = engine.assess_risk(feat)
-    actions = engine.suggest_actions(feat, result)
+    result = None if _is_sonarpur(row["village"]) else engine.assess_risk(feat)
+    actions = engine.suggest_actions(feat, result) if result is not None else []
 
     weather_block = None
     weather_data_status = "UNAVAILABLE"
@@ -112,7 +152,7 @@ def build_village_result(row: pd.Series, include_live_weather: bool = True):
                               "note": "Weather location unavailable — no coordinate record for this village."}
         else:
             weather_data_status = obs.status  # LIVE | STALE | SIMULATED_DEMO | UNAVAILABLE
-            rainfall_pipeline = weather_features.compute_rainfall_anomaly(obs, loc.district, loc.block)
+            rainfall_pipeline = _sonarpur_live_rainfall_pipeline(obs, fc, loc) if _is_sonarpur(row["village"]) else weather_features.compute_rainfall_anomaly(obs, loc.district, loc.block)
             weather_block = {
                 "observation": obs.to_dict(),
                 "forecast": fc.to_dict(),
@@ -122,6 +162,12 @@ def build_village_result(row: pd.Series, include_live_weather: bool = True):
 
     data_coverage = {"weather": weather_data_status, **DATA_COVERAGE_STATIC}
 
+    hybrid_features = _sonarpur_hybrid_features(obs, loc, rainfall_pipeline) if (_is_sonarpur(row["village"]) and obs is not None and loc is not None) else None
+    if hybrid_features is not None:
+        result = engine.assess_risk(hybrid_features)
+        result["data_quality"]["data_status"] = "HYBRID_LIVE_WEATHER_PLUS_SIMULATED_REMAINDER"
+        result["data_quality"]["overall_quality_label"] = "Live Sonarpur weather + explicitly simulated expansion signals"
+        actions = engine.suggest_actions(hybrid_features, result)
     return {
         "village": row["village"],
         "zone": row["zone"],
@@ -130,27 +176,31 @@ def build_village_result(row: pd.Series, include_live_weather: bool = True):
         "weather": weather_block,
         "observed_signals": _raw_signals_with_provenance(row),
         "model_assessment": {
-            "estimated_risk_score": result["risk_score"],
-            "status": result["status"],
-            "model_uncertainty": result["model_uncertainty"],
-            "note": "Model risk score, not a calibrated probability of poverty, migration, debt, or distress. "
-                    "This model is trained on the representative/synthetic dataset described in "
-                    "/model/validation-status — live weather is NOT yet a trained-model input (see "
-                    "weather.rainfall_anomaly_pipeline.model_input_used, currently False in this build).",
+            "estimated_risk_score": result["risk_score"] if result is not None else None,
+            "status": result["status"] if result is not None else "WAITING_FOR_LIVE_DATA",
+            "model_uncertainty": result["model_uncertainty"] if result is not None else None,
+            "mode": "SONARPUR_LIVE_HYBRID" if _is_sonarpur(row["village"]) and hybrid_features is not None else "EXPANSION_SIMULATED",
+            "note": (
+                "Sonarpur mode: rainfall anomaly is derived from live Open-Meteo weather plus a real ERA5 historical baseline; "
+                "crop, market, employment, water and vulnerability inputs remain explicitly simulated for expansion demonstration. "
+                "The score is therefore a hybrid prototype assessment, not a field-validated prediction."
+                if _is_sonarpur(row["village"]) else
+                "Expansion mode: all six livelihood-model inputs are representative/simulated. The risk score is not a calibrated probability and is not a field-validated prediction."
+            ),
         },
         "driver_contribution_indicative": {
             "method": "SHAP (TreeExplainer) over the trained RandomForest",
             "note": "Explains the MODEL's output, not proven real-world causation.",
-            "drivers": result["drivers"],
+            "drivers": result["drivers"] if result is not None else [],
         },
-        "data_quality": result["data_quality"],
+        "data_quality": result["data_quality"] if result is not None else {"data_status": "LIVE_DATA_INCOMPLETE", "completeness": 0.0, "missing_features": ["live rainfall anomaly baseline"], "overall_quality_label": "Live Sonarpur weather present, model withheld until real rainfall baseline is available"},
         "scenario_trajectory": {
             "note": "Illustrative scenario trajectory generated by hand-designed transition weights over "
                     "representative inputs. Not a forecast validated against field outcomes.",
-            "stages": result["scenario_trajectory"],
+            "stages": result["scenario_trajectory"] if result is not None else [],
         },
         "suggested_actions_for_officer_review": actions,
-        "validation_status": result["validation_status"],
+        "validation_status": result["validation_status"] if result is not None else engine.VALIDATION_STATUS,
     }
 
 
@@ -159,11 +209,14 @@ def list_villages():
     df = load_snapshot()
     out = []
     for _, row in df.iterrows():
+        if _is_sonarpur(row["village"]):
+            out.append({"village": row["village"], "zone": row["zone"], "estimated_risk_score": None, "status": "live-pilot", "mode": "SONARPUR_LIVE_HYBRID"})
+            continue
         feat = row[engine.FEATURES].to_dict()
         result = engine.assess_risk(feat)
         out.append({"village": row["village"], "zone": row["zone"],
-                     "estimated_risk_score": result["risk_score"], "status": result["status"]})
-    out.sort(key=lambda v: -v["estimated_risk_score"])
+                     "estimated_risk_score": result["risk_score"], "status": result["status"], "mode": "EXPANSION_SIMULATED"})
+    out.sort(key=lambda v: -(v["estimated_risk_score"] if v["estimated_risk_score"] is not None else -1))
     return {"pilot_mode_banner": PILOT_BANNER, "villages": out}
 
 
@@ -251,44 +304,6 @@ def root():
             "pilot_mode_banner": PILOT_BANNER, "docs": "/docs"}
 
 
-@app.get("/health")
-def health_check():
-    """Health check endpoint for monitoring and load balancers."""
-    import time
-    from . import config
-    
-    try:
-        # Check model is loaded
-        model_loaded = engine.MODEL is not None
-        
-        # Check data is available
-        df = load_snapshot()
-        data_available = len(df) > 0
-        
-        # Check weather service (don't actually call external APIs)
-        weather_config_valid = bool(config.Config.WEATHER_COUNTRY and config.Config.WEATHER_STATE)
-        
-        status = "healthy" if (model_loaded and data_available and weather_config_valid) else "degraded"
-        
-        return {
-            "status": status,
-            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S+05:30"),
-            "checks": {
-                "model_loaded": model_loaded,
-                "data_available": data_available,
-                "village_count": len(df) if data_available else 0,
-                "weather_config": weather_config_valid,
-            },
-            "version": "0.3.0"
-        }
-    except Exception as e:
-        return {
-            "status": "unhealthy",
-            "error": str(e),
-            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S+05:30")
-        }
-
-
 # --- Weather (Part 30) -------------------------------------------------------
 
 @app.get("/locations")
@@ -296,6 +311,57 @@ def locations():
     return {"country": geography.COUNTRY, "state": geography.STATE,
             "districts": {d: {"blocks": list(b["blocks"].keys())} for d, b in geography.DISTRICTS.items()},
             "villages": geography.all_villages()}
+
+
+@app.get("/live-area/sonarpur")
+def sonarpur_live_area():
+    """Dedicated live-data pilot for Sonarpur Station Road / Mission Pally.
+
+    Only weather is claimed as live here. The livelihood model is deliberately
+    not scored until crop, market, employment, water and vulnerability inputs
+    are sourced from real data for this exact area.
+    """
+    obs, fc, warnings, loc = _weather_bundle(SONARPUR_LIVE_VILLAGE)
+    if loc is None:
+        raise HTTPException(404, "Sonarpur live location is not configured")
+    live_pipeline = _sonarpur_live_rainfall_pipeline(obs, fc, loc)
+    hybrid_features = _sonarpur_hybrid_features(obs, loc, live_pipeline)
+    return {
+        "area": {
+            "name": SONARPUR_LIVE_VILLAGE,
+            "address": "Sonarpur Station Road, Mission Pally, Narendrapur, Rajpur Sonarpur, Kolkata – 700150, West Bengal, India",
+            "latitude": loc.latitude,
+            "longitude": loc.longitude,
+            "timezone": geography.TIMEZONE,
+            "coordinate_source": "geocoded public address reference",
+        },
+        "weather": obs.to_dict(),
+        "forecast": fc.to_dict(),
+        "warnings": warnings,
+        "rainfall_pipeline": live_pipeline,
+        "model_assessment": (
+            {"status": "LIVE_WEATHER_HYBRID", "mode": "SONARPUR_LIVE_HYBRID",
+             "risk_score": engine.assess_risk(hybrid_features)["risk_score"],
+             "reason": "Live Sonarpur weather is used to derive today's rainfall anomaly; the remaining five model inputs are explicitly simulated for expansion demonstration.",
+             "simulated_features": list(SONARPUR_SIMULATED_REMAINDER.keys())}
+            if hybrid_features is not None else
+            {"status": "WAITING_FOR_LIVE_BASELINE", "mode": "SONARPUR_LIVE_ONLY", "risk_score": None,
+             "reason": "Live weather is available, but a defensible real historical rainfall baseline could not be fetched, so the model score is withheld rather than fabricated."}
+        ),
+    }
+
+
+@app.get("/expansion-mode")
+def expansion_mode():
+    df = load_snapshot()
+    out = []
+    for _, row in df.iterrows():
+        if _is_sonarpur(row["village"]):
+            continue
+        feat = row[engine.FEATURES].to_dict()
+        r = engine.assess_risk(feat)
+        out.append({"village": row["village"], "mode": "EXPANSION_SIMULATED", "risk_score": r["risk_score"], "status": r["status"], "data_coverage": DATA_COVERAGE_STATIC})
+    return {"mode": "EXPANSION_SIMULATED", "description": "Representative/simulated signals used to demonstrate how Kavach can expand beyond the Sonarpur live pilot.", "villages": out}
 
 
 @app.get("/weather/{village}")

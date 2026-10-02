@@ -30,6 +30,16 @@ UNITS = {"temperature": "C", "rainfall": "mm", "wind_speed": "km/h"}
 # A resolution tag on every location record: "block_centroid" means the
 # coordinate is the block headquarters, not a village-specific GPS point.
 DISTRICTS = {
+    "South 24 Parganas": {
+        "blocks": {
+            "Rajpur Sonarpur": {
+                "latitude": 22.442948, "longitude": 88.428633, "resolution": "address_geocode",
+                "villages": ["Sonarpur Station Road — Mission Pally, Narendrapur"],
+                "area_id": "sonarpur_live",
+            },
+        },
+        "imd_district_id": None,
+    },
     "Nadia": {
         "blocks": {
             "Krishnanagar Sadar": {

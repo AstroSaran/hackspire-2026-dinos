@@ -12,18 +12,29 @@ from .weather.models import LIVE
 from .weather import historical
 
 
-def compute_rainfall_anomaly(observation, district: str, block: str) -> dict:
+def compute_rainfall_anomaly(observation, district: str, block: str, latitude=None, longitude=None, live_pilot=False, rainfall_mm_override=None, measurement_type="observation") -> dict:
     """observation: a WeatherObservation (real, from the weather service).
     Returns the full pipeline trace, not just the final number, so the API
     and UI can show exactly which stage failed if any did."""
     stage_1_observation = {
         "have_observation": observation.status == LIVE,
-        "precipitation_mm": observation.precipitation_mm,
+        "precipitation_mm": rainfall_mm_override if rainfall_mm_override is not None else observation.precipitation_mm,
+        "measurement_type": measurement_type,
         "observed_at": observation.observed_at,
         "provider": observation.provider_name,
     }
 
     baseline = historical.get_baseline(district, block)
+    if baseline is None and live_pilot and latitude is not None and longitude is not None:
+        try:
+            baseline = historical.fetch_era5_daily_baseline(latitude, longitude)
+        except Exception as exc:
+            baseline = None
+            live_baseline_error = str(exc)
+        else:
+            live_baseline_error = None
+    else:
+        live_baseline_error = None
     stage_2_baseline = {
         "have_baseline": baseline is not None,
         "baseline": baseline,  # None, or {"mean_mm": ..., "period": ..., "source": ..., "computed_at": ...}
@@ -39,7 +50,7 @@ def compute_rainfall_anomaly(observation, district: str, block: str) -> dict:
                              "API key not configured in this build, and the Open-Meteo ERA5 batch "
                              "computation has not been run (no network egress in this environment)")
 
-    actual = observation.precipitation_mm
+    actual = stage_1_observation["precipitation_mm"]
     mean_mm = baseline["mean_mm"]
     if mean_mm in (None, 0):
         return _unavailable(stage_1_observation, stage_2_baseline, "baseline mean is zero/invalid")

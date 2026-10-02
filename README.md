@@ -237,3 +237,27 @@ predicts exactly what will happen."*
   records the `subsequent_outcome` field this build already reserves for it — the only
   way any real accuracy claim becomes possible
 - Household/cluster-level prioritization once ethically and operationally reviewed
+
+## Sonarpur live-data pilot
+
+A dedicated live-data pilot location is configured for:
+
+`Sonarpur Station Road, Mission Pally, Narendrapur, Rajpur Sonarpur, Kolkata – 700150, West Bengal, India`
+
+Coordinates: `22.442948, 88.428633` (public geocoded address reference).
+
+The dedicated endpoint is:
+
+`GET /live-area/sonarpur`
+
+It uses the real Open-Meteo provider for current weather and forecast when the deployment has normal internet egress. Demo fallback is disabled in the example configuration for this pilot, so unavailable live data remains `UNAVAILABLE` rather than being fabricated.
+
+**Important:** the livelihood-risk Random Forest score is deliberately withheld for this location until the remaining model inputs (crop stress, market, employment, water stress and vulnerability) are backed by real area-specific data. The live pilot therefore demonstrates genuine weather ingestion without falsely presenting a weather-only reading as a validated livelihood-risk prediction.
+
+A small browser page for this endpoint is included at `frontend/sonarpur_live.html`.
+
+
+## Sonarpur live pilot + expansion mode
+The project now has a dedicated real-data pilot for **Sonarpur Station Road, Mission Pally, Narendrapur, Rajpur Sonarpur, Kolkata – 700150** (22.442948, 88.428633). In `SONARPUR_LIVE_HYBRID` mode, current weather comes from Open-Meteo and rainfall anomaly can be computed against a real Open-Meteo ERA5 historical baseline at runtime. The remaining five livelihood features are deliberately simulated and visibly labeled as such. This lets the demo show a genuine local live signal without pretending the entire livelihood model is field-validated.
+
+`GET /expansion-mode` exposes the wider representative/simulated village layer as an explicit expansion option. This is the intended demonstration pattern: **one real pilot area now, simulated expansion elsewhere until each signal has a defensible real source.**

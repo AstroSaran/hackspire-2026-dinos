@@ -1,0 +1,5 @@
+# Separate offline experiment dependencies; these are not added to the live app.
+numpy==2.5.3
+pandas==3.0.6
+scikit-learn==1.9.1
+joblib==1.6.0

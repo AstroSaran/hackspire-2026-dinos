@@ -66,6 +66,23 @@ few for one. Its final adjacent-year holdout covers 22 known districts, not
 unseen-district generalization. It remains withheld because it loses to the
 prior-year baseline on MAE and has only one independent test year.
 
+### Experimental rice yield-shortfall study
+
+A separate offline experiment uses the real district/season APY Rice records
+to label yield below 85% of the previous five consecutive years' mean. It is
+not the DINOS livelihood model and is not connected to the live dashboard. The
+APY-derived panel has 1,119 labeled rows, 63 shortfalls, 21 years, and 18
+districts. On the 2018-2022 holdout, the weather Random Forest scored AUC 0.5036
+and Brier 0.129242, below the same-district-season persistence and training
+base-rate baselines on Brier; **no predictive-skill claim is supported**.
+
+The runnable script, exact target/feature definitions, geography harmonization,
+holdout scores, data requirements, and limitations are in
+[RICE_YIELD_SHORTFALL_EXPERIMENT.md](docs/RICE_YIELD_SHORTFALL_EXPERIMENT.md).
+The APY CSV and local panel/weather/model artifacts are deliberately not
+committed. This experiment does not alter the existing Kavach models or
+`collect_historical_weather.py` production snapshot.
+
 ### Refresh the historical weather feature snapshot
 
 The current immutable snapshot, raw provider response, and provenance manifest

@@ -22,3 +22,10 @@ backend/data/metadata/mango-yield-evaluation-*.json
 # Archived demo data and model are local-only and are not part of the live app.
 legacy_prototype/
 backend/requirements-legacy.txt
+
+# Local APY source copy and experimental rice-yield inputs/outputs.
+backend/data/raw/apy/
+backend/data/raw/rice-yield-weather/
+backend/data/processed/rice-yield-weather/
+backend/data/metadata/rice-yield-weather/
+backend/data/experimental/rice-yield-shortfall/

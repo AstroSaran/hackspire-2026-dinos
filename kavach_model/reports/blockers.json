@@ -1,0 +1,70 @@
+{
+  "groups": {
+    "soil": {
+      "feature_coverage": {
+        "soil_mean": 0.0,
+        "soil_anomaly": 0.0
+      },
+      "eligible_features": [],
+      "coverage": 0,
+      "eligible": false,
+      "reason": "Below 60% coverage / no verified matched source"
+    },
+    "vegetation": {
+      "feature_coverage": {
+        "ndvi_anomaly": 0.0,
+        "evi_anomaly": 0.0
+      },
+      "eligible_features": [],
+      "coverage": 0,
+      "eligible": false,
+      "reason": "Below 60% coverage / no verified matched source"
+    },
+    "market": {
+      "feature_coverage": {
+        "price_deviation": 0.0,
+        "price_volatility": 0.0,
+        "arrivals": 0.0
+      },
+      "eligible_features": [],
+      "coverage": 0,
+      "eligible": false,
+      "reason": "Below 60% coverage / no verified matched source"
+    },
+    "water": {
+      "feature_coverage": {
+        "groundwater_change": 0.0
+      },
+      "eligible_features": [],
+      "coverage": 0,
+      "eligible": false,
+      "reason": "Below 60% coverage / no verified matched source"
+    },
+    "vulnerability": {
+      "feature_coverage": {
+        "agri_labourer_share": 0.41809954751131223,
+        "cultivator_share": 0.41809954751131223,
+        "literacy_share": 0.41809954751131223,
+        "irrigation_share": 0.0
+      },
+      "eligible_features": [],
+      "coverage": 0,
+      "eligible": false,
+      "reason": "Below 60% coverage / no verified matched source"
+    },
+    "employment": {
+      "feature_coverage": {
+        "households_demanded": 0.0
+      },
+      "eligible_features": [],
+      "coverage": 0,
+      "eligible": false,
+      "reason": "Below 60% coverage / no verified matched source"
+    }
+  },
+  "data_vintage": "Reanalysis and final revised APY are retrospective. No point-in-time release-vintage archives. 7-day weather, 45-day index and 12-month APY latency assumptions must be validated for prospective release.",
+  "boro_calendar": "APY YYYY–YYYY is treated as July–June crop year: Summer/boro Dec(Y)–May(Y+1), cutoff 15 Mar(Y+1). Source-specific harvest-year metadata verification remains a release blocker.",
+  "spatial": "Boundary adjacency not verified; spatial lag stays missing. Uses last available neighbouring outcome under the 12-month publication assumption.",
+  "withdrawal": "Monsoon withdrawal after the fixed cutoff is not observable; deliberately excluded.",
+  "vegetation": "AppEEARS catalogue alone is not an NDVI/EVI district time series."
+}

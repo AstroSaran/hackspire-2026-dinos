@@ -1,0 +1,146 @@
+{
+  "weather": {
+    "feature_coverage": {
+      "rain_total": 1.0,
+      "rain_z": 1.0,
+      "dry_spell": 1.0,
+      "heavy_days": 1.0,
+      "extreme_days": 1.0,
+      "hot35": 1.0,
+      "hot38": 1.0,
+      "gdd10": 1.0,
+      "diurnal_range": 1.0,
+      "et0_total": 0.22805429864253393,
+      "water_balance": 0.22805429864253393,
+      "spi1": 0.783710407239819,
+      "spi3": 0.7692307692307693,
+      "spi6": 0.7529411764705882,
+      "spei1": 0.17737556561085974,
+      "spei3": 0.17375565610859728,
+      "spei6": 0.17013574660633485,
+      "onset_delay": 0.6497737556561086,
+      "onset_seen": 0.6687782805429864
+    },
+    "eligible_features": [
+      "diurnal_range",
+      "dry_spell",
+      "extreme_days",
+      "gdd10",
+      "heavy_days",
+      "hot35",
+      "hot38",
+      "rain_total",
+      "rain_z",
+      "spi1",
+      "spi3",
+      "spi6"
+    ],
+    "coverage": 0.7529411764705882,
+    "eligible": true,
+    "reason": null
+  },
+  "soil": {
+    "feature_coverage": {
+      "soil_mean": 0.0,
+      "soil_anomaly": 0.0
+    },
+    "eligible_features": [],
+    "coverage": 0,
+    "eligible": false,
+    "reason": "Below 60% coverage / no verified matched source"
+  },
+  "vegetation": {
+    "feature_coverage": {
+      "ndvi_anomaly": 0.0,
+      "evi_anomaly": 0.0
+    },
+    "eligible_features": [],
+    "coverage": 0,
+    "eligible": false,
+    "reason": "Below 60% coverage / no verified matched source"
+  },
+  "climate": {
+    "feature_coverage": {
+      "oni_lag": 1.0,
+      "dmi_lag": 1.0
+    },
+    "eligible_features": [
+      "dmi_lag",
+      "oni_lag"
+    ],
+    "coverage": 1.0,
+    "eligible": true,
+    "reason": null
+  },
+  "cyclone": {
+    "feature_coverage": {
+      "cyclone_150km": 1.0,
+      "cyclone_days": 1.0
+    },
+    "eligible_features": [
+      "cyclone_150km",
+      "cyclone_days"
+    ],
+    "coverage": 1.0,
+    "eligible": true,
+    "reason": null
+  },
+  "market": {
+    "feature_coverage": {
+      "price_deviation": 0.0,
+      "price_volatility": 0.0,
+      "arrivals": 0.0
+    },
+    "eligible_features": [],
+    "coverage": 0,
+    "eligible": false,
+    "reason": "Below 60% coverage / no verified matched source"
+  },
+  "water": {
+    "feature_coverage": {
+      "groundwater_change": 0.0
+    },
+    "eligible_features": [],
+    "coverage": 0,
+    "eligible": false,
+    "reason": "Below 60% coverage / no verified matched source"
+  },
+  "vulnerability": {
+    "feature_coverage": {
+      "agri_labourer_share": 0.41809954751131223,
+      "cultivator_share": 0.41809954751131223,
+      "literacy_share": 0.41809954751131223,
+      "irrigation_share": 0.0
+    },
+    "eligible_features": [],
+    "coverage": 0,
+    "eligible": false,
+    "reason": "Below 60% coverage / no verified matched source"
+  },
+  "employment": {
+    "feature_coverage": {
+      "households_demanded": 0.0
+    },
+    "eligible_features": [],
+    "coverage": 0,
+    "eligible": false,
+    "reason": "Below 60% coverage / no verified matched source"
+  },
+  "memory_spatial": {
+    "feature_coverage": {
+      "previous_shortfall": 0.0,
+      "yield_trend": 1.0,
+      "previous_residual": 0.9076923076923077,
+      "area_change": 1.0,
+      "neighbour_anomaly": 0.0
+    },
+    "eligible_features": [
+      "area_change",
+      "yield_trend",
+      "previous_residual"
+    ],
+    "coverage": 0.9076923076923077,
+    "eligible": true,
+    "reason": null
+  }
+}

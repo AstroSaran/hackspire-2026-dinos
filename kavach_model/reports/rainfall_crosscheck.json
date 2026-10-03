@@ -1,0 +1,8 @@
+{
+  "district": "South 24 Parganas",
+  "month": "2020-06",
+  "chirps_mm": 374.5353088378906,
+  "archive_snapshot_mm": 301.49999999999994,
+  "days": 30,
+  "method": "One centroid, one month; not bias correction or statewide validation."
+}

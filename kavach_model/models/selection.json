@@ -1,0 +1,112 @@
+{
+  "classifier": "mixed_isotonic",
+  "regressor": "catboost",
+  "development_ranking": [
+    {
+      "model": "mixed_isotonic",
+      "brier": 0.030483747877004055,
+      "rows": 216
+    },
+    {
+      "model": "lightgbm",
+      "brier": 0.032397936542078114,
+      "rows": 216
+    },
+    {
+      "model": "lightgbm_isotonic",
+      "brier": 0.03258624062910812,
+      "rows": 216
+    },
+    {
+      "model": "xgboost_isotonic",
+      "brier": 0.03272043557355036,
+      "rows": 216
+    },
+    {
+      "model": "stack",
+      "brier": 0.03273563743715848,
+      "rows": 216
+    },
+    {
+      "model": "stack_isotonic",
+      "brier": 0.03273563743715848,
+      "rows": 216
+    },
+    {
+      "model": "catboost_isotonic",
+      "brier": 0.03275383793199885,
+      "rows": 216
+    },
+    {
+      "model": "lightgbm_season_isotonic",
+      "brier": 0.03298463370703259,
+      "rows": 216
+    },
+    {
+      "model": "catboost",
+      "brier": 0.03306396295904934,
+      "rows": 216
+    },
+    {
+      "model": "mixed",
+      "brier": 0.034054642928680996,
+      "rows": 216
+    },
+    {
+      "model": "xgboost",
+      "brier": 0.03462245982539606,
+      "rows": 216
+    },
+    {
+      "model": "lightgbm_season",
+      "brier": 0.036040545696461035,
+      "rows": 216
+    }
+  ],
+  "regression_ranking": [
+    {
+      "model": "catboost",
+      "rmse_pct": 17.604851726119286,
+      "rows": 216
+    },
+    {
+      "model": "stack",
+      "rmse_pct": 17.8202950156956,
+      "rows": 216
+    },
+    {
+      "model": "mixed",
+      "rmse_pct": 17.88373030077099,
+      "rows": 216
+    },
+    {
+      "model": "lightgbm",
+      "rmse_pct": 18.128052144324105,
+      "rows": 216
+    },
+    {
+      "model": "lightgbm_season",
+      "rmse_pct": 18.278520695836942,
+      "rows": 216
+    },
+    {
+      "model": "xgboost",
+      "rmse_pct": 18.4113680943212,
+      "rows": 216
+    }
+  ],
+  "selection_years": [
+    2012,
+    2013,
+    2014,
+    2015
+  ],
+  "test_years": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022
+  ],
+  "locked_before": "2018-06-30"
+}

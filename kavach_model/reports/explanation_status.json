@@ -1,0 +1,7 @@
+{
+  "status": "complete",
+  "errors": [],
+  "method": "Permutation SHAP of selected probability, actual training background (up to 20 rows), one permutation; not causal.",
+  "local_rows": 260,
+  "pdp_warning": "Marginal perturbations can break weather correlations. No perturbed rows were used in training."
+}

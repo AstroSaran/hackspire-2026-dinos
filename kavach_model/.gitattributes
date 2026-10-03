@@ -1,0 +1,5 @@
+# Preserve measured report bytes and their recorded integrity hashes on checkout.
+reports/*.json -text
+models/*.json -text
+# csv.writer emits valid CRLF records; retain them without treating CR as trailing spaces.
+reports/*.csv -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

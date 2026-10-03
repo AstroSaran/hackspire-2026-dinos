@@ -105,6 +105,20 @@ retired pilot registry is empty.
 
 The retired synthetic prototype and its model artifacts are not part of the current application.
 
+## Standalone rice-yield research
+
+[`kavach_model/`](kavach_model/README.md) contains the independent preharvest rice shortfall
+research pipeline: cutoff-safe features, nested temporal comparisons, calibration, conformal
+intervals, SHAP explanations, tests, and aggregate measured reports. Its
+[model card](kavach_model/MODEL_CARD.md) and
+[release report](kavach_model/reports/model_release_report.json) record a **withheld** result:
+the held-out event count, AUC confidence bound, and source-timing evidence do not meet the
+release requirements. It is a historical research experiment, not a live livelihood-risk service.
+
+The public checkout includes source and aggregate reports. Dataset snapshots, fitted weights,
+and row-level outputs require locally supplied inputs under the repository's data standards;
+see the [research setup instructions](kavach_model/README.md#public-checkout-and-local-inputs).
+
 ## Production packaging
 
 The repository includes a hardened API container and a production Compose

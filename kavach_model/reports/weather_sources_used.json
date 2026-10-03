@@ -1,0 +1,166 @@
+[
+  {
+    "district": "Bankura",
+    "source": "Open-Meteo explicitly ERA5",
+    "rows": 10592,
+    "sha256": "b098d5fbdf991db508703bf5b903b73dc3a1ef673afc44d0994f04b210e9eb69"
+  },
+  {
+    "district": "Bardhaman",
+    "source": "Open-Meteo explicitly ERA5",
+    "rows": 10592,
+    "sha256": "ed18fe415d04d0efd30012da5c1a8b5b951e6960764176ec24339c5054b7b496"
+  },
+  {
+    "district": "Birbhum",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "78139ac4dd2914197dd15b2389a7be2559348dcd197c7d294f2be085737b6796"
+  },
+  {
+    "district": "Birbhum",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "Cooch Behar",
+    "source": "Open-Meteo explicitly ERA5",
+    "rows": 10592,
+    "sha256": "dde2eff4c75a8ad4ec673ec98daf6e03676007b3c516d5dcf15cb182f33a4bde"
+  },
+  {
+    "district": "Dakshin Dinajpur",
+    "source": "Open-Meteo explicitly ERA5",
+    "rows": 10592,
+    "sha256": "c6dc5c92d55f8efbc0d8e559b7b4149f8b68ac0626192288c45f9f8d7a089ead"
+  },
+  {
+    "district": "Darjeeling",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "2b3f7153e0b8651cec2e8fcc4f7567085e776f7fa7e4f63a66908831e23336dd"
+  },
+  {
+    "district": "Darjeeling",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "Hooghly",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "0d341315175524ef83ab34bf9593261d7ab9ff96940c66a6c7ff12af1d60bab7"
+  },
+  {
+    "district": "Hooghly",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "Howrah",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "511e7cb334220be3b718a3e0f6dcb34cfd1f6fa01ca6cfd5d9024eeee7732966"
+  },
+  {
+    "district": "Howrah",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "Jalpaiguri",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "107484ad6d4f786c4582cca5e2e9c308e058292edf4e954342347f77d738f765"
+  },
+  {
+    "district": "Jalpaiguri",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "Malda",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "61fd708510f1938883c6457421be9d0abfcfff7b1a26d6ce28e74678cc5e21bf"
+  },
+  {
+    "district": "Malda",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "Murshidabad",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "2592947414724c3de195c2b3ea8033048dce538d478fbf48f7fd88724b3d4354"
+  },
+  {
+    "district": "Murshidabad",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "Nadia",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "a3418bcf240fbd97ae93dd0261df199ce52c7ec1bc02331bce11bc8637d6ef1a"
+  },
+  {
+    "district": "Nadia",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "North 24 Parganas",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "60a00a41dd076391d810b034cc1735245f31d3f5f33faaa5ebe5da0da8d498be"
+  },
+  {
+    "district": "North 24 Parganas",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "Paschim Medinipur",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "7900df11ac4edad0342c8198255b8c77df19f22a401824beff5a72751b207f9e"
+  },
+  {
+    "district": "Paschim Medinipur",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "Purba Medinipur",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "37128635fbdb4ed3b7ba501337c4694b67bb362a79fe7e36787753158c40bb07"
+  },
+  {
+    "district": "Purba Medinipur",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "Purulia",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "e7c2258c8c8ea0bae3c97c1db3ea1320e14b1428d9b509908e8bf43c7509b7e8"
+  },
+  {
+    "district": "Purulia",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "South 24 Parganas",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "10f0656adff0f57c63bfe8e280dccf2ce521be324e32a7681039ab271472b2f4"
+  },
+  {
+    "district": "South 24 Parganas",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  },
+  {
+    "district": "Uttar Dinajpur",
+    "temperature_source": "NASA POWER MERRA-2",
+    "sha256": "9de96126297e9ee67f98999be89de3e154f2f8e035124ddb7872fcbe64a4a56e"
+  },
+  {
+    "district": "Uttar Dinajpur",
+    "source": "verified archive best-match snapshot",
+    "rows": 10592
+  }
+]

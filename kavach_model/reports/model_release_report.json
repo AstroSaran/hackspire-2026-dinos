@@ -1,0 +1,253 @@
+{
+  "status": "withheld",
+  "checks": {
+    "positive_brier_skill": true,
+    "auc_lower_bound_above_055": false,
+    "beats_base_rate": true,
+    "beats_persistence": true,
+    "at_least_25_heldout_positives": false,
+    "interval_coverage_within_5pp_of_80": true,
+    "at_least_four_test_years": true,
+    "data_evidence_verified": false
+  },
+  "failed_checks": [
+    "auc_lower_bound_above_055",
+    "at_least_25_heldout_positives",
+    "data_evidence_verified"
+  ],
+  "evidence_blockers": [
+    "APY crop-calendar/year convention for boro not source-verified",
+    "Historical APY/reanalysis/index release vintages not available; assumed publication lags",
+    "APY/Census/boundary redistribution terms not independently verified",
+    "Raw APY historical split-district geography before 2016 not independently validated"
+  ],
+  "created_at": "2026-10-03T08:44:08.779533+00:00",
+  "classifier": "mixed_isotonic",
+  "regressor": "catboost",
+  "metrics": {
+    "rows": 260,
+    "positives": 12,
+    "brier": 0.0436563920719575,
+    "auc": 0.5878696236559139,
+    "ap": 0.1971789211514667,
+    "base_brier": 0.04421779824042843,
+    "brier_skill": 0.012696384506038938,
+    "persistence_brier": 0.08076923076923077,
+    "brier_gain_over_base": 0.0005614061684709321,
+    "anomaly_mae": 0.2554714131957683,
+    "anomaly_rmse": 0.3571019571843513,
+    "anomaly_r2": -0.022367565974964698,
+    "anomaly_rows": 260,
+    "anomaly_coverage": 0.7923076923076923,
+    "anomaly_width": 0.7844426107354567,
+    "anomaly_pct_mae": 9.397242210385388,
+    "anomaly_pct_rmse": 13.468869296708615,
+    "anomaly_pct_r2": 0.011389288711245005,
+    "anomaly_pct_rows": 260,
+    "anomaly_pct_coverage": 0.8076923076923077,
+    "anomaly_pct_width": 30.133845952360815,
+    "detrended_anomaly_mae": 0.25040621950534087,
+    "detrended_anomaly_rmse": 0.34615297008057616,
+    "detrended_anomaly_r2": 0.07170564028323612,
+    "detrended_anomaly_rows": 260,
+    "detrended_anomaly_coverage": 0.7807692307692308,
+    "detrended_anomaly_width": 0.7780235450897008,
+    "detrended_pct_mae": 9.06701504659354,
+    "detrended_pct_rmse": 12.866029716312754,
+    "detrended_pct_r2": 0.0672159047944838,
+    "detrended_pct_rows": 260,
+    "detrended_pct_coverage": 0.8076923076923077,
+    "detrended_pct_width": 29.006872977245806
+  },
+  "confidence_intervals_95": {
+    "rows": {
+      "lower": 250.0,
+      "upper": 268.0,
+      "valid_replicates": 500
+    },
+    "positives": {
+      "lower": 5.0,
+      "upper": 20.0,
+      "valid_replicates": 500
+    },
+    "brier": {
+      "lower": 0.01958038940700244,
+      "upper": 0.06914021736706183,
+      "valid_replicates": 500
+    },
+    "auc": {
+      "lower": 0.33073065967560505,
+      "upper": 0.7938105770763589,
+      "valid_replicates": 500
+    },
+    "ap": {
+      "lower": 0.03453248613537331,
+      "upper": 0.4654962511912784,
+      "valid_replicates": 500
+    },
+    "base_brier": {
+      "lower": 0.02046081357120113,
+      "upper": 0.0708998659269378,
+      "valid_replicates": 500
+    },
+    "brier_skill": {
+      "lower": -0.03691111251042203,
+      "upper": 0.06153087157672552,
+      "valid_replicates": 500
+    },
+    "persistence_brier": {
+      "lower": 0.047244094488188976,
+      "upper": 0.11789483576220215,
+      "valid_replicates": 500
+    },
+    "brier_gain_over_base": {
+      "lower": -0.0014977263849035118,
+      "upper": 0.0031107120230536253,
+      "valid_replicates": 500
+    },
+    "anomaly_mae": {
+      "lower": 0.2240881465983188,
+      "upper": 0.29179333727849593,
+      "valid_replicates": 500
+    },
+    "anomaly_rmse": {
+      "lower": 0.2956365805757313,
+      "upper": 0.4218702810469232,
+      "valid_replicates": 500
+    },
+    "anomaly_r2": {
+      "lower": -0.07674925043732274,
+      "upper": 0.017112528219588287,
+      "valid_replicates": 500
+    },
+    "anomaly_rows": {
+      "lower": 250.0,
+      "upper": 268.0,
+      "valid_replicates": 500
+    },
+    "anomaly_coverage": {
+      "lower": 0.7364341085271318,
+      "upper": 0.8475004472805343,
+      "valid_replicates": 500
+    },
+    "anomaly_width": {
+      "lower": 0.7599134610720434,
+      "upper": 0.8081043424246077,
+      "valid_replicates": 500
+    },
+    "anomaly_pct_mae": {
+      "lower": 8.138273398822413,
+      "upper": 10.74927733219475,
+      "valid_replicates": 500
+    },
+    "anomaly_pct_rmse": {
+      "lower": 11.224251529835895,
+      "upper": 15.81431968021524,
+      "valid_replicates": 500
+    },
+    "anomaly_pct_r2": {
+      "lower": -0.04103920768475345,
+      "upper": 0.04808432472030349,
+      "valid_replicates": 500
+    },
+    "anomaly_pct_rows": {
+      "lower": 250.0,
+      "upper": 268.0,
+      "valid_replicates": 500
+    },
+    "anomaly_pct_coverage": {
+      "lower": 0.7509205426356589,
+      "upper": 0.8599280303030303,
+      "valid_replicates": 500
+    },
+    "anomaly_pct_width": {
+      "lower": 29.292024871493865,
+      "upper": 30.90852821708574,
+      "valid_replicates": 500
+    },
+    "detrended_anomaly_mae": {
+      "lower": 0.21927408647166258,
+      "upper": 0.285057617107106,
+      "valid_replicates": 500
+    },
+    "detrended_anomaly_rmse": {
+      "lower": 0.2871513017630068,
+      "upper": 0.41077049140334876,
+      "valid_replicates": 500
+    },
+    "detrended_anomaly_r2": {
+      "lower": 0.021235602562489686,
+      "upper": 0.11912665810983986,
+      "valid_replicates": 500
+    },
+    "detrended_anomaly_rows": {
+      "lower": 250.0,
+      "upper": 268.0,
+      "valid_replicates": 500
+    },
+    "detrended_anomaly_coverage": {
+      "lower": 0.7285059207715314,
+      "upper": 0.8333333333333334,
+      "valid_replicates": 500
+    },
+    "detrended_anomaly_width": {
+      "lower": 0.7516532354322768,
+      "upper": 0.8033988322385495,
+      "valid_replicates": 500
+    },
+    "detrended_pct_mae": {
+      "lower": 7.874736232970913,
+      "upper": 10.354845231375338,
+      "valid_replicates": 500
+    },
+    "detrended_pct_rmse": {
+      "lower": 10.697534233191131,
+      "upper": 15.027546506473994,
+      "valid_replicates": 500
+    },
+    "detrended_pct_r2": {
+      "lower": 0.002720627717662759,
+      "upper": 0.1233530536744946,
+      "valid_replicates": 500
+    },
+    "detrended_pct_rows": {
+      "lower": 250.0,
+      "upper": 268.0,
+      "valid_replicates": 500
+    },
+    "detrended_pct_coverage": {
+      "lower": 0.7548558993602362,
+      "upper": 0.8549618320610687,
+      "valid_replicates": 500
+    },
+    "detrended_pct_width": {
+      "lower": 27.805299205003926,
+      "upper": 30.15305588175052,
+      "valid_replicates": 500
+    }
+  },
+  "test_years": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022
+  ],
+  "positives_by_year": {
+    "2018": 2,
+    "2019": 3,
+    "2020": 0,
+    "2021": 3,
+    "2022": 4
+  },
+  "model_manifest_sha256": "3b235da050daeb017551a09a110c552a68828257a6917755cc3ded2f150cd3b9",
+  "training_panel_sha256": "7e32215202ba76acbd3bdb15351a810381af79918219e852eef2660489c73151",
+  "predictions_sha256": "188141869765a56a40692462945ad2e2e895b7dc27f7508fd85534d5ab20b31f",
+  "selected_predictions_sha256": "f7958495df392aeed904497b55f4975a994e0ce1cc9dc8b9986eeeeb705fd350",
+  "next_evidence": [
+    "At least 25 observed held-out shortfalls under the unchanged 15% label",
+    "Document crop-year conventions, district mapping and actual historical publication vintages",
+    "AUC lower confidence bound >0.55 and positive Brier skill versus released-history baselines",
+    "Independent interval coverage within 75–85%; a prospective evaluation with fresh data"
+  ]
+}

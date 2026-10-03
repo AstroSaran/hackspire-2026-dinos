@@ -1,0 +1,3377 @@
+{
+  "method": "District–crop-year paired block bootstrap; seasons within block kept together",
+  "replicates": 500,
+  "seed": 20261003,
+  "limitation": "Does not fully represent common cross-district year shocks; only five held-out years.",
+  "models": {
+    "base_rate": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.25426471354166663,
+        "upper": 0.6310349033856191,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.019613338728623395,
+        "upper": 0.09234654341683418,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": 0.0,
+        "upper": 2.220446049250313e-16,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": 0.0,
+        "upper": 6.938893903907228e-18,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.22332906284950738,
+        "upper": 0.2919258910905169,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.29073757018585883,
+        "upper": 0.42016432239023876,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.024964752926212853,
+        "upper": 0.0001084201715116717,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.32216798896026,
+        "upper": 10.977270990812931,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.33976005668597,
+        "upper": 16.008874449323702,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.05378499748402504,
+        "upper": 0.0005632926918421412,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.23211125078250716,
+        "upper": 0.29889792366348744,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2990041068357845,
+        "upper": 0.4232326092999921,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.020804075371250702,
+        "upper": -0.0011805325235727975,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.36893353936552,
+        "upper": 10.837643698845985,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 11.218948688811697,
+        "upper": 15.557747580497852,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.02838490154997511,
+        "upper": -0.0005494707693832764,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "catboost": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.02072523586782629,
+        "upper": 0.07164814437825652,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.29350019970451485,
+        "upper": 0.5861126923948574,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.021050700460530286,
+        "upper": 0.1771683051676935,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.03137076386812637,
+        "upper": 0.007699969975429398,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.0014115559005055008,
+        "upper": 0.00030448575916671735,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.2240881465983188,
+        "upper": 0.29179333727849593,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.2956365805757313,
+        "upper": 0.4218702810469232,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.07674925043732274,
+        "upper": 0.017112528219588287,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.138273398822413,
+        "upper": 10.74927733219475,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.224251529835895,
+        "upper": 15.81431968021524,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.04103920768475345,
+        "upper": 0.04808432472030349,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.21927408647166258,
+        "upper": 0.285057617107106,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2871513017630068,
+        "upper": 0.41077049140334876,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": 0.021235602562489686,
+        "upper": 0.11912665810983986,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 7.874736232970913,
+        "upper": 10.354845231375338,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.697534233191131,
+        "upper": 15.027546506473994,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": 0.002720627717662759,
+        "upper": 0.1233530536744946,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "catboost_isotonic": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.021445200325648468,
+        "upper": 0.07482560204985297,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.2472904002985204,
+        "upper": 0.501694108422939,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.018482000943087516,
+        "upper": 0.07711641018303943,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.09243958330304804,
+        "upper": 0.01663917094737681,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.004603245542448496,
+        "upper": 0.0004905704454974229,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.2240881465983188,
+        "upper": 0.29179333727849593,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.2956365805757313,
+        "upper": 0.4218702810469232,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.07674925043732274,
+        "upper": 0.017112528219588287,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.138273398822413,
+        "upper": 10.74927733219475,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.224251529835895,
+        "upper": 15.81431968021524,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.04103920768475345,
+        "upper": 0.04808432472030349,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.21927408647166258,
+        "upper": 0.285057617107106,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2871513017630068,
+        "upper": 0.41077049140334876,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": 0.021235602562489686,
+        "upper": 0.11912665810983986,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 7.874736232970913,
+        "upper": 10.354845231375338,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.697534233191131,
+        "upper": 15.027546506473994,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": 0.002720627717662759,
+        "upper": 0.1233530536744946,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "climatology": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.024005741152232356,
+        "upper": 0.06920277631616213,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.36633155230596176,
+        "upper": 0.7707414108278478,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.033167686030562096,
+        "upper": 0.28054992639495346,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.2967723063666303,
+        "upper": 0.10362181145741474,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.008517148534663042,
+        "upper": 0.0062103187159096756,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.23255345028490568,
+        "upper": 0.300572470482562,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.3057918796723085,
+        "upper": 0.4345824407191881,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.15805061983439267,
+        "upper": -0.03552993898869714,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.877840121785768,
+        "upper": 11.490679284874629,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 12.050347580354662,
+        "upper": 16.536823008771535,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.22136108305895963,
+        "upper": -0.03771163023851506,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22691001013389558,
+        "upper": 0.29337494824404303,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.29711692472560625,
+        "upper": 0.4195401295074795,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.053222329594209465,
+        "upper": 0.06571409741381351,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.128508114132329,
+        "upper": 10.789501204042605,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 11.07764838700006,
+        "upper": 15.624663076398122,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.127062430508598,
+        "upper": 0.07745506478147579,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "elastic": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.021425143880433158,
+        "upper": 0.06923197597471482,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.5216679351622667,
+        "upper": 0.8294397243490669,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.04153863955668969,
+        "upper": 0.24449692344098242,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.15550789569901782,
+        "upper": 0.0649192522155272,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.004631795801851621,
+        "upper": 0.0036412668336697268,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.22453097747366124,
+        "upper": 0.2928576884182048,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.2911285711579733,
+        "upper": 0.42065438076566164,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.03227251152167374,
+        "upper": 0.0038968242240508895,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.639645578902497,
+        "upper": 11.285478171667103,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.486833232829234,
+        "upper": 16.066923333217733,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.1464716897732643,
+        "upper": 0.041837699280286716,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22130421025168573,
+        "upper": 0.28809289644828223,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2877404630814908,
+        "upper": 0.4157485052518596,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": 0.022045936754566776,
+        "upper": 0.10677959430325612,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.051957349837584,
+        "upper": 10.52917779172652,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.75188737362025,
+        "upper": 14.945136631837473,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.0315282067250909,
+        "upper": 0.15945993952687662,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "elastic_isotonic": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.02095700718434353,
+        "upper": 0.07164660004394999,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.4449454560367454,
+        "upper": 0.8007932061713572,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.03439371783268157,
+        "upper": 0.23287804543688176,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.117771574707327,
+        "upper": 0.053811576949113225,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.004678345755706407,
+        "upper": 0.0021384374611910276,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.22453097747366124,
+        "upper": 0.2928576884182048,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.2911285711579733,
+        "upper": 0.42065438076566164,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.03227251152167374,
+        "upper": 0.0038968242240508895,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.639645578902497,
+        "upper": 11.285478171667103,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.486833232829234,
+        "upper": 16.066923333217733,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.1464716897732643,
+        "upper": 0.041837699280286716,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22130421025168573,
+        "upper": 0.28809289644828223,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2877404630814908,
+        "upper": 0.4157485052518596,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": 0.022045936754566776,
+        "upper": 0.10677959430325612,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.051957349837584,
+        "upper": 10.52917779172652,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.75188737362025,
+        "upper": 14.945136631837473,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.0315282067250909,
+        "upper": 0.15945993952687662,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "lightgbm": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.020897479558705894,
+        "upper": 0.0718589708063128,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.4708513245444084,
+        "upper": 0.765158877103005,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.03379181904168649,
+        "upper": 0.18580234310779634,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.06876921197748598,
+        "upper": 0.03494039950063536,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.0026379901746857518,
+        "upper": 0.0015622597222257205,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.2308379122004702,
+        "upper": 0.29941874386802503,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.3063232170433741,
+        "upper": 0.43020268194849715,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.17432152611403334,
+        "upper": -0.019132404271727504,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.574566620835828,
+        "upper": 11.226986131526806,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.785575605243421,
+        "upper": 16.451640360240994,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.18948115463269238,
+        "upper": -0.01157792809975901,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22546784300177938,
+        "upper": 0.28827074135832176,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.29496519100604074,
+        "upper": 0.41405871150395746,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.03839098918995573,
+        "upper": 0.0941758003996979,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 7.941432901056002,
+        "upper": 10.228964446922037,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.69354640355046,
+        "upper": 14.926206900620556,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.012964318510691917,
+        "upper": 0.1338982805303004,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "lightgbm_isotonic": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.019501002436791592,
+        "upper": 0.07171890430635486,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.4065996475742952,
+        "upper": 0.7220169285447063,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.026902053111280185,
+        "upper": 0.16279841483593416,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.020155420079466836,
+        "upper": 0.05017705248854419,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.0011477235309026196,
+        "upper": 0.0012296163936657322,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.2308379122004702,
+        "upper": 0.29941874386802503,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.3063232170433741,
+        "upper": 0.43020268194849715,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.17432152611403334,
+        "upper": -0.019132404271727504,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.574566620835828,
+        "upper": 11.226986131526806,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.785575605243421,
+        "upper": 16.451640360240994,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.18948115463269238,
+        "upper": -0.01157792809975901,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22546784300177938,
+        "upper": 0.28827074135832176,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.29496519100604074,
+        "upper": 0.41405871150395746,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.03839098918995573,
+        "upper": 0.0941758003996979,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 7.941432901056002,
+        "upper": 10.228964446922037,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.69354640355046,
+        "upper": 14.926206900620556,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.012964318510691917,
+        "upper": 0.1338982805303004,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "lightgbm_label10": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 15.0,
+        "upper": 34.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.06126708748143439,
+        "upper": 0.11652833864824266,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.3669994514562373,
+        "upper": 0.644944753327264,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.06984958583518287,
+        "upper": 0.23929463888675417,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.05720167079692329,
+        "upper": 0.11214302078839512,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.13005965174192888,
+        "upper": 0.018837862394193574,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.11742424242424243,
+        "upper": 0.198093822119652,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.01020801955165622,
+        "upper": 0.0015638743450369504,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.2361185678340315,
+        "upper": 0.3056878829207744,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.3126936681038919,
+        "upper": 0.43482141307317007,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.226542740300866,
+        "upper": -0.04570508176700657,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.761170108405535,
+        "upper": 11.470736502696344,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.956127487923329,
+        "upper": 16.734156632307865,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.2552861467017955,
+        "upper": -0.027303716079874786,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22938783661232934,
+        "upper": 0.2921030890035245,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.30092321201385236,
+        "upper": 0.41840692210976976,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.08284331567645825,
+        "upper": 0.07345361413308223,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.160783685977105,
+        "upper": 10.411296584928055,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.944623806448343,
+        "upper": 15.132044826980074,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.050844952905848756,
+        "upper": 0.11070887061384556,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "lightgbm_label20": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 3.0,
+        "upper": 14.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.012884021831662375,
+        "upper": 0.04991618561506783,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.42346386389201346,
+        "upper": 0.8932429130009775,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.028609095920663085,
+        "upper": 0.2628135180586549,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.01229657359089289,
+        "upper": 0.05080456357197513,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.09206646836813343,
+        "upper": 0.07200255152507211,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.03088252832438879,
+        "upper": 0.08814078097475042,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.002085310315983164,
+        "upper": 0.0025280613607608885,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.2308379122004702,
+        "upper": 0.29941874386802503,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.3063232170433741,
+        "upper": 0.43020268194849715,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.17432152611403334,
+        "upper": -0.019132404271727504,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.574566620835828,
+        "upper": 11.226986131526806,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.785575605243421,
+        "upper": 16.451640360240994,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.18948115463269238,
+        "upper": -0.01157792809975901,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22546784300177938,
+        "upper": 0.28827074135832176,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.29496519100604074,
+        "upper": 0.41405871150395746,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.03839098918995573,
+        "upper": 0.0941758003996979,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 7.941432901056002,
+        "upper": 10.228964446922037,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.69354640355046,
+        "upper": 14.926206900620556,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.012964318510691917,
+        "upper": 0.1338982805303004,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "lightgbm_season": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.021377623223317554,
+        "upper": 0.07082059058576454,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.3833219622793896,
+        "upper": 0.7347460871642126,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.02838412448565536,
+        "upper": 0.22984021268324026,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.09623973044455501,
+        "upper": 0.04424277509948177,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.003403591490735752,
+        "upper": 0.002356498180037801,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.22717531664725865,
+        "upper": 0.29318733119384865,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.30166700817647735,
+        "upper": 0.4233706025377117,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.12856048338451767,
+        "upper": 0.019675071276860773,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.564165496352468,
+        "upper": 11.240069034963842,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.92512699856943,
+        "upper": 16.754938892200343,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.2021530858270027,
+        "upper": -0.020173830390685373,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.23238892669098868,
+        "upper": 0.2940903964202968,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2994733718883258,
+        "upper": 0.4164633053703608,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.060650757619518214,
+        "upper": 0.077696014112359,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.235094678214022,
+        "upper": 10.648222514498933,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 11.198419838881248,
+        "upper": 15.4209223599888,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.08781521043956139,
+        "upper": 0.0746223837531198,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "lightgbm_season_isotonic": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.020017673341780635,
+        "upper": 0.07104434515008526,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.3607303969816273,
+        "upper": 0.6806694556001784,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.02204019380493607,
+        "upper": 0.12155965907537794,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.02505908628683588,
+        "upper": 0.02647942394160258,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.001179760818114309,
+        "upper": 0.0010623163264638293,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.22717531664725865,
+        "upper": 0.29318733119384865,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.30166700817647735,
+        "upper": 0.4233706025377117,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.12856048338451767,
+        "upper": 0.019675071276860773,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.564165496352468,
+        "upper": 11.240069034963842,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.92512699856943,
+        "upper": 16.754938892200343,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.2021530858270027,
+        "upper": -0.020173830390685373,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.23238892669098868,
+        "upper": 0.2940903964202968,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2994733718883258,
+        "upper": 0.4164633053703608,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.060650757619518214,
+        "upper": 0.077696014112359,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.235094678214022,
+        "upper": 10.648222514498933,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 11.198419838881248,
+        "upper": 15.4209223599888,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.08781521043956139,
+        "upper": 0.0746223837531198,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "lightgbm_without_climate": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.020292419588560692,
+        "upper": 0.07159169341631753,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.35432494553376903,
+        "upper": 0.7326642279284723,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.030639877057047744,
+        "upper": 0.20515195094212507,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.07098969826117392,
+        "upper": 0.03778930178376318,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.002725926232006728,
+        "upper": 0.0018043257321059755,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.22298203756012236,
+        "upper": 0.2897742406865173,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.2981817850641753,
+        "upper": 0.41937553135762995,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.11044758994245203,
+        "upper": 0.027427941158429378,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.694463663780448,
+        "upper": 11.277566340329752,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.89870181880136,
+        "upper": 16.362951617274167,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.17978798742556107,
+        "upper": -0.011152092025040118,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22817399494547919,
+        "upper": 0.2901815218393404,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2952928030107428,
+        "upper": 0.4107314871467796,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.02709091031277965,
+        "upper": 0.10005232193206376,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.0191707337231,
+        "upper": 10.350777240378468,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.79678810950585,
+        "upper": 14.93245268424579,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.016981826466396937,
+        "upper": 0.13949357160401915,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "lightgbm_without_cyclone": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.02087709550140371,
+        "upper": 0.07186906751183716,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.46855765637084856,
+        "upper": 0.7604746859566135,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.033706174436360724,
+        "upper": 0.1855380767479112,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.06958490067957367,
+        "upper": 0.03343823036257833,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.002657964601512213,
+        "upper": 0.0014106433998892416,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.23032511564220248,
+        "upper": 0.2983411000894669,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.30572767048956934,
+        "upper": 0.4295428498989078,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.16829373200105724,
+        "upper": -0.01707851995063206,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.574566620835828,
+        "upper": 11.226986131526806,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.785575605243421,
+        "upper": 16.451640360240994,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.18948115463269238,
+        "upper": -0.01157792809975901,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22670019358125817,
+        "upper": 0.2885104524648494,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2951239727899822,
+        "upper": 0.41217815231171956,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.039168743793589623,
+        "upper": 0.09822855198297335,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 7.87261915494826,
+        "upper": 10.196048286750251,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.6403077977372,
+        "upper": 14.94896311496293,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.01155002036511246,
+        "upper": 0.13976903608149813,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "lightgbm_without_memory_spatial": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.02067833882957969,
+        "upper": 0.07124551094256007,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.46590252822457073,
+        "upper": 0.7046141687260108,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.029501050474257495,
+        "upper": 0.15593451550655055,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.059551517836703254,
+        "upper": 0.026038520987538144,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.00202671808035835,
+        "upper": 0.001319282860191853,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.234387111764441,
+        "upper": 0.30145269099025035,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.30878918709357683,
+        "upper": 0.4316527630473311,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.18265649010164436,
+        "upper": -0.03138869340788616,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.973421950598444,
+        "upper": 11.607803193010694,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 12.241852712628429,
+        "upper": 16.841903666571763,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.2844113742256695,
+        "upper": -0.0608569981615563,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22808506813519663,
+        "upper": 0.2922075087019744,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.3063026124596903,
+        "upper": 0.42528697151934036,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.107112902955447,
+        "upper": 0.032409174959038875,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.461747247958062,
+        "upper": 10.753082118571031,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 11.464437573620012,
+        "upper": 15.57437537808803,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.1291257692794285,
+        "upper": 0.03197906833042994,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "lightgbm_without_weather": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.02260968274401844,
+        "upper": 0.07212891506869291,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.38704413116763714,
+        "upper": 0.7697364631336406,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.03142416282872857,
+        "upper": 0.21683909734414755,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.1707435029413982,
+        "upper": 0.0323967209495195,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.005760997656876852,
+        "upper": 0.001776297731465697,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.22313777159413226,
+        "upper": 0.2920700294615809,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.2954861984325058,
+        "upper": 0.419614015814512,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.06393152312776898,
+        "upper": 0.03731647388115028,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.159701395293293,
+        "upper": 10.9207363866604,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.239224558552847,
+        "upper": 15.87837304067649,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.07264489449497366,
+        "upper": 0.0625638388476776,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22558257871740428,
+        "upper": 0.29194037710873477,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2944768770245151,
+        "upper": 0.41641186110936296,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.05822186992615025,
+        "upper": 0.09571419814268409,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 7.955156855675263,
+        "upper": 10.469600850624245,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.854128393189907,
+        "upper": 15.056133312144683,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.03474344069809194,
+        "upper": 0.1269575480806988,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "linear": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.022940883294647555,
+        "upper": 0.0706312799326778,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.486098320169034,
+        "upper": 0.8255509700881551,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.0387792703891649,
+        "upper": 0.25198611377907,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.2595273776415569,
+        "upper": 0.059570813560855806,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.007708012376864421,
+        "upper": 0.0034849432945375774,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.23475354148858327,
+        "upper": 0.3007735633780979,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.30157806353221,
+        "upper": 0.42260663120582787,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.13735645080362538,
+        "upper": 0.018625746220648807,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.648200505067493,
+        "upper": 11.313468019543185,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.6291021740037,
+        "upper": 16.114819956512296,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.16451287663178202,
+        "upper": 0.03333553017882439,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22615445997378814,
+        "upper": 0.29207430986594923,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.29274444270377636,
+        "upper": 0.4091778250371241,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.01186945456400164,
+        "upper": 0.1135500639224095,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.058894038127871,
+        "upper": 10.590326594468772,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.835335554547127,
+        "upper": 14.945613175234607,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.04010930962415503,
+        "upper": 0.15263173920801154,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "linear_isotonic": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.019813802053210927,
+        "upper": 0.06979671161810086,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.46117553499132447,
+        "upper": 0.7974255356912353,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.03149531703595117,
+        "upper": 0.18222082263564732,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.03053100784148978,
+        "upper": 0.047162475944352605,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.001200073673910179,
+        "upper": 0.0025190769056350946,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.23475354148858327,
+        "upper": 0.3007735633780979,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.30157806353221,
+        "upper": 0.42260663120582787,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.13735645080362538,
+        "upper": 0.018625746220648807,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.648200505067493,
+        "upper": 11.313468019543185,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.6291021740037,
+        "upper": 16.114819956512296,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.16451287663178202,
+        "upper": 0.03333553017882439,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22615445997378814,
+        "upper": 0.29207430986594923,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.29274444270377636,
+        "upper": 0.4091778250371241,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.01186945456400164,
+        "upper": 0.1135500639224095,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.058894038127871,
+        "upper": 10.590326594468772,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.835335554547127,
+        "upper": 14.945613175234607,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.04010930962415503,
+        "upper": 0.15263173920801154,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "mixed": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.021347333645172828,
+        "upper": 0.06746352970165666,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.4884608150347124,
+        "upper": 0.8292151438059372,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.0382733564138816,
+        "upper": 0.29537919716548144,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.14908660861921086,
+        "upper": 0.09602269451452655,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.004356568489222221,
+        "upper": 0.0056183277472431885,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.2251526166350893,
+        "upper": 0.29415562877550244,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.2924505463888373,
+        "upper": 0.4208399463810025,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.04681543934168302,
+        "upper": 0.02478668561593171,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.325662899684096,
+        "upper": 11.095102094274727,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.30728579234472,
+        "upper": 16.079513241516057,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.0827629374540687,
+        "upper": 0.04454541323660089,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.2192896202375408,
+        "upper": 0.286610686401106,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2856428700409482,
+        "upper": 0.4111720967454821,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": 0.023159758119706157,
+        "upper": 0.12279914086617955,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 7.847300500659244,
+        "upper": 10.435155106501124,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.624178154422959,
+        "upper": 15.136090269721766,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.013088475009080894,
+        "upper": 0.1461998756182999,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "mixed_isotonic": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.01958038940700244,
+        "upper": 0.06914021736706183,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.33073065967560505,
+        "upper": 0.7938105770763589,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.03453248613537331,
+        "upper": 0.4654962511912784,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.03691111251042203,
+        "upper": 0.06153087157672552,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.0014977263849035118,
+        "upper": 0.0031107120230536253,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.2251526166350893,
+        "upper": 0.29415562877550244,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.2924505463888373,
+        "upper": 0.4208399463810025,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.04681543934168302,
+        "upper": 0.02478668561593171,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.325662899684096,
+        "upper": 11.095102094274727,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.30728579234472,
+        "upper": 16.079513241516057,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.0827629374540687,
+        "upper": 0.04454541323660089,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.2192896202375408,
+        "upper": 0.286610686401106,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2856428700409482,
+        "upper": 0.4111720967454821,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": 0.023159758119706157,
+        "upper": 0.12279914086617955,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 7.847300500659244,
+        "upper": 10.435155106501124,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.624178154422959,
+        "upper": 15.136090269721766,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.013088475009080894,
+        "upper": 0.1461998756182999,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "persistence": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.47124262101534825,
+        "upper": 0.5955229081838525,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.019451762354651164,
+        "upper": 0.11325757575757571,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -2.0866044667727315,
+        "upper": -0.2635397509899017,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.061534474444627354,
+        "upper": -0.015615265073998038,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.27707821285266826,
+        "upper": 0.3612525817353688,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.3824817172813098,
+        "upper": 0.5582701965054878,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -1.6011754020185525,
+        "upper": -0.2285058685600999,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 10.193969530039675,
+        "upper": 13.254563474215464,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 14.437662088378362,
+        "upper": 20.262774651299807,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -1.302692181897848,
+        "upper": -0.16696753049615828,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.25723806112497904,
+        "upper": 0.33889198751795796,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.3607621259664922,
+        "upper": 0.53196906034872,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -1.2213476470786182,
+        "upper": -0.08276547489573981,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 9.260548395959479,
+        "upper": 12.09624454428744,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 13.445106807042063,
+        "upper": 19.17640552200302,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -1.0590644706049057,
+        "upper": -0.06422388002563777,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "quantile_CQR": {
+      "rows": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": null,
+        "upper": null,
+        "valid_replicates": 0
+      },
+      "auc": {
+        "lower": null,
+        "upper": null,
+        "valid_replicates": 0
+      },
+      "ap": {
+        "lower": null,
+        "upper": null,
+        "valid_replicates": 0
+      },
+      "anomaly_coverage": {
+        "lower": 0.7364341085271318,
+        "upper": 0.8475004472805343,
+        "valid_replicates": 500
+      },
+      "anomaly_width": {
+        "lower": 0.7599134610720434,
+        "upper": 0.8081043424246077,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_coverage": {
+        "lower": 0.7509205426356589,
+        "upper": 0.8599280303030303,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_width": {
+        "lower": 29.292024871493865,
+        "upper": 30.90852821708574,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_coverage": {
+        "lower": 0.7285059207715314,
+        "upper": 0.8333333333333334,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_width": {
+        "lower": 0.7516532354322768,
+        "upper": 0.8033988322385495,
+        "valid_replicates": 500
+      },
+      "detrended_pct_coverage": {
+        "lower": 0.7548558993602362,
+        "upper": 0.8549618320610687,
+        "valid_replicates": 500
+      },
+      "detrended_pct_width": {
+        "lower": 27.805299205003926,
+        "upper": 30.15305588175052,
+        "valid_replicates": 500
+      }
+    },
+    "stack": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.019824141810731142,
+        "upper": 0.07122817658903402,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.2966713842685753,
+        "upper": 0.6797393516313753,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.02556479548783754,
+        "upper": 0.15592851117679804,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.0048848879583430205,
+        "upper": 0.031191920750407637,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.0003506947390763227,
+        "upper": 0.0006414117159295759,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.22484643407880262,
+        "upper": 0.29126290878820493,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.2933039269417134,
+        "upper": 0.42586283700805294,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.07276608769630374,
+        "upper": 0.004200226394833013,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.519954483582856,
+        "upper": 11.10343652148243,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.472160185637371,
+        "upper": 16.074118120057097,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.09840805798848534,
+        "upper": 0.020704222446440285,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.23127526244072438,
+        "upper": 0.2936837036000003,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2957769722541762,
+        "upper": 0.4204419133975487,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.049590502066480024,
+        "upper": 0.07409530490013996,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.631800309875409,
+        "upper": 11.047840475738091,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 11.383534393772207,
+        "upper": 16.098667984559857,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.20576970941984082,
+        "upper": 0.07153115955412938,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "stack_isotonic": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.01931394939971082,
+        "upper": 0.07218924824731539,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.21685078875171468,
+        "upper": 0.6345062584005374,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.01805716729209147,
+        "upper": 0.11596562235376574,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.022840335862378706,
+        "upper": 0.05709423904448501,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.0015352849355190225,
+        "upper": 0.001186697415115901,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.22484643407880262,
+        "upper": 0.29126290878820493,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.2933039269417134,
+        "upper": 0.42586283700805294,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.07276608769630374,
+        "upper": 0.004200226394833013,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.519954483582856,
+        "upper": 11.10343652148243,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.472160185637371,
+        "upper": 16.074118120057097,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.09840805798848534,
+        "upper": 0.020704222446440285,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.23127526244072438,
+        "upper": 0.2936837036000003,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2957769722541762,
+        "upper": 0.4204419133975487,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.049590502066480024,
+        "upper": 0.07409530490013996,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.631800309875409,
+        "upper": 11.047840475738091,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 11.383534393772207,
+        "upper": 16.098667984559857,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.20576970941984082,
+        "upper": 0.07153115955412938,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "trailing_mean": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.019230769230769232,
+        "upper": 0.07633587786259542,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.5,
+        "upper": 0.5,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.019230769230769232,
+        "upper": 0.07633587786259542,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.07817112089120862,
+        "upper": 0.05989500126715654,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.005534553388620662,
+        "upper": 0.0012243005577576031,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.23109224351652888,
+        "upper": 0.30458185734435833,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.3042640055665296,
+        "upper": 0.4269551869913522,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.14272280098053794,
+        "upper": -0.018132447959046637,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.41417760084472,
+        "upper": 11.465852809895948,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.662405518297275,
+        "upper": 16.198783521678894,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.15639778982790806,
+        "upper": -0.02196372978494663,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22989644065796674,
+        "upper": 0.29860503992031795,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.3002382865103363,
+        "upper": 0.4242137055546517,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.03995316755209823,
+        "upper": -4.356269901427131e-05,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 8.218791546215561,
+        "upper": 10.809770272378282,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 11.35571317905461,
+        "upper": 15.583977373800654,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.05123780428042873,
+        "upper": -4.2904209796613073e-05,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "xgboost": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.021578894055851207,
+        "upper": 0.07206763850112742,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.3702920503120095,
+        "upper": 0.6868784291507634,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.025852833423322723,
+        "upper": 0.13304222989105016,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.07725383706835648,
+        "upper": 0.012930424273804936,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.0025393996926364147,
+        "upper": 0.0005904224084700196,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.22819355706438416,
+        "upper": 0.29302151076174954,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.30156089255691715,
+        "upper": 0.4297144224253967,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.13598045951753915,
+        "upper": 0.0036275307023706307,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.229811022161563,
+        "upper": 10.802678489387539,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.48214082254972,
+        "upper": 16.18255370116739,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.13320653069225744,
+        "upper": 0.027926441217553867,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22615892137241858,
+        "upper": 0.2896502987811673,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2956378044207653,
+        "upper": 0.4128924865277201,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.03075731024802668,
+        "upper": 0.09732976859007293,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 7.8856797694624845,
+        "upper": 10.338739606995949,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.8057458907209,
+        "upper": 15.117325140457083,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.029028486949373128,
+        "upper": 0.11944856089339884,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    },
+    "xgboost_isotonic": {
+      "rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "positives": {
+        "lower": 5.0,
+        "upper": 20.0,
+        "valid_replicates": 500
+      },
+      "brier": {
+        "lower": 0.01942257833880748,
+        "upper": 0.07223856827800376,
+        "valid_replicates": 500
+      },
+      "auc": {
+        "lower": 0.3127622551051726,
+        "upper": 0.6182037885764194,
+        "valid_replicates": 500
+      },
+      "ap": {
+        "lower": 0.021929141301547314,
+        "upper": 0.09865124007546952,
+        "valid_replicates": 500
+      },
+      "base_brier": {
+        "lower": 0.02046081357120113,
+        "upper": 0.0708998659269378,
+        "valid_replicates": 500
+      },
+      "brier_skill": {
+        "lower": -0.03837555218691226,
+        "upper": 0.05253567961639154,
+        "valid_replicates": 500
+      },
+      "persistence_brier": {
+        "lower": 0.047244094488188976,
+        "upper": 0.11789483576220215,
+        "valid_replicates": 500
+      },
+      "brier_gain_over_base": {
+        "lower": -0.002057482888753158,
+        "upper": 0.0011951497986625469,
+        "valid_replicates": 500
+      },
+      "anomaly_mae": {
+        "lower": 0.22819355706438416,
+        "upper": 0.29302151076174954,
+        "valid_replicates": 500
+      },
+      "anomaly_rmse": {
+        "lower": 0.30156089255691715,
+        "upper": 0.4297144224253967,
+        "valid_replicates": 500
+      },
+      "anomaly_r2": {
+        "lower": -0.13598045951753915,
+        "upper": 0.0036275307023706307,
+        "valid_replicates": 500
+      },
+      "anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_mae": {
+        "lower": 8.229811022161563,
+        "upper": 10.802678489387539,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rmse": {
+        "lower": 11.48214082254972,
+        "upper": 16.18255370116739,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_r2": {
+        "lower": -0.13320653069225744,
+        "upper": 0.027926441217553867,
+        "valid_replicates": 500
+      },
+      "anomaly_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_mae": {
+        "lower": 0.22615892137241858,
+        "upper": 0.2896502987811673,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rmse": {
+        "lower": 0.2956378044207653,
+        "upper": 0.4128924865277201,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_r2": {
+        "lower": -0.03075731024802668,
+        "upper": 0.09732976859007293,
+        "valid_replicates": 500
+      },
+      "detrended_anomaly_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      },
+      "detrended_pct_mae": {
+        "lower": 7.8856797694624845,
+        "upper": 10.338739606995949,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rmse": {
+        "lower": 10.8057458907209,
+        "upper": 15.117325140457083,
+        "valid_replicates": 500
+      },
+      "detrended_pct_r2": {
+        "lower": -0.029028486949373128,
+        "upper": 0.11944856089339884,
+        "valid_replicates": 500
+      },
+      "detrended_pct_rows": {
+        "lower": 250.0,
+        "upper": 268.0,
+        "valid_replicates": 500
+      }
+    }
+  }
+}

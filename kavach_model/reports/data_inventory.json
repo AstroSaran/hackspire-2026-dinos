@@ -1,0 +1,1083 @@
+{
+  "checked_at": "2026-10-03T08:42:07.985415+00:00",
+  "datasets": [
+    {
+      "dataset": "APY WB imported raw snapshot",
+      "path": "data/raw/apy_wb.csv",
+      "sha256": "8c22d64242bae00115a5be94f0d0a450c146c7fc0f64d48392d2ff01b7aff704",
+      "downloaded_at": "2026-10-03T07:56:21.373598+00:00",
+      "url": "https://indiadataportal.com/",
+      "licence_as_recorded": "Original ministry data: GODL-India; IDP snapshot redistribution terms require verification",
+      "independent_licence_verification": false,
+      "rows": 16089,
+      "rice_rows": 1959,
+      "first_year": "1997-1998",
+      "last_year": "2022-2023",
+      "raw_districts": [
+        "Alipurduar",
+        "Bankura",
+        "Birbhum",
+        "Cooch Behar",
+        "Dakshin Dinajpur",
+        "Darjeeling",
+        "Hooghly",
+        "Howrah",
+        "Jalpaiguri",
+        "Jhargram",
+        "Kalimpong",
+        "Malda",
+        "Murshidabad",
+        "Nadia",
+        "North 24 Parganas",
+        "Paschim Bardhaman",
+        "Paschim Medinipur",
+        "Purba Bardhaman",
+        "Purba Medinipur",
+        "Purulia",
+        "South 24 Parganas",
+        "Uttar Dinajpur"
+      ],
+      "units": {
+        "area": [
+          "Hectare"
+        ],
+        "production": [
+          "Tonnes"
+        ],
+        "reported_yield": [
+          "Tonnes/Hectare"
+        ]
+      },
+      "training_use": "Area and production recompute t/ha labels after audited aggregation; Total excluded"
+    },
+    {
+      "dataset": "Explicit ERA5",
+      "path": "data/raw/weather/Bankura.json",
+      "sha256": "b098d5fbdf991db508703bf5b903b73dc3a1ef673afc44d0994f04b210e9eb69",
+      "downloaded_at": "2026-10-03T07:57:55.218432+00:00",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=23.1392&longitude=87.1363&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "licence_as_recorded": "CC BY 4.0",
+      "independent_licence_verification": false,
+      "district": "Bankura",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "time": "iso8601",
+        "precipitation_sum": "mm",
+        "temperature_2m_max": "°C",
+        "temperature_2m_min": "°C",
+        "et0_fao_evapotranspiration": "mm"
+      },
+      "time_standard": "Asia/Kolkata",
+      "missing_provider_values": 0,
+      "training_use": "District-series rainfall, temperature, ET0; observed columns only"
+    },
+    {
+      "dataset": "Explicit ERA5",
+      "path": "data/raw/weather/Bardhaman.json",
+      "sha256": "ed18fe415d04d0efd30012da5c1a8b5b951e6960764176ec24339c5054b7b496",
+      "downloaded_at": "2026-10-03T07:57:57.898318+00:00",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=23.4285&longitude=87.7663&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "licence_as_recorded": "CC BY 4.0",
+      "independent_licence_verification": false,
+      "district": "Bardhaman",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "time": "iso8601",
+        "precipitation_sum": "mm",
+        "temperature_2m_max": "°C",
+        "temperature_2m_min": "°C",
+        "et0_fao_evapotranspiration": "mm"
+      },
+      "time_standard": "Asia/Kolkata",
+      "missing_provider_values": 0,
+      "training_use": "District-series rainfall, temperature, ET0; observed columns only"
+    },
+    {
+      "dataset": "Explicit ERA5",
+      "path": "data/raw/weather/Cooch_Behar.json",
+      "sha256": "dde2eff4c75a8ad4ec673ec98daf6e03676007b3c516d5dcf15cb182f33a4bde",
+      "downloaded_at": "2026-10-03T07:58:02.986269+00:00",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=26.2926&longitude=89.3478&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "licence_as_recorded": "CC BY 4.0",
+      "independent_licence_verification": false,
+      "district": "Cooch Behar",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "time": "iso8601",
+        "precipitation_sum": "mm",
+        "temperature_2m_max": "°C",
+        "temperature_2m_min": "°C",
+        "et0_fao_evapotranspiration": "mm"
+      },
+      "time_standard": "Asia/Kolkata",
+      "missing_provider_values": 0,
+      "training_use": "District-series rainfall, temperature, ET0; observed columns only"
+    },
+    {
+      "dataset": "Explicit ERA5",
+      "path": "data/raw/weather/Dakshin_Dinajpur.json",
+      "sha256": "c6dc5c92d55f8efbc0d8e559b7b4149f8b68ac0626192288c45f9f8d7a089ead",
+      "downloaded_at": "2026-10-03T07:58:05.061436+00:00",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=25.3672&longitude=88.5755&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "licence_as_recorded": "CC BY 4.0",
+      "independent_licence_verification": false,
+      "district": "Dakshin Dinajpur",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "time": "iso8601",
+        "precipitation_sum": "mm",
+        "temperature_2m_max": "°C",
+        "temperature_2m_min": "°C",
+        "et0_fao_evapotranspiration": "mm"
+      },
+      "time_standard": "Asia/Kolkata",
+      "missing_provider_values": 0,
+      "training_use": "District-series rainfall, temperature, ET0; observed columns only"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Bankura.json",
+      "sha256": "0cb804c5f39c5aebfd3ba1430ce88c0a67f5555cc22eb670e644399c785f3d56",
+      "downloaded_at": "2026-10-03T08:06:57.663423+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=87.13627330581487&latitude=23.139199216487327&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Bankura",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Bardhaman.json",
+      "sha256": "ec45d60b19542786f4b501c1ca2a0993b0295298c69a08c736f33ac246ca3749",
+      "downloaded_at": "2026-10-03T08:06:57.672765+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=87.76630644478023&latitude=23.42853511978721&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Bardhaman",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Birbhum.json",
+      "sha256": "78139ac4dd2914197dd15b2389a7be2559348dcd197c7d294f2be085737b6796",
+      "downloaded_at": "2026-10-03T08:06:59.995058+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=87.6633025669185&latitude=23.954374946162023&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Birbhum",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Cooch_Behar.json",
+      "sha256": "64bf0df231b585c9f43d12ca7fdb0f7a2b0727970718385a153afb4ce140af41",
+      "downloaded_at": "2026-10-03T08:06:59.973890+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=89.34781614341841&latitude=26.292614323373925&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Cooch Behar",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Dakshin_Dinajpur.json",
+      "sha256": "7254c3d88e1e7bfd9f63182f36eed9d5a7ede1bbccb827f437970fd7e289d7e7",
+      "downloaded_at": "2026-10-03T08:07:00.783879+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=88.57549538946012&latitude=25.367223422262104&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Dakshin Dinajpur",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Darjeeling.json",
+      "sha256": "2b3f7153e0b8651cec2e8fcc4f7567085e776f7fa7e4f63a66908831e23336dd",
+      "downloaded_at": "2026-10-03T08:07:02.360435+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=88.39044353556395&latitude=26.91461355635869&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Darjeeling",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Hooghly.json",
+      "sha256": "0d341315175524ef83ab34bf9593261d7ab9ff96940c66a6c7ff12af1d60bab7",
+      "downloaded_at": "2026-10-03T08:07:03.011784+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=88.07619274657169&latitude=22.884919970827617&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Hooghly",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Howrah.json",
+      "sha256": "511e7cb334220be3b718a3e0f6dcb34cfd1f6fa01ca6cfd5d9024eeee7732966",
+      "downloaded_at": "2026-10-03T08:07:04.577615+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=88.063396636747&latitude=22.521489523659817&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Howrah",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Jalpaiguri.json",
+      "sha256": "107484ad6d4f786c4582cca5e2e9c308e058292edf4e954342347f77d738f765",
+      "downloaded_at": "2026-10-03T08:07:05.251242+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=89.07787352693339&latitude=26.660195593859427&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Jalpaiguri",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Malda.json",
+      "sha256": "61fd708510f1938883c6457421be9d0abfcfff7b1a26d6ce28e74678cc5e21bf",
+      "downloaded_at": "2026-10-03T08:07:06.806451+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=88.0888833238987&latitude=25.13748802229477&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Malda",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Murshidabad.json",
+      "sha256": "2592947414724c3de195c2b3ea8033048dce538d478fbf48f7fd88724b3d4354",
+      "downloaded_at": "2026-10-03T08:07:07.474319+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=88.23064912357843&latitude=24.162777370029914&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Murshidabad",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Nadia.json",
+      "sha256": "a3418bcf240fbd97ae93dd0261df199ce52c7ec1bc02331bce11bc8637d6ef1a",
+      "downloaded_at": "2026-10-03T08:07:09.046494+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=88.5166952647382&latitude=23.479814018509497&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Nadia",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/North_24_Parganas.json",
+      "sha256": "60a00a41dd076391d810b034cc1735245f31d3f5f33faaa5ebe5da0da8d498be",
+      "downloaded_at": "2026-10-03T08:07:09.712109+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=88.73013288354228&latitude=22.727142120267875&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "North 24 Parganas",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Paschim_Medinipur.json",
+      "sha256": "7900df11ac4edad0342c8198255b8c77df19f22a401824beff5a72751b207f9e",
+      "downloaded_at": "2026-10-03T08:07:11.394523+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=87.2646111978331&latitude=22.41408848488627&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Paschim Medinipur",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Purba_Medinipur.json",
+      "sha256": "37128635fbdb4ed3b7ba501337c4694b67bb362a79fe7e36787753158c40bb07",
+      "downloaded_at": "2026-10-03T08:07:12.415918+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=87.7728874271141&latitude=22.03155974597491&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Purba Medinipur",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Purulia.json",
+      "sha256": "e7c2258c8c8ea0bae3c97c1db3ea1320e14b1428d9b509908e8bf43c7509b7e8",
+      "downloaded_at": "2026-10-03T08:07:13.927687+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=86.42154583618007&latitude=23.276707060223515&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Purulia",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/South_24_Parganas.json",
+      "sha256": "10f0656adff0f57c63bfe8e280dccf2ce521be324e32a7681039ab271472b2f4",
+      "downloaded_at": "2026-10-03T08:07:13.240299+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=88.55190737873234&latitude=22.056788955506644&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "South 24 Parganas",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "NASA POWER",
+      "path": "data/raw/power/Uttar_Dinajpur.json",
+      "sha256": "9de96126297e9ee67f98999be89de3e154f2f8e035124ddb7872fcbe64a4a56e",
+      "downloaded_at": "2026-10-03T08:07:15.484210+00:00",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M_MAX%2CT2M_MIN&community=AG&longitude=88.15726096266737&latitude=25.890156770364925&start=19970101&end=20251231&format=JSON",
+      "licence_as_recorded": "NASA open data; MERRA-2 meteorology attribution",
+      "independent_licence_verification": false,
+      "district": "Uttar Dinajpur",
+      "rows": 10592,
+      "first_date": "1997-01-01",
+      "last_date": "2025-12-31",
+      "units": {
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "time_standard": "LST",
+      "missing_provider_values": 0,
+      "training_use": "Temperature only, where a complete explicit ERA5 district series is absent"
+    },
+    {
+      "dataset": "oni_lag",
+      "path": "data/raw/oni.txt",
+      "sha256": "93f8c86c7a660f46318abe33b38c0479d184812d95a479a1fe869c0c2363a9e4",
+      "downloaded_at": "2026-10-03T07:56:24.492424+00:00",
+      "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+      "licence_as_recorded": "US NOAA public domain",
+      "independent_licence_verification": false,
+      "observed_monthly_values": 919,
+      "first_assumed_available": "1950-04-14",
+      "last_assumed_available": "2026-10-15",
+      "units": "degrees C sea-surface-temperature anomaly",
+      "training_use": "Latest finite observation whose assumed release date precedes cutoff"
+    },
+    {
+      "dataset": "dmi_lag",
+      "path": "data/raw/dmi.txt",
+      "sha256": "42c1000e221addacac4451b8b9ddfbc5ee732b99ee69b0be5105e69ebe881e05",
+      "downloaded_at": "2026-10-03T07:56:24.603633+00:00",
+      "url": "https://psl.noaa.gov/gcos_wgsp/Timeseries/Data/dmi.had.long.data",
+      "licence_as_recorded": "NOAA distribution; underlying HadISST attribution",
+      "independent_licence_verification": false,
+      "observed_monthly_values": 1877,
+      "first_assumed_available": "1870-03-17",
+      "last_assumed_available": "2026-07-15",
+      "units": "degrees C sea-surface-temperature anomaly",
+      "training_use": "Latest finite observation whose assumed release date precedes cutoff"
+    },
+    {
+      "dataset": "IBTrACS NI valid coordinates",
+      "path": "data/raw/ibtracs.csv",
+      "sha256": "9f9734cf416f393649bd2a3ddeee82545470fe4d8c58b4a4a9aa1824818e9c6a",
+      "downloaded_at": "2026-10-03T07:56:46.785843+00:00",
+      "url": "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.NI.list.v04r01.csv",
+      "licence_as_recorded": "NOAA public domain; cite IBTrACS v4r01",
+      "independent_licence_verification": false,
+      "track_rows": 62864,
+      "storms": 1859,
+      "first_date": "1842-10-25 08:53:00",
+      "last_date": "2026-09-24 05:30:00",
+      "units": "WGS84 degrees; derived distance km",
+      "training_use": "Observed pre-cutoff tracks within 150 km; no future tracks"
+    },
+    {
+      "dataset": "Census 2011 district mirror",
+      "path": "data/raw/census_india-districts-census-2011.csv",
+      "sha256": "88c924d78dc7d8b2b3b855262786098cf29ba9e172571fb82dd9bc68ca990318",
+      "downloaded_at": null,
+      "url": null,
+      "licence_as_recorded": null,
+      "independent_licence_verification": false,
+      "rows": 640,
+      "wb_rows": 19,
+      "year": 2011,
+      "wb_districts": [
+        "Bankura",
+        "Barddhaman",
+        "Birbhum",
+        "Cooch Behar",
+        "Dakshin Dinajpur",
+        "Darjeeling",
+        "Hooghly",
+        "Howrah",
+        "Jalpaiguri",
+        "Kolkata",
+        "Malda",
+        "Murshidabad",
+        "Nadia",
+        "North 24 Parganas",
+        "Paschim Medinipur",
+        "Purba Medinipur",
+        "Purulia",
+        "South 24 Parganas",
+        "Uttar Dinajpur"
+      ],
+      "units": "Persons/workers/households counts",
+      "training_use": "Excluded: conservative post-2014 availability gives <60% coverage",
+      "parent_archive_sha256": "7f187e6e67cc713cf991a81a1bf290d0a38fd1e24a569a4d6fe17d1809f1dc6c",
+      "licence_note": "Transport archive manifest contains provisional terms; extracted CSV has no separate licence"
+    },
+    {
+      "dataset": "WFP prices cross-check only",
+      "path": "data/raw/wfp.csv",
+      "sha256": "df253166918129fcc773baed33487234bb0a178b4b4758901db4f58368f76a9e",
+      "downloaded_at": "2026-10-03T07:57:53.166452+00:00",
+      "url": "https://s3.us-east-1.amazonaws.com/hdx-production-filestore/resources/3b1ff071-6b01-4998-aa62-2f3efb5d4888/wfp_food_prices_ind.csv?AWSAccessKeyId=ASIAXYC32WNAS26JWCTO&Signature=wWxA5BimKwZbkU73zY1fnJVErMM%3D&x-amz-security-token=FwoGZXIvYXdzEPH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDKCVnvbVAr%2BPbrtDhSLBAZ1Gm5ZywVfuA2OsEVxdC89GytJx1U%2Fm2duT05hhfprHa8VzW730wjYw2gdUjSln5vGmivbwYw6jf2jklL6H9581DSD3K4WiQ508bIv87cDR0rb3fg246gHHAN3BGqIPIm8QoYgYEnmlZayHm3xZtALWcA4ZbWCn54BTjeGO12jFZ37M4KWspvEYBDbbRk8WB%2B7lryei93KhQ7TfUM8UmdVM%2FU%2BtBC70pQb7VhxSTGtPxDyxLZDeor3uZls6b%2FuCtSQoiNOC1gYyLYdd%2BmeAUnGKXvEsY42rgvNemJRmktKeHFvudvFmcrqlaA4zQBfOmoLuHZTdhQ%3D%3D&Expires=1791014390",
+      "licence_as_recorded": "Creative Commons Attribution for Intergovernmental Organisations (CC BY-IGO)",
+      "independent_licence_verification": false,
+      "rows": 215110,
+      "wb_rows": 8820,
+      "first_date": "1994-01-15",
+      "last_date": "2026-05-15",
+      "wb_markets": [
+        "Kharagpur",
+        "Kolkata",
+        "Malda",
+        "Purulia",
+        "Raiganj",
+        "Rampurhat",
+        "Siliguri"
+      ],
+      "units": [
+        "KG",
+        "L"
+      ],
+      "training_use": "Not used. No matched AGMARKNET export to perform price comparison."
+    }
+  ],
+  "unusable_or_failed_attempts": [
+    {
+      "source": "APY IDP dataset",
+      "status": "FAILED",
+      "url": "https://data.indiadataportal.com/dataset/crop-wise-area-production-yield",
+      "error": "ConnectionError: HTTPSConnectionPool(host='data.indiadataportal.com', port=443): Max retries exceeded with url: /dataset/crop-wise-area-production-yield (Caused by NameResolutionError(\"HTTPSConnection(host='data.indiadataportal.com', port=443): Failed to resolve 'data.indiadataportal.com' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "source": "IDP documentation",
+      "status": "PORTAL_ONLY",
+      "url": "https://docs.indiadataportal.com/",
+      "error": null
+    },
+    {
+      "source": "CEDA Agri-Market",
+      "status": "PORTAL_ONLY",
+      "url": "https://agmarknet.ceda.ashoka.edu.in/",
+      "error": null
+    },
+    {
+      "source": "CGWB",
+      "status": "FAILED",
+      "url": "https://cgwb.gov.in/en/ground-water-level-monitoring",
+      "error": "SSLError: HTTPSConnectionPool(host='cgwb.gov.in', port=443): Max retries exceeded with url: /en/ground-water-level-monitoring (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))"
+    },
+    {
+      "source": "IDP AGMARKNET",
+      "status": "PORTAL_ONLY",
+      "url": "https://indiadataportal.com/p/agmarknet",
+      "error": null
+    },
+    {
+      "source": "Census PCA",
+      "status": "FAILED",
+      "url": "https://censusindia.gov.in/nada/index.php/catalog/40699",
+      "error": "SSLError: HTTPSConnectionPool(host='censusindia.gov.in', port=443): Max retries exceeded with url: /nada/index.php/catalog/40699 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))"
+    },
+    {
+      "source": "India-WRIS",
+      "status": "PORTAL_ONLY",
+      "url": "https://indiawris.gov.in/wris/",
+      "error": null
+    },
+    {
+      "source": "MGNREGA",
+      "status": "PORTAL_ONLY",
+      "url": "https://nrega.nic.in/",
+      "error": null
+    },
+    {
+      "source": "Rice calendar",
+      "status": "FAILED",
+      "url": "https://riceknowledgebank.irri.org/step-by-step-production/pre-planting/crop-calendar",
+      "error": "ConnectionError: HTTPSConnectionPool(host='riceknowledgebank.irri.org', port=443): Max retries exceeded with url: /step-by-step-production/pre-planting/crop-calendar (Caused by NameResolutionError(\"HTTPSConnection(host='riceknowledgebank.irri.org', port=443): Failed to resolve 'riceknowledgebank.irri.org' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "source": "APY ministry calendar",
+      "status": "FAILED",
+      "url": "https://data.desagri.gov.in/website/crops-apy-report-web",
+      "error": "ConnectTimeout: HTTPSConnectionPool(host='data.desagri.gov.in', port=443): Max retries exceeded with url: /website/crops-apy-report-web (Caused by ConnectTimeoutError(<HTTPSConnection(host='data.desagri.gov.in', port=443) at 0x7a9c11f59e50>, 'Connection to data.desagri.gov.in timed out. (connect timeout=10)'))"
+    },
+    {
+      "source": "MODIS NDVI/EVI extraction",
+      "status": "SKIPPED",
+      "url": null,
+      "error": "No Earthdata login/token supplied; product catalogue is not district NDVI/EVI data."
+    },
+    {
+      "source": "CEDA/AGMARKNET export",
+      "status": "BLOCKED",
+      "url": null,
+      "error": "No authenticated or documented downloadable district-period export discovered; no HTML used as training data."
+    },
+    {
+      "source": "CGWB district export",
+      "status": "BLOCKED",
+      "url": null,
+      "error": "No authenticated or documented downloadable district-period export discovered; no HTML used as training data."
+    },
+    {
+      "source": "MGNREGA district-month export",
+      "status": "BLOCKED",
+      "url": null,
+      "error": "No authenticated or documented downloadable district-period export discovered; no HTML used as training data."
+    },
+    {
+      "source": "Open-Meteo ERA5 Birbhum",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=23.9544&longitude=87.6633&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=23.9544&longitude=87.6633&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 Darjeeling",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=26.9146&longitude=88.3904&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=26.9146&longitude=88.3904&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 Hooghly",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=22.8849&longitude=88.0762&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=22.8849&longitude=88.0762&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 Howrah",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=22.5215&longitude=88.0634&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=22.5215&longitude=88.0634&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 Jalpaiguri",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=26.6602&longitude=89.0779&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=26.6602&longitude=89.0779&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 Malda",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=25.1375&longitude=88.0889&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=25.1375&longitude=88.0889&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 Murshidabad",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=24.1628&longitude=88.2306&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=24.1628&longitude=88.2306&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 Nadia",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=23.4798&longitude=88.5167&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=23.4798&longitude=88.5167&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 North 24 Parganas",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=22.7271&longitude=88.7301&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=22.7271&longitude=88.7301&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 Paschim Medinipur",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=22.4141&longitude=87.2646&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=22.4141&longitude=87.2646&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 Purba Medinipur",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=22.0316&longitude=87.7729&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=22.0316&longitude=87.7729&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 Purulia",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=23.2767&longitude=86.4215&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=23.2767&longitude=86.4215&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 South 24 Parganas",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=22.0568&longitude=88.5519&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=22.0568&longitude=88.5519&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "Open-Meteo ERA5 Uttar Dinajpur",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=25.8902&longitude=88.1573&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=25.8902&longitude=88.1573&start_date=1997-01-01&end_date=2025-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cet0_fao_evapotranspiration&timezone=Asia%2FKolkata&models=era5"
+    },
+    {
+      "source": "ERA5-Land soil Bankura",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=23.1392&longitude=87.1363&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=23.1392&longitude=87.1363&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Bardhaman",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=23.4285&longitude=87.7663&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=23.4285&longitude=87.7663&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Birbhum",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=23.9544&longitude=87.6633&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=23.9544&longitude=87.6633&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Cooch Behar",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=26.2926&longitude=89.3478&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=26.2926&longitude=89.3478&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Dakshin Dinajpur",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=25.3672&longitude=88.5755&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=25.3672&longitude=88.5755&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Darjeeling",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=26.9146&longitude=88.3904&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=26.9146&longitude=88.3904&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Hooghly",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=22.8849&longitude=88.0762&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=22.8849&longitude=88.0762&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Howrah",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=22.5215&longitude=88.0634&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=22.5215&longitude=88.0634&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Jalpaiguri",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=26.6602&longitude=89.0779&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=26.6602&longitude=89.0779&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Malda",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=25.1375&longitude=88.0889&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=25.1375&longitude=88.0889&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Murshidabad",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=24.1628&longitude=88.2306&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=24.1628&longitude=88.2306&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Nadia",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=23.4798&longitude=88.5167&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=23.4798&longitude=88.5167&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil North 24 Parganas",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=22.7271&longitude=88.7301&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=22.7271&longitude=88.7301&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Paschim Medinipur",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=22.4141&longitude=87.2646&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=22.4141&longitude=87.2646&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Purba Medinipur",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=22.0316&longitude=87.7729&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=22.0316&longitude=87.7729&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Purulia",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=23.2767&longitude=86.4215&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=23.2767&longitude=86.4215&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil South 24 Parganas",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=22.0568&longitude=88.5519&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=22.0568&longitude=88.5519&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "ERA5-Land soil Uttar Dinajpur",
+      "status": "FAILED",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=25.8902&longitude=88.1573&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land",
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://archive-api.open-meteo.com/v1/archive?latitude=25.8902&longitude=88.1573&start_date=1997-01-01&end_date=2025-12-31&daily=soil_moisture_0_to_7cm_mean&timezone=Asia%2FKolkata&models=era5_land"
+    },
+    {
+      "source": "Official WB district boundaries",
+      "status": "FAILED",
+      "url": "https://mapservice.gov.in/gismapservice/rest/services/BharatMapService/Admin_Boundary_District/MapServer/1/query?where=stname%3D%27West+Bengal%27&outFields=dtname%2Cstname%2Cdtcode11%2Cyear_stat&returnGeometry=true&outSR=4326&f=json",
+      "error": "SSLError: HTTPSConnectionPool(host='mapservice.gov.in', port=443): Max retries exceeded with url: /gismapservice/rest/services/BharatMapService/Admin_Boundary_District/MapServer/1/query?where=stname%3D%27West+Bengal%27&outFields=dtname%2Cstname%2Cdtcode11%2Cyear_stat&returnGeometry=true&outSR=4326&f=json (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))"
+    }
+  ],
+  "notes": [
+    "Counts are parsed from downloaded content, not HTTP success alone.",
+    "Checksums establish local lineage, not authenticity or historical as-of availability.",
+    "NASA POWER may use local solar time; ERA5 requests use Asia/Kolkata civil dates. No subdaily alignment was performed.",
+    "Rainfall CHIRPS point check is in rainfall_crosscheck.json; global raster rows are not district observations."
+  ]
+}

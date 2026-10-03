@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
+.env.*
+
+# Local datasets and fitted weights: see the repository's CONTRIBUTING.md.
+data/
+models/*.joblib
+reports/apy_drop_audit.csv
+reports/predictions.csv
+reports/selected_predictions.csv
+reports/worst_cases.csv
+reports/shap_local.csv
+reports/shap_top_five.csv
+reports/results_previous_*.csv

@@ -1,0 +1,11 @@
+stage,model,year,season,target,status,error
+inner,lightgbm_season,2009.0,Winter,label15,FAILED,ValueError: Training outcome has only one class
+inner,lightgbm_season,2009.0,Winter,label15,FAILED,ValueError: Training outcome has only one class
+inner,lightgbm_season,2009.0,Winter,label15,FAILED,ValueError: Training outcome has only one class
+inner,lightgbm_season,2009.0,Winter,label15,FAILED,ValueError: Training outcome has only one class
+inner,lightgbm_season,2010.0,Winter,label15,FAILED,ValueError: Training outcome has only one class
+inner,lightgbm_season,2010.0,Winter,label15,FAILED,ValueError: Training outcome has only one class
+inner,lightgbm_season,2010.0,Winter,label15,FAILED,ValueError: Training outcome has only one class
+inner,lightgbm_season,2010.0,Winter,label15,FAILED,ValueError: Training outcome has only one class
+inner,lightgbm_season,2011.0,Winter,label15,FAILED,ValueError: Training outcome has only one class
+inner,lightgbm_season,2011.0,Winter,label15,FAILED,ValueError: Training outcome has only one class

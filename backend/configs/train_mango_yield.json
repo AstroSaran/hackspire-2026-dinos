@@ -29,7 +29,7 @@
     "note": "Closed-form CPU fit; iterative optimization hyperparameters do not apply."
   },
   "output": {
-    "model_artifact": "backend/data/mango_yield_baseline_model.json",
+    "model_artifact": "backend/data/mango_yield_holdout_model.json",
     "metadata_dir": "backend/data/metadata"
   }
 }

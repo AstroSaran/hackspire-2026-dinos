@@ -1,0 +1,10 @@
+# Application source uses consistent line endings across local and CI platforms.
+*.py text eol=lf
+*.html text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+*.sh text eol=lf
+*.ps1 text eol=lf
+*.yml text eol=lf
+backend/data/live_pilots.json text eol=lf

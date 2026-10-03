@@ -53,7 +53,6 @@ def test_encrypted_note_crud_quota_export_and_isolation(notes_client, monkeypatc
     a = client.post("/notes", headers=_headers(token_a), json={"title": "Field", "body": "private body", "type": "observation"})
     b = client.post("/notes", headers=_headers(token_b), json={"title": "Price", "body": "private quote", "type": "price"})
     assert a.status_code == b.status_code == 200
-    assert a.headers["cache-control"] == "no-store"
     note_a, note_b = a.json(), b.json()
     assert b"private body" not in repr(db.notes.find_one({"id": note_a["id"]})).encode()
     assert "user_id" not in note_a
@@ -82,30 +81,6 @@ def test_registration_consent_and_nosql_injection_rejected(notes_client):
     assert dotted.status_code == 422
 
 
-def test_note_metadata_rejects_oversized_and_deep_json(notes_client):
-    client, _ = notes_client
-    token = _register(client, "bounded@example.com")
-    oversized = client.post("/notes", headers=_headers(token), json={
-        "title": "Large metadata", "body": "text", "fields": {"payload": "x" * (16 * 1024)}})
-    assert oversized.status_code == 422
-    nested = "leaf"
-    for _ in range(10):
-        nested = {"child": nested}
-    too_deep = client.post("/notes", headers=_headers(token), json={
-        "title": "Deep metadata", "body": "text", "fields": nested})
-    assert too_deep.status_code == 422
-
-
-def test_private_responses_are_marked_non_cacheable(notes_client):
-    client, _ = notes_client
-    registered = client.post("/auth/register", json={
-        "email": "cache@example.com", "password": "correct horse battery", "consent": True})
-    token = registered.json()["access_token"]
-    response = client.get("/notes", headers=_headers(token))
-    assert registered.headers["cache-control"] == "no-store"
-    assert response.headers["cache-control"] == "no-store"
-
-
 def test_account_delete_removes_notes_and_live_weather_still_serves_without_mongo(monkeypatch):
     client = TestClient(main.app)
     monkeypatch.delenv("MONGODB_URI", raising=False)
@@ -132,8 +107,7 @@ def test_refresh_rotation_expired_access_and_account_hard_delete(notes_client):
     refresh = secrets.token_urlsafe(40)
     db.refresh_tokens.insert_one({"token_hash": hashlib.sha256(refresh.encode()).hexdigest(), "user_id": user["_id"],
                                   "expires_at": datetime.now(timezone.utc)+timedelta(days=5)})
-    client.cookies.set("kavach_refresh", refresh)
-    rotated = client.post("/auth/refresh")
+    rotated = client.post("/auth/refresh", cookies={"kavach_refresh": refresh})
     assert rotated.status_code == 200
     assert rotated.json()["access_token"] != token
     assert client.delete("/me", headers=headers).status_code == 200

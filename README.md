@@ -1,133 +1,54 @@
-# Kavach — West Bengal live-data beta
+# Kavach — Hackspire live-data beta
 
-Kavach is a source-attributed data workspace for West Bengal. Choose any of the
-22 districts represented in the published horticulture dataset. The dashboard
-resolves a district-headquarters search point for live Open-Meteo weather and
-shows dated official mango area and production estimates for 2021-22 through
-2024-25. Optional mandi, crop and MGNREGA connectors request real records from
-data.gov.in when configured. Missing sources stay unavailable; the app never
-substitutes simulated livelihood signals or risk scores.
+Kavach is a source-attributed live data workspace for West Bengal. Its weather
+card uses one clearly labeled Sonarpur forecast grid; official crop, mandi and
+employment records are requested for all West Bengal districts. It shows data
+only after a configured real provider responds. It never renders
+the earlier prototype's simulated livelihood signals, synthetic risk score, or
+illustrative trajectory.
 
 ## What is live, and what is not connected
 
 | Signal | Current beta behavior | Source / limitation |
 |---|---|---|
-| Current weather and forecast | Fetched through FastAPI from Open-Meteo for a selected district; the API caches real provider responses | Open-Meteo model output; provider-resolved grid coordinates are displayed; not a station observation |
+| Current weather and forecast | Fetched directly from Open-Meteo when the user refreshes; does not depend on the local API being online | Open-Meteo model output; provider-resolved grid coordinates are displayed; not a station observation |
 | Forecast watch | Derived from the seven-day live forecast | Kavach screening thresholds are clearly labeled as model watches, not IMD warnings or official impact thresholds. Official IMD alert access remains separately linked and unavailable unless configured. |
-| Rainfall anomaly | API fetches the latest complete archived month and matching calendar-month normal | Real Open-Meteo ERA5 reanalysis at the selected provider grid, not a rain-gauge observation; the API caches the dated comparison for six hours |
-| Historical environmental features | Versioned 2018–2025 daily snapshot collected for all 22 district-headquarters search points | 64,284 ERA5 reanalysis rows (temperature, precipitation, wind and reference evapotranspiration); predictors only, not crop-loss or livelihood labels; source and point-resolution limits are in the dataset manifest |
+| Rainfall anomaly | Compares the most recent complete month with its same-calendar-month 1991–2020 normal | Real Open-Meteo ERA5 reanalysis at the returned grid cell, not a rain-gauge observation; the dashboard refreshes the archive query and uses a dated same-month cache only if that query fails |
 | Topsoil moisture | Live 0–7 cm provider-grid model field | Open-Meteo forecast model estimate in m³/m³; not a field reading, crop-stress score, groundwater level or irrigation recommendation |
-| Field crop-survey coverage | Live source-coverage summary from the West Bengal WUA GIS layer | 19 point records were counted on 2026-10-03, with one crop-health label and one soil-moisture reading; no district field. Too sparse for training. The app excludes coordinates and editor metadata |
 | Environmental watch model | Runs transparent forecast thresholds in the background over real weather inputs | Reports watch dates and contextual rainfall/soil-moisture evidence; no calibrated livelihood-impact score is inferred |
 | Mandi prices | Optional live connector | AGMARKNET daily reports through data.gov.in, filtered to West Bengal. Rows are dated wholesale reports, not real-time local quotes |
 | MGNREGA employment | Optional live connector and direct official MIS link | Statewide district aggregates require an official API key and a current resource UUID. District totals are not household demand or entitlement |
-| Horticulture history | Local-only snapshot in this development workspace; not bundled in the public GitHub repo | Official annual district mango estimates for 22 districts, 2021-22 to 2024-25; historical values, not a live feed or stress labels. Reuse terms are not confirmed |
-| Annual mango-yield experiment | Local experimental artifact; forecast withheld and artifact not bundled | 88 local official-source rows; one held-out year; its MAE is worse than the prior-year baseline. Not a livelihood, stress or production-decision model |
-| OGD crop production | Optional live connector | Annual district/crop/season history from data.gov.in when the resource and API access work; not field-stress labels |
+| Crop production | Optional live connector | Annual district/crop/season area and production history across West Bengal; not crop-stress labels or an individual yield forecast |
 | Crop stress, water and vulnerability | Not connected | Dated field stress/loss labels, appropriately scaled soil or groundwater observations, and authorized outcome data are not connected. No proxy values are filled in. |
 | Livelihood risk score | Withheld | No validated outcome labels or field-validated model exists |
 
 ### Source fit and data setup
 
-The dashboard's **Data fit** panel explains source coverage at the selected
-district scale. The weather card uses one live-geocoded headquarters point, not
-a district average. Historical mango records cover all 22 districts in the
-source tables. The panel reports coverage only; it does not estimate a
-livelihood score.
-
-### Reproduce the mango snapshot quality gate and experiment
-
-The public repository does not include the mango CSV or its trained artifact
-because reuse terms for the source tables have not been confirmed. Obtain
-permission and a verified copy before running these commands. The unit tests
-use local test fixtures and do not require that source dataset.
-
-From the repository root in PowerShell:
-
-```powershell
-Set-Location backend
-..\.venv\Scripts\python.exe -m app.mango_dataset_pipeline
-..\.venv\Scripts\python.exe -m app.train_mango_yield_model --config configs/train_mango_yield.json
-..\.venv\Scripts\python.exe -m app.evaluate_mango_yield_model --artifact data/mango_yield_baseline_model.json
-```
-
-When an authorized CSV is supplied at the configured path, the quality command
-validates it without fetching or changing it, then writes a content-addressed report under
-`backend/data/metadata/`. The trainer runs the same gate and records the data
-hash and report path in its model artifact. A changed CSV receives a new report
-version; an existing versioned report cannot be silently replaced. The current
-CSV is already a normalized transcription, not the publisher's original raw
-files. Its original source artifacts and collection date are not archived, and
-the repository does not record a reuse license for those tables; confirm
-publisher terms before redistributing the data.
-
-This experiment has no separate validation set: four yearly vintages are too
-few for one. Its final adjacent-year holdout covers 22 known districts, not
-unseen-district generalization. It remains withheld because it loses to the
-prior-year baseline on MAE and has only one independent test year.
-
-### Refresh the historical weather feature snapshot
-
-The current immutable snapshot, raw provider response, and provenance manifest
-are under `backend/data/{raw,processed,metadata}/`. To request a different
-date range (at most eight calendar years per run):
-
-```powershell
-Set-Location backend
-..\.venv\Scripts\python.exe -m app.collect_historical_weather --start-date 2018-01-01 --end-date 2025-12-31
-```
-
-An existing matching snapshot is reused without another provider request. Add
-`--refresh` only when intentionally collecting a new revision. Open-Meteo's
-free API is for non-commercial use; commercial operation requires an
-appropriate API plan. Each manifest records required Open-Meteo/ECMWF
-attribution and the grid-point/reanalysis limitations. The collector does not
-train a risk model because this dataset contains predictor features, not
-outcomes. See [DATASET_INVENTORY.md](DATASET_INVENTORY.md) for the source
-inventory and the outcome data required for the withheld tracks.
-
-The latest acquisition check found the three `data.gov.in` connectors unable
-to establish HTTPS from this backend. The official MGNREGA MPR page loaded, but
-its geography selector was disabled and no report could be exported. See
-`backend/data/metadata/source-access-2026-10-03.json` for timestamped
-source-by-source results; the report contains no credentials.
+The dashboard's **Data fit** panel explains source coverage. Mandi, crop and
+employment feeds request West Bengal records across districts. The local weather
+panel remains Sonarpur-only. The panel reports coverage only; it does not
+estimate a livelihood score.
 
 Weather polling runs every five minutes while the dashboard is visible. Soil
 context is revalidated every fifteen minutes; market and employment feeds are
 revalidated hourly. A visible tab refreshes on focus or reconnect only when its
 cached readings are older than their interval. Hidden tabs pause polling.
 
-The district selector uses the published district catalogue in
-`backend/app/geography.py`. FastAPI sends the district-headquarters search label
-to Open-Meteo's geocoder and makes weather/archive requests server-side.
-Coordinates are not presented as field locations or district centroids. The
-retired pilot registry is empty.
+The registered pilots and coordinates are listed in
+`backend/data/live_pilots.json`. Add a location only after checking its source,
+administrative area and coordinate resolution. The dashboard obtains the
+coordinate from `/locations` rather than embedding it in the page.
 
-The retired synthetic prototype and its model artifacts are not part of the current application.
+Retired prototype code and datasets are local-only under `legacy_prototype/`;
+they are excluded from the public repository. Yield and employment measurements
+are not substituted for observed distress labels.
 
 ## Standalone rice-yield research
 
-[`kavach_model/`](kavach_model/README.md) contains the independent preharvest rice shortfall
-research pipeline: cutoff-safe features, nested temporal comparisons, calibration, conformal
-intervals, SHAP explanations, tests, and aggregate measured reports. Its
-[model card](kavach_model/MODEL_CARD.md) and
-[release report](kavach_model/reports/model_release_report.json) record a **withheld** result:
-the held-out event count, AUC confidence bound, and source-timing evidence do not meet the
-release requirements. It is a historical research experiment, not a live livelihood-risk service.
-
-The public checkout includes source and aggregate reports. Dataset snapshots, fitted weights,
-and row-level outputs require locally supplied inputs under the repository's data standards;
-see the [research setup instructions](kavach_model/README.md#public-checkout-and-local-inputs).
-
-## Production packaging
-
-The repository includes a hardened API container and a production Compose
-profile for deployment behind a trusted HTTPS reverse proxy. Follow
-[`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) to set allowed origins/hosts and the
-proxy trust range. Caches and throttles are process-local, so the packaged API
-runs one worker and is not horizontally scalable until shared controls are
-configured. The application still withholds livelihood predictions pending
-real outcome data and independent validation.
+[`kavach_model/`](kavach_model/README.md) contains the separate preharvest rice
+pipeline, tests, source metadata, plots and aggregate evaluation reports. Its
+[model card](kavach_model/MODEL_CARD.md) records a **withheld** release. See its
+README for the locally supplied data and artifact requirements.
 
 ## Run locally (PowerShell)
 
@@ -146,7 +67,57 @@ button forces a fresh request. Provider publication schedules determine when
 the underlying values change. Change the API endpoint if the backend uses
 another host or port.
 
-`backend/requirements-live.txt` is the runtime dependency set.
+`backend/requirements-live.txt` is the runtime dependency set. The local app is
+tested with the patched dependency versions pinned there and in
+`backend/requirements-test.txt`.
+
+### Showcase demo mode
+
+For a presentation where provider access is unavailable, run the explicitly
+labeled deterministic showcase mode in a separate process:
+
+```powershell
+$env:KAVACH_DEMO_MODE = 'true'
+cd backend
+..\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8002
+```
+
+Open `http://127.0.0.1:8002/dashboard/kavach_dashboard.html`. The banner,
+provider status, timestamps and source copy identify the values as simulated;
+demo mode never acts as a fallback after a live provider fails. Unset the
+variable and use port 8001 for the live-only beta.
+
+### Model workbench
+
+The supported experimental model is the annual West Bengal district mango-yield
+baseline. It trains only on the official, provenance-linked CSV and selects a
+candidate by rolling-origin backtest; it is not a livelihood-risk model:
+
+The public repository excludes `backend/data/wb_mango_district_annual.csv`,
+trained model JSON and release archives pending source redistribution terms.
+Supply an authorized local snapshot before training. Without it, model routes
+report unavailable and the weather/data workspace still runs. CI uses isolated
+test fixtures for registry and serving contracts; source-specific integration
+checks skip when the official snapshot is absent.
+
+```powershell
+cd backend
+..\.venv\Scripts\python.exe -m app.train_mango_yield_model
+```
+
+`GET /models/mango-yield` validates the source and artifact before returning an
+experimental result. `GET /models/readiness` exposes the blocked production
+gates; `GET /models/metrics` reports worker-local validation counters.
+`python -m app.model_registry --list` lists releases; `--activate SHA256`
+validates and restores an archived release. An optional digest pin is configured
+through `KAVACH_MANGO_ARTIFACT_SHA256`.
+
+The previous v0.1 holdout experiment is retained as `app.train_mango_holdout`
+with its separate evaluator and `backend/configs/train_mango_yield.json`.
+
+The legacy six-feature distress interface remains blocked until independently
+observed outcome labels and complete location-matched inputs are available.
+Kaggle convenience copies and synthetic labels are not used as substitutes.
 
 ### Optional official mandi and employment feeds
 
@@ -159,15 +130,11 @@ Set the key and each resource UUID in `backend/.env` before starting Kavach:
 ```powershell
 $env:DATA_GOV_IN_API_KEY = 'your-key'
 $env:DATA_GOV_IN_MARKET_RESOURCE_ID = 'official-resource-uuid'
-$env:DATA_GOV_IN_MGNREGA_RESOURCE_ID = 'ee03643a-ee4c-48c2-ac30-9f2ff26ab722'
+$env:DATA_GOV_IN_MGNREGA_RESOURCE_ID = 'official-resource-uuid'
 $env:DATA_GOV_IN_CROP_RESOURCE_ID = '35be999b-0208-4354-b557-f6ca9a5355de'
 ```
 
-The configured MGNREGA resource is the published **1 April–31 August 2023
-snapshot**. It is historical context, not today's employment feed. The linked
-official state MIS is the place to inspect current district/block/panchayat
-records. Replace the snapshot UUID only after confirming a newer resource and
-its schema on the official portal. The connector uses the official **Current Daily Price of Various
+The mandi connector uses the official **Current Daily Price of Various
 Commodities from Various Markets (Mandi)** resource. It reports dated wholesale
 min/max/modal prices; rows are not live local quotes. MGNREGA feed rows are
 administrative aggregates and do not establish individual employment demand.
@@ -205,16 +172,11 @@ need MongoDB access control, TLS and protected backups.
 
 ### Known limitations
 
-- Weather represents a single provider grid near the selected district
-  headquarters, not local station readings or a district-wide surface.
-- Mandi rows are daily wholesale reports and may be distant from the selected
-  district point. MGNREGA rows are district aggregates, not household outcomes.
-- The discoverable MGNREGA OGD resource covers 1 April–31 August 2023; a
-  successful API retrieval would not make those observations current.
-- Crop-stress, groundwater/water-supply and validated livelihood-outcome feeds
-  are not connected. Kavach does not produce a livelihood-risk score.
-- The annual mango experiment was withheld because it lost to the simple
-  prior-year baseline on MAE and has only one independent test year.
+- The Sonarpur pilot is a municipal address; MGNREGA rural aggregates do not
+  apply to individual households there.
+- Mandi records are daily wholesale reports and may be distant from the pilot.
+- Crop, groundwater/water-supply and validated livelihood-outcome feeds are not
+  connected. Kavach does not produce a livelihood risk score.
 - IMD API access requires the relevant official access approval/whitelisting.
 - Gemini availability, model access, API pricing and data handling depend on the
   configured provider account.
@@ -229,8 +191,8 @@ and all `*.pkl` files. Never share a real API key. Read [SECURITY.md](SECURITY.m
 Each connector returns `NEEDS_CONFIGURATION` until its resource ID and API key are configured, and `UNAVAILABLE` if the real API request fails. Mandi and crop data use `DATA_GOV_IN_API_KEY`; MGNREGA can use its separate `DATA_GOV_IN_MGNREGA_API_KEY` (or fall back to the shared key). Requests are made server-side by FastAPI; the browser never receives the API key. West Bengal records can be paged with `offset` and `limit` on `/signals/market`, `/signals/crop-production`, and `/signals/employment`. Market data are dated daily reports; MGNREGA data are district aggregates, not household-level demand. For a keyless
 browse of the live official MIS, use the [West Bengal portal](https://mnregaweb2.dord.gov.in/netnrega/homestciti.aspx?state_code=32&state_name=WEST%20BENGAL&lflag=eng&labels=labels).
 Choose the relevant West Bengal district, block, and panchayat. Do not
-assign rural aggregate records to a household or weather grid without an
-authoritative geographic match.
+assign those rural records to the pilot address until an authoritative boundary
+match confirms coverage.
 
 ## API
 
@@ -241,29 +203,22 @@ authoritative geographic match.
 - `GET /weather/{village}/watch` — transparent threshold flags derived from a real weather forecast; never an official warning.
 - `GET /data-health` — weather provider health and baseline availability.
 - `GET /signals/soil-moisture` — real provider-grid 0–7 cm model field, with timestamp and provenance.
-- `GET /signals/field-crop-survey` — live coverage from the West Bengal government crop-survey GIS layer; returns summary counts only, not point locations or editor metadata.
 - `GET /signals/environmental-model` — background environmental watch plus explicit livelihood-model readiness and blockers.
 - `GET /support/status` and `POST /support/chat` — optional server-keyed AI helper grounded in a fresh, source-labeled snapshot of real feeds.
 - `GET /signals/market` — official daily market feed, or explicit `UNAVAILABLE`.
 - `GET /signals/employment` — official daily district MGNREGA aggregate, or explicit `UNAVAILABLE`.
-- `GET /signals/crop-production` — optional official annual district/crop/season production feed, or explicit `UNAVAILABLE`.
-- `GET /signals/mango-production?district=Malda` — official historical mango estimates for the selected district.
-- `GET /signals/mango-yield-model` — training and holdout results for the withheld annual-yield experiment.
-- `GET /model/readiness` — livelihood-model evidence and release gates.
-- `GET /districts/geocode?district=Malda` — live West Bengal headquarters geocode.
-- `GET /district-weather?district=Malda` — real current, seven-day forecast, threshold watch and 0–7 cm soil field.
-- `GET /district-rainfall-anomaly?district=Malda` — latest complete ERA5 month compared with its 1991–2020 monthly normal.
-- `GET /live-area/{key}` — retired legacy route; use `/locations` for district selection.
-- `GET /locations` — published West Bengal district catalogue; coordinates are resolved server-side when selected.
+- `GET /signals/crop-production` — official annual South 24 Parganas crop/season production history, or explicit `UNAVAILABLE`. This is not field-level crop stress or a short-horizon forecast.
+- `GET /live-area/sonarpur` — location, weather and withheld assessment status.
+- `GET /locations` — supported geography and coordinate resolution.
+- `GET /models/mango-yield` — experimental annual district mango-yield baseline with backtest metrics, 80% bands and data-quality flags (see MODEL_CARD.md). Not a risk score.
 
 Synthetic scoring, what-if and expansion endpoints return HTTP 410 in this
 beta. The app does not make benefit, insurance, employment or migration
 decisions.
 
-Rainfall comparison requests the selected grid's previous complete month and
-its 1991–2020 ERA5 calendar-month normals from Open-Meteo. A result appears only
-when both real archive requests return complete data. No fixed-place baseline
-or stale location cache is bundled.
+The saved Sonarpur ERA5 baseline contains all twelve 1991–2020 monthly normals
+for the provider-resolved grid cell. The latest completed-month cache is dated
+and source-attributed; it is not treated as a current-month observation.
 Windows-native certificate validation is enabled through truststore so the
 Python provider requests use the machine's trusted roots without disabling
 HTTPS verification.

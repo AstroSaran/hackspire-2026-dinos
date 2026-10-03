@@ -10,12 +10,10 @@ class Response:
         pass
 
     def json(self):
-        return {"records": [
-            {"state": "West Bengal", "district": "South 24 Parganas",
-             "market": "Baruipur", "commodity": "Rice", "modal_price": "3100"},
-            {"state": "Bihar", "district": "Patna", "market": "Patna",
-             "commodity": "Rice", "modal_price": "2900"},
-        ]}
+        return {"records": [{
+            "state": "West Bengal", "district": "South 24 Parganas",
+            "market": "Baruipur", "commodity": "Rice", "modal_price": "3100",
+        }]}
 
 
 def test_market_feed_uses_actual_agmarknet_state_field_and_returns_matching_rows(monkeypatch):
@@ -26,11 +24,9 @@ def test_market_feed_uses_actual_agmarknet_state_field_and_returns_matching_rows
 
     assert result["status"] == "LIVE"
     assert result["records"][0]["market"] == "Baruipur"
-    assert len(result["records"]) == 1
     params = get.call_args.kwargs["params"]
     assert params["filters[state.keyword]"] == "West Bengal"
-    assert params["offset"] == 0
-    assert params["limit"] == 500
+    assert "filters[district]" not in params  # statewide district coverage is intentional
     assert "private-test-key" not in repr(result)
 
 

@@ -1,69 +1,56 @@
 # DINOS deck delivery tracker
 
-This tracker checks the DINOS deck's promises against the running Kavach beta.
-It reports partial work plainly; missing real outcomes are not filled with
-synthetic data.
+This file compares the six-page DINOS pitch deck with the current Kavach beta. A
+pitch promise is marked delivered only when the working application and its data
+support it. Missing records are never replaced with simulated values.
 
 ## Current position
 
-The app now supports selecting any district in the 22-district West Bengal
-horticulture data vintage, displaying live weather near a geocoded district
-headquarters, and inspecting official annual mango history. An experimental
-annual yield model was trained and evaluated. It underperforms the persistence
-baseline on MAE and is withheld. The short-horizon livelihood-risk goal remains
-unfulfilled.
+The project is on the same problem and product direction, but it has not reached
+the deck's predictive outcome. The current release is a source-attributed
+dashboard with a seven-day weather threshold screener and model-readiness gates.
+There is no trained livelihood-risk model, causal model, or personalized
+government-intervention router.
 
-The backend requests configured data.gov.in feeds server-side. In this run,
-`api.data.gov.in` refused connections from the Kavach environment, and the
-historical MGNREGA resource is configured for the 1 April–31 August 2023
-snapshot. It is not a current feed. Historical mango source records were
-collected from published West Bengal Directorate of Horticulture estimates;
-they are not live measurements.
-
-The WUA crop-survey layer currently has 19 point records but only one
-crop-health label and one soil-moisture value, so it cannot train the promised
-crop-stress model. The official MGNREGA MPR page loaded during the latest
-check, but its geography selector was disabled and no report could be
-exported. Source checks are logged in
-`backend/data/metadata/source-access-2026-10-03.json`.
+The market and crop connectors now request all West Bengal districts and expose
+page offsets. The backend makes data.gov.in requests server-side with keys kept
+in `backend/.env`. In the current run, `api.data.gov.in` refused HTTPS
+connections from the Kavach server and the browser; no statewide records were
+collected. The MGNREGA resource ID is not configured. Do not set the previously
+inspected April–August 2023 snapshot as a live feed.
 
 ## Promise-by-promise status
 
-| Deck promise | Status | Remaining work |
+| Deck promise | Current status | Work required |
 |---|---|---|
-| Climate, crop, mandi, employment signals combined | Partial | District-selectable weather and historical horticulture are available. Live OGD mandi/crop feeds require working server egress and active resource configuration; MGNREGA has only a 2023 archive configured, not a current series. |
-| Village/block warnings 2–8 weeks before distress | Not delivered | Define outcome and horizon; collect dated location-matched outcomes; train separately, validate prospectively and abstain when evidence is missing. The app's seven-day weather screen is not a distress model. |
-| Causal explanations and quantitative drivers | Not delivered | Define a causal question and measure interventions/confounders with suitable data. Current readings are not causal effects. |
-| Best government support by urgency, cost and impact | Partial, general links only | Scheme eligibility, cost/impact ranking, program data and human review remain unimplemented. |
-| Meghdoot/IMD, e-NAM/AGMARKNET and MGNREGA integrations | Partial | Open-Meteo powers weather, not IMD/Meghdoot. AGMARKNET and MGNREGA depend on configured real server feeds; MGNREGA resource setup is incomplete. |
-| District/geospatial command center and agro-climatic zones | Partial | District selector and point weather display exist. Verified boundaries, agro-climatic zones and district-wide spatial surfaces are not implemented. |
-| Household or vulnerable-cluster identification | Not delivered | Requires authorized, privacy-reviewed, location-matched outcome data. Public district aggregates cannot identify households. |
-| Human-in-the-loop policy feedback | Partial | The app labels evidence limits and offers general official links; case review, intervention logs and governed follow-up remain to be built. |
-| Predictive M&E of support outcomes | Not delivered | Needs authorized intervention records, dated outcomes and a valid impact-evaluation design. |
-| Synthetic augmentation for reporting delays | Excluded by requirement | Keep missingness and latency visible; never use synthetic data as observed outcomes. |
-| Production architecture in the deck | Not delivered | Current beta uses FastAPI and a static HTML dashboard. TimescaleDB/PostGIS/Kafka/PyTorch/CausalML/XGBoost/GEE are not implemented. |
+| Climate, crop, mandi, and employment signals combined | Partial | The app has weather and connectors for crop production and mandi records. The crop feed is annual, MGNREGA is not configured, and none of the OGD records could be fetched in this run. Add verified current source access and coverage metadata. |
+| Village/block warnings 2–8 weeks before distress | Not delivered | Define a target and horizon by source/geography; collect dated real outcomes; train and evaluate separate models. The current seven-day weather screen is not a livelihood forecast. |
+| Causal explanations and quantitative drivers | Not delivered | Establish a causal question and valid interventions/confounders; use field and administrative outcome data. Correlations or a deck example must not be rendered as measured causal effects. |
+| Recommend the best government support by urgency, cost, and impact | Partial, general links only | The dashboard now links to official West Bengal crop advice, soil cards, Bangla Shasya Bima, PMFBY, and MGNREGA. Eligibility, costs, impact ranking, and automatic routing need verified rules, current program data, and human review. |
+| Connect Meghdoot/IMD, e-NAM/AGMARKNET, and MGNREGA | Partial | AGMARKNET is configured; Open-Meteo is not IMD/Meghdoot. MGNREGA needs a current resource UUID. Do not describe these as completed integrations. |
+| District/geospatial command center and agro-climatic zones | Not delivered | Add verified district boundaries and zone classifications with source/date, then map source coverage and model output. Current weather is one Sonarpur grid, not a West Bengal surface. |
+| Household or vulnerable-cluster identification | Not delivered | Needs authorized, privacy-reviewed household/cluster outcomes. Public district aggregates cannot identify a household. |
+| Human-in-the-loop policy feedback | Partial | Users can inspect source limitations; a governed administrator review, intervention log, and measured follow-up outcome loop remain to be built. |
+| Predictive M&E showing whether support changed outcomes | Not delivered | Record authorized interventions and dated outcomes, define comparison design, and evaluate changes before claiming impact. |
+| Synthetic augmentation to bridge reporting delays | Intentionally excluded | The project requirement is real data only. Report missingness/latency and abstain; synthetic rows cannot stand in for observed outcomes. |
+| Production architecture named in the deck | Not delivered | The beta currently uses FastAPI and a static HTML dashboard. TimescaleDB/PostGIS/Kafka/PyTorch/CausalML/XGBoost/GEE are not implemented. Adopt components only when the measured workload and available data justify them. |
 
-## Completed model experiment
+## Immediate release gates
 
-The annual mango experiment uses 88 official rows (22 districts × four crop
-years, 2021-22 through 2024-25). Its single forward test transition is
-2023-24 → 2024-25. Model MAE is 0.8636 t/ha; prior-year persistence MAE is
-0.5865 t/ha. The artifact remains local and is excluded from GitHub while
-source reuse terms are checked. It emits no production forecast and cannot
-serve as a crop-stress or livelihood-distress model.
-
-## Remaining release gates
-
-1. Restore and verify backend HTTPS access to `api.data.gov.in`; use active
-   resource IDs and page through every West Bengal response.
-2. Confirm a current MGNREGA resource UUID, schema, geography and update cadence; retain the 2023 archive as historical context only.
-3. Store source rows with resource ID, request time, pagination, field
-   definitions, publication time and revision history.
-4. Define real labels for crop stress, employment shortfall and livelihood
-   disruption. Annual crop production supports only a separate annual-output
-   study.
-5. Train each supported target separately with later-time and held-out-district
-   validation, compare against baselines, quantify uncertainty, and abstain
-   outside evidence coverage.
-6. Keep scheme suggestions source-linked and for human review; do not prescribe
-   crop changes or infer eligibility from statewide averages.
+1. Restore outbound HTTPS from the backend host to `api.data.gov.in`; verify the
+   stored keys privately and retrieve every West Bengal page for the configured
+   official resources.
+2. Identify a current MGNREGA resource UUID and inspect its fields, geography,
+   update cadence, and date coverage before using it.
+3. Preserve raw source rows, request time, resource UUID, pagination, field
+   definitions, and revisions. Do not merge district, block, and household
+   records as if they were the same geography.
+4. Define real outcome labels for crop stress, employment shortfall, and broad
+   livelihood disruption. Crop production totals can support a separate annual
+   production/yield analysis, not a short-horizon field-stress label.
+5. Train each supported target separately; hold out later periods and whole
+   districts, compare against simple baselines, calibrate uncertainty, and
+   abstain outside validated coverage.
+6. Release support suggestions as source-linked options for human review. Do
+   not prescribe crop changes or determine scheme eligibility from statewide
+   averages.

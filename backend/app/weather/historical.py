@@ -37,7 +37,6 @@ TLS verification; certificate checks are never disabled.
 import os
 import json
 import datetime
-import time
 import truststore
 truststore.inject_into_ssl()
 import requests
@@ -77,8 +76,12 @@ def fetch_ogd_district_normal(district: str, api_key: str = None):
 
 
 def fetch_era5_daily_baseline(latitude: float, longitude: float, period_start="1991-01-01", period_end="2020-12-31"):
-    """Fetch a real ERA5 daily precipitation baseline for a selected grid point."""
-    key = f"grid:{latitude:.6f},{longitude:.6f}"
+    """Fetch a real ERA5 daily precipitation baseline for one live pilot point.
+
+    This is intentionally scoped to the Sonarpur pilot: it is a real historical
+    reanalysis baseline, not a fabricated number. The result is cached locally.
+    """
+    key = f"pilot:{latitude:.6f},{longitude:.6f}"
     data = {}
     if os.path.exists(BASELINE_FILE):
         try:
@@ -112,8 +115,8 @@ def fetch_era5_daily_baseline(latitude: float, longitude: float, period_start="1
 
 
 def fetch_era5_monthly_daily_baseline(latitude: float, longitude: float, month: int, period_start="1991-01-01", period_end="2020-12-31"):
-    """Real ERA5 daily precipitation mean for one calendar month at a selected grid point."""
-    key = f"grid-month:{latitude:.6f},{longitude:.6f}:{int(month):02d}"
+    """Real ERA5 daily precipitation mean for the requested calendar month across 1991-2020."""
+    key = f"pilot-month:{latitude:.6f},{longitude:.6f}:{int(month):02d}"
     data = {}
     if os.path.exists(BASELINE_FILE):
         try:
@@ -150,32 +153,38 @@ def get_baseline(district: str, block: str):
     return data.get(f"{district}:{block}")
 
 
-def get_grid_monthly_normals(latitude: float, longitude: float):
-    """Return all twelve cached real month normals for a selected grid point."""
+def get_pilot_monthly_normals(latitude: float, longitude: float):
+    """Return all twelve cached real month normals for a pilot grid point."""
     if not os.path.exists(BASELINE_FILE):
         return None
     try:
         with open(BASELINE_FILE, encoding="utf-8") as f:
             data = json.load(f)
-        keys = {str(month): data[f"grid-month:{latitude:.6f},{longitude:.6f}:{month:02d}"]
+        keys = {str(month): data[f"pilot-month:{latitude:.6f},{longitude:.6f}:{month:02d}"]
                 for month in range(1, 13)}
     except (json.JSONDecodeError, OSError, KeyError):
         return None
     return keys
 
 
-def baseline_status():
-    """For /data-health — reports honestly whether any real baseline exists."""
+def get_pilot_latest_complete_month():
+    """Return the real archived monthly comparison cached for the Sonarpur pilot."""
     try:
         with open(BASELINE_FILE, encoding="utf-8") as f:
             data = json.load(f)
+        return data.get("pilot-last-complete-month")
     except (json.JSONDecodeError, OSError):
-        data = {}
+        return None
+
+
+def baseline_status():
+    """For /data-health — reports honestly whether any real baseline exists."""
+    exists = os.path.exists(BASELINE_FILE)
     return {
-        "baseline_file_present": bool(data),
-        "cached_grid_count": len({key.split(":", 1)[1] for key in data if key.startswith("grid:")}),
+        "baseline_file_present": exists,
         "climatological_period_if_populated": CLIMATOLOGICAL_PERIOD,
-        "selected_grid_monthly_normals": None,
+        "sonarpur_monthly_normals": get_pilot_monthly_normals(22.442948, 88.428633),
+        "sonarpur_latest_completed_month": get_pilot_latest_complete_month(),
         "candidate_sources": {
             "india_ogd_imd_normals": {
                 "url": OGD_RAINFALL_CATALOG_URL,
@@ -192,18 +201,23 @@ def baseline_status():
 if __name__ == "__main__":
     import sys
     if "--populate" in sys.argv:
-        if len(sys.argv) < 4:
-            print("Usage: python -m app.weather.historical --populate LATITUDE LONGITUDE")
-            sys.exit(2)
-        latitude, longitude = float(sys.argv[2]), float(sys.argv[3])
+        from .. import geography, live_pilots
         failures = 0
-        for month in range(1, 13):
-            try:
-                result = fetch_era5_monthly_daily_baseline(latitude, longitude, month)
-                print(f"OK month={month:02d} mean_daily_rainfall_mm={result['mean_mm']} "
-                      f"period={result['period']} source={result['source']}")
-            except (BaselineUnavailable, requests.RequestException, ValueError) as exc:
-                print(f"FAILED month={month:02d}: {exc}")
+        for pilot in live_pilots.all_pilots():
+            loc = geography.resolve_location(pilot.village)
+            if not loc:
+                print(f"SKIP {pilot.village}: no verified coordinate record")
                 failures += 1
-                break
+                continue
+            for month in range(1, 13):
+                try:
+                    result = fetch_era5_monthly_daily_baseline(
+                        loc["latitude"], loc["longitude"], month)
+                    print(f"OK {pilot.village} month={month:02d} "
+                          f"mean_daily_rainfall_mm={result['mean_mm']} "
+                          f"period={result['period']} source={result['source']}")
+                except (BaselineUnavailable, requests.RequestException, ValueError) as exc:
+                    print(f"FAILED {pilot.village} month={month:02d}: {exc}")
+                    failures += 1
+                    break
         sys.exit(1 if failures else 0)

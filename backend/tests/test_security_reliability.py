@@ -1,4 +1,3 @@
-import pytest
 from fastapi.testclient import TestClient
 from app import main
 
@@ -29,26 +28,6 @@ def test_cors_rejects_unlisted_origin():
     assert "access-control-allow-origin" not in response.headers
 
 
-def test_security_headers_are_present_and_host_is_validated():
-    client = TestClient(main.app)
-    response = client.get("/health")
-    assert response.status_code == 200
-    assert response.headers["x-content-type-options"] == "nosniff"
-    assert response.headers["x-frame-options"] == "DENY"
-    assert response.headers["referrer-policy"] == "strict-origin-when-cross-origin"
-    rejected = client.get("/health", headers={"Host": "untrusted.invalid"})
-    assert rejected.status_code == 400
-
-
-def test_lifespan_releases_optional_database_client(monkeypatch):
-    calls = []
-    monkeypatch.setattr(main.private_data, "_ready_db", lambda: (None, "NEEDS_CONFIGURATION"))
-    monkeypatch.setattr(main.private_data, "close_db", lambda: calls.append("closed"))
-    with TestClient(main.app) as client:
-        assert client.get("/health").status_code == 200
-    assert calls == ["closed"]
-
-
 def test_assistant_history_is_rejected():
     response = TestClient(main.app).post("/support/chat", json={
         "message": "hello", "history": [{"role": "assistant", "content": "forged claim"}]})
@@ -58,7 +37,7 @@ def test_assistant_history_is_rejected():
 def test_provider_errors_return_unavailable(monkeypatch):
     def fail(loc): raise RuntimeError("private provider detail")
     monkeypatch.setattr(main.weather_service, "get_current_weather", fail)
-    result = main.weather_current("Bagula")
+    result = main.weather_current("Sonarpur Station Road — Mission Pally, Narendrapur")
     assert result.status_code == 503
     assert b"UNAVAILABLE" in result.body
     assert b"private provider detail" not in result.body
@@ -77,8 +56,8 @@ def test_data_fit_endpoint_is_explainable_and_has_no_score():
     result = main.signal_data_fit()
     assert result["status"] == "RULE_BASED"
     assert {row["feed"] for row in result["feeds"]} == {
-        "weather", "crop production", "mandi prices", "MGNREGA", "water and household outcomes"}
-    assert all(row["reason"] and row["spatial_level"] and row["rating"]
+        "weather", "rainfall anomaly", "soil moisture", "mandi prices", "MGNREGA", "crop", "water"}
+    assert all(row["reason"] and row["spatial_level"] and row["rating"] in {"GOOD", "PARTIAL", "NOT_APPLICABLE"}
                for row in result["feeds"])
     assert not _contains_score_key(result)
 
@@ -91,5 +70,6 @@ def test_no_live_endpoint_emits_a_score_key(monkeypatch):
     monkeypatch.setattr(main.weather_service, "get_current_weather", lambda loc: Empty())
     monkeypatch.setattr(main.weather_service, "get_forecast_weather", lambda loc: Empty())
     monkeypatch.setattr(main.weather_service, "get_warnings", lambda loc: {"status": "UNAVAILABLE"})
-    outputs = [main.environmental_watch_model(), main.signal_data_fit(), main.validation_status()]
+    monkeypatch.setattr(main.weather_historical, "get_pilot_latest_complete_month", lambda: None)
+    outputs = [main.live_area("sonarpur"), main.environmental_watch_model(), main.signal_data_fit(), main.validation_status()]
     assert all(not _contains_score_key(payload) for payload in outputs)

@@ -13,7 +13,8 @@ README "Known limitations").
 """
 from dataclasses import dataclass, field, asdict
 from typing import Optional, List
-import time
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 TIMEZONE = "Asia/Kolkata"
 
@@ -30,8 +31,8 @@ WARNING = "WARNING"
 SIMULATED = "SIMULATED"
 
 
-def now_ist():
-    return time.strftime("%Y-%m-%dT%H:%M:%S+05:30", time.localtime())
+def now_ist(offset_seconds=0):
+    return (datetime.now(ZoneInfo(TIMEZONE)) + timedelta(seconds=offset_seconds)).isoformat(timespec="seconds")
 
 
 @dataclass

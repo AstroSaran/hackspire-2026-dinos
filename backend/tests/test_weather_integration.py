@@ -139,6 +139,18 @@ def test_demo_provider_deterministic_not_random():
     assert obs1.temperature_c == obs2.temperature_c  # same village -> same values every time
 
 
+def test_explicit_demo_mode_uses_labeled_provider_without_network(monkeypatch):
+    monkeypatch.setattr(weather_service, "DEMO_MODE", True)
+    weather_service._cache.store.clear()
+    with patch("requests.get") as mock_get:
+        obs = weather_service.get_current_weather(_loc("ShowcaseVillage"))
+        forecast = weather_service.get_forecast_weather(_loc("ShowcaseVillage"))
+        mock_get.assert_not_called()
+    assert obs.status == SIMULATED_DEMO
+    assert forecast.status == SIMULATED_DEMO
+    assert len(forecast.days) == 7
+
+
 # --- Provider fallback chain (mocked) ---------------------------------------
 
 def test_imd_fallback_to_open_meteo(monkeypatch):
@@ -339,9 +351,13 @@ def test_integration_real_open_meteo_call_succeeds():
     assert obs.temperature_c is not None
 
 
-def test_district_catalog_uses_verified_west_bengal_scope_without_address_pilot():
+def test_sonarpur_station_road_is_configured_as_live_pilot_location():
     from app import geography
-    catalog = geography.district_catalog()
-    assert len(catalog) == 22
-    assert "Malda" in catalog
-    assert geography.resolve_location("Unregistered locality") is None
+    name = "Sonarpur Station Road — Mission Pally, Narendrapur"
+    rec = geography.resolve_location(name)
+    assert rec is not None
+    assert rec["district"] == "South 24 Parganas"
+    assert rec["block"] == "Rajpur Sonarpur"
+    assert rec["latitude"] == 22.442948
+    assert rec["longitude"] == 88.428633
+    assert rec["resolution"] == "address_geocode"

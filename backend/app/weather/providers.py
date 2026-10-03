@@ -30,6 +30,7 @@ egress to get genuinely live data.
 """
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from datetime import date, timedelta
 from typing import Optional
 import requests
 
@@ -323,12 +324,29 @@ class DemoWeatherProvider(WeatherProvider):
         )
 
     def get_forecast(self, loc: Location) -> WeatherForecast:
+        seed = sum(ord(c) for c in loc.village)
+        days = []
+        for index in range(7):
+            rainfall = round(((seed + index * 17) % 80) / 2, 1)
+            probability = 35 + ((seed + index * 13) % 61)
+            wind = round(8 + ((seed + index * 7) % 38), 1)
+            minimum = round(23 + ((seed + index * 3) % 5), 1)
+            maximum = round(minimum + 6 + ((seed + index * 11) % 8), 1)
+            days.append(WeatherForecastDay(
+                date=(date.today() + timedelta(days=index)).isoformat(),
+                precipitation_sum_mm=rainfall,
+                precipitation_probability_max_pct=probability,
+                temperature_min_c=minimum,
+                temperature_max_c=maximum,
+                wind_speed_max_kmh=wind,
+                weather_code=61 if rainfall >= 20 else 3 if wind >= 30 else 1,
+            ))
         return WeatherForecast(
             provider=self.name, provider_name=self.provider_name,
             source="Kavach demo-mode deterministic simulation",
             status=SIMULATED_DEMO, data_status=SIMULATED_DEMO,
             country=loc.country, state=loc.state, district=loc.district, block=loc.block,
             village=loc.village, latitude=loc.latitude, longitude=loc.longitude,
-            issued_at=now_ist(), fetched_at=now_ist(), days=[],
+            issued_at=now_ist(), fetched_at=now_ist(), days=days,
             note="Demo/simulation mode — not a live forecast.",
         )

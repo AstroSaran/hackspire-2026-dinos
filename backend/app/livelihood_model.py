@@ -19,7 +19,7 @@ TRACKS = [
         ],
         "blockers": [
             "The annual West Bengal crop-production dataset is district/crop/season history; it does not label current field stress.",
-            "The reachable West Bengal government crop-survey layer is sparse and has no district field; the latest check found one crop-health label and one soil-moisture reading, which cannot support training or validation.",
+            "No authorized, district-matched historical crop-stress outcomes are connected for training or validation.",
         ],
     },
     {
@@ -34,7 +34,7 @@ TRACKS = [
             "Clear rural coverage and reporting definitions for each district",
         ],
         "blockers": [
-            "The identified OGD MGNREGA resource is an archived 1 April–31 August 2023 snapshot; a current reporting series is not connected.",
+            "The current MGNREGA resource UUID is not configured, so the statewide API feed is not connected.",
             "District aggregates cannot establish an individual household's demand or access to work.",
             "Historical outcome labels have not been collected for the proposed forecast horizon.",
         ],
@@ -63,7 +63,7 @@ def readiness(market_status: str, employment_status: str) -> dict:
     """Describe the three requested tracks without fabricating predictions."""
     tracks = [dict(track) for track in TRACKS]
     tracks[1]["blockers"] = [
-            (f"MGNREGA configuration: {employment_status}; check /signals/employment for current API connectivity. District data is context only."),
+        (f"MGNREGA source status: {employment_status}; a configured feed is still only district context."),
         *TRACKS[1]["blockers"][1:],
     ]
     tracks[2]["blockers"] = [
@@ -95,7 +95,7 @@ def readiness(market_status: str, employment_status: str) -> dict:
              "detail": "Each deployed track needs input-freshness checks, out-of-domain abstention, drift monitoring, versioning, and rollback."},
         ],
         "next_steps": [
-            "Restore outbound HTTPS access from the Kavach backend to api.data.gov.in, identify a current MGNREGA resource, then collect every West Bengal page with source vintage and retrieval time.",
+            "Restore outbound HTTPS access from the Kavach backend to api.data.gov.in, then collect every West Bengal page and keep the raw source response with fetch time and resource ID.",
             "Use annual crop records only for a separately named district/crop/season production or yield analysis; they cannot train a seven-day crop-stress model.",
             "Configure a current MGNREGA resource UUID and confirm its fields and reporting period before analyzing district work provision.",
             "Collect consented district-season crop-stress outcomes and dated district employment outcomes before fitting those risk models.",

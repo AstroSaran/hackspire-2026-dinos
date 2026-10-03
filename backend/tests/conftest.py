@@ -12,8 +12,29 @@ exception is the explicitly-marked, opt-in integration test
 KAVACH_RUN_LIVE_INTEGRATION_TESTS=true is set.
 """
 import os
+import csv
 import pytest
 import requests as _requests
+
+
+@pytest.fixture
+def mango_source(tmp_path):
+    """Test-only panel for registry/serving contracts, never production training."""
+    from app import train_mango_yield_model as trainer
+    source=tmp_path/'mango-fixture.csv'
+    fields=['state','district','crop','year','estimate_round',
+            'area_thousand_ha','production_thousand_mt','source_url']
+    with source.open('w',newline='',encoding='utf-8') as stream:
+        writer=csv.DictWriter(stream,fieldnames=fields);writer.writeheader()
+        for year_index,(year,(area_total,production_total)) in enumerate(trainer.EXPECTED_TOTALS.items()):
+            for index in range(22):
+                centered=(index-10.5)/11
+                writer.writerow({'state':'West Bengal','district':'Malda' if index==0 else f'Test District {index:02d}',
+                    'crop':'Mango','year':year,'estimate_round':'Final Estimate',
+                    'area_thousand_ha':f'{area_total/22*(1+centered*.04):.6f}',
+                    'production_thousand_mt':f'{production_total/22*(1+centered*.12+(year_index%2)*centered*.02):.6f}',
+                    'source_url':'https://wbfpih.wb.gov.in/download?id=test-fixture'})
+    return source
 
 
 @pytest.fixture(autouse=True)

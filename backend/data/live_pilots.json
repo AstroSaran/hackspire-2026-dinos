@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "village": "Sonarpur Station Road — Mission Pally, Narendrapur",
+    "address": "Sonarpur Station Road, Mission Pally, Narendrapur, Rajpur Sonarpur, Kolkata – 700150, West Bengal, India",
+    "url_key": "sonarpur",
+    "coordinate_source": "public address geocode; address-level coordinate",
+    "latitude": 22.442948,
+    "longitude": 88.428633,
+    "district": "South 24 Parganas",
+    "block": "Rajpur Sonarpur",
+    "resolution": "address_geocode"
+  }
+]

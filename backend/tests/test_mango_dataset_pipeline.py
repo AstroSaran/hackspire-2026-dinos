@@ -6,7 +6,7 @@ import pytest
 
 from app import mango_dataset_pipeline as pipeline
 from app import evaluate_mango_yield_model
-from app import train_mango_yield_model
+from app import train_mango_holdout as train_mango_yield_model
 
 
 @pytest.fixture

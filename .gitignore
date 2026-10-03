@@ -1,6 +1,7 @@
 .env
 backend/.env
 .venv/
+.venv-dinos/
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -16,6 +17,9 @@ tmp/
 # Local mango source data and experiment outputs are excluded pending reuse rights.
 backend/data/wb_mango_district_annual.csv
 backend/data/mango_yield_baseline_model.json
+backend/data/mango_yield_holdout_model.json
+backend/data/model_releases/
+backend/data/sonarpur_live_pilot.json
 backend/data/metadata/west-bengal-district-mango-annual-manifest-*.json
 backend/data/metadata/mango-yield-evaluation-*.json
 

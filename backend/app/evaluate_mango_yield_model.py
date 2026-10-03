@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 
 from .mango_dataset_pipeline import METADATA_DIR, inspect_mango_dataset
-from .train_mango_yield_model import (
+from .train_mango_holdout import (
     ARTIFACT_FILE,
     REPOSITORY_DIR,
     fit_simple_regression,

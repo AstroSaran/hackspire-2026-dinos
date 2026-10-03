@@ -25,7 +25,6 @@ value is confirmed directly with IMD — see README "IMD integration status".
 
 import json
 from pathlib import Path
-from .district_catalog import DISTRICT_HQ_QUERIES, district_catalog
 
 COUNTRY = "India"
 STATE = "West Bengal"
@@ -58,21 +57,22 @@ DISTRICTS = {
     },
 }
 
-# Pilot coordinates live in a JSON data file so validated locations can be
-# added without changes to API route code.
-_PILOT_FILE = Path(__file__).resolve().parents[1] / "data" / "live_pilots.json"
-try:
-    for _pilot in json.loads(_PILOT_FILE.read_text(encoding="utf-8")):
-        _district = DISTRICTS.setdefault(_pilot["district"], {"blocks": {}, "imd_district_id": None})
-        _block = _district["blocks"].setdefault(_pilot["block"], {
-            "latitude": _pilot["latitude"], "longitude": _pilot["longitude"],
-            "resolution": _pilot["resolution"], "villages": [],
-        })
-        _block.update(latitude=_pilot["latitude"], longitude=_pilot["longitude"], resolution=_pilot["resolution"])
-        if _pilot["village"] not in _block["villages"]:
-            _block["villages"].append(_pilot["village"])
-except (OSError, ValueError, KeyError, TypeError):
-    pass
+# Horticulture Directorate district rows use this 22-district vintage. These
+# display names are normalized from that official source; HQ queries are only
+# sent to the live geocoder and no coordinates are guessed or embedded here.
+DISTRICT_HQ_QUERIES = {
+    "Darjeeling": "Darjeeling", "Kalimpong": "Kalimpong", "Jalpaiguri": "Jalpaiguri",
+    "Alipurduar": "Alipurduar", "Cooch Behar": "Cooch Behar", "Uttar Dinajpur": "Raiganj",
+    "Dakshin Dinajpur": "Balurghat", "Malda": "Malda", "Murshidabad": "Berhampore",
+    "Nadia": "Krishnanagar", "North 24 Parganas": "Barasat", "South 24 Parganas": "Alipore",
+    "Howrah": "Howrah", "Hooghly": "Chinsurah", "Purba Bardhaman": "Bardhaman",
+    "Paschim Bardhaman": "Asansol", "Birbhum": "Suri", "Bankura": "Bankura",
+    "Purulia": "Purulia", "Paschim Medinipur": "Midnapore", "Jhargram": "Jhargram",
+    "Purba Medinipur": "Tamluk",
+}
+
+for _district in DISTRICT_HQ_QUERIES:
+    DISTRICTS.setdefault(_district, {"blocks": {}, "imd_district_id": None})
 
 
 def all_villages():
@@ -93,6 +93,13 @@ def resolve_location(village: str):
         if rec["village"].lower() == village.lower():
             return rec
     return None
+
+
+def district_catalog():
+    """Return the published district vintage and live-geocoder search labels."""
+    return {name: {"headquarters_search": query, "coordinates": None,
+                   "resolution": "district headquarters resolved from live geocoder on selection"}
+            for name, query in DISTRICT_HQ_QUERIES.items()}
 
 
 def is_supported_state(state: str) -> bool:
